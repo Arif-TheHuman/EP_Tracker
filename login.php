@@ -6,6 +6,13 @@
     <title>Log In</title>
 </head>
 <body>
+    <?php 
+    session_start();
+    if(isset($_SESSION['message'])) {
+        echo $_SESSION['message'];
+        unset($_SESSION['message']);
+    }
+    ?>
     <form action="login_process.php" method="post">
         <label for="username">Username:</label><br>
         <input type="text" id="username" name="username"><br>
