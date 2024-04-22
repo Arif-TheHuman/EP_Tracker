@@ -1,5 +1,5 @@
 <?php 
-$percentage = 10;
+$percentage = 30;
 ?>
 <!DOCTYPE html>
 <html lang="en">
