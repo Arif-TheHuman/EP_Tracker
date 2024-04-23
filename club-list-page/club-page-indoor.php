@@ -32,7 +32,7 @@
     <img class="sm:w-1/4 md:w-1/2 lg:w-full" src="" alt="">
 </div>
 
-<h1 class="text-center sm:text-3xl md:text-4xl lg:text-5xl">SOCIETY</h1>
+<h1 class="text-center sm:text-3xl md:text-4xl lg:text-5xl ">INDOOR</h1>
 
 <div class="justify-center items-center text-center">
 <table class="w-full">
@@ -45,19 +45,23 @@
   </thead>
   <tbody class="justify-center items-center">
     <tr>
-      <td class="border px-6 py-3">KAWAN Club</td>
-      <td class="border px-6 py-3">67</td>
-      <td class="border px-6 py-3">80</td>
+      <td class="border px-6 py-3">Art Club<img></td>
+      <td class="border px-6 py-3">76</td>
+      <td class="border px-6 py-3">90</td>
     </tr>
     <tr>
-      <td class="border px-6 py-3">PB MHA</td>
+      <td class="border px-6 py-3">Let's Japan</td>
+      <td class="border px-6 py-3">45</td>
+      <td class="border px-6 py-3">90</td>
+    </tr>
+    <tr>
+      <td class="border px-6 py-3">Nasyidul Islam</td>
+      <td class="border px-6 py-3">20</td>
+      <td class="border px-6 py-3">35</td>
+    </tr>
+    <td class="border px-6 py-3">Korean Culture Club</td>
+      <td class="border px-6 py-3">40</td>
       <td class="border px-6 py-3">55</td>
-      <td class="border px-6 py-3">80</td>
-    </tr>
-    <tr>
-      <td class="border px-6 py-3">GEOSOC</td>
-      <td class="border px-6 py-3">75</td>
-      <td class="border px-6 py-3">80</td>
     </tr>
   </tbody>
 </table>

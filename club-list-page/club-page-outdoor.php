@@ -32,7 +32,7 @@
     <img class="sm:w-1/4 md:w-1/2 lg:w-full" src="" alt="">
 </div>
 
-<h1 class="text-center sm:text-3xl md:text-4xl lg:text-5xl">SOCIETY</h1>
+<h1 class="text-center sm:text-3xl md:text-4xl lg:text-5xl">OUTDOOR</h1>
 
 <div class="justify-center items-center text-center">
 <table class="w-full">
@@ -45,19 +45,24 @@
   </thead>
   <tbody class="justify-center items-center">
     <tr>
-      <td class="border px-6 py-3">KAWAN Club</td>
-      <td class="border px-6 py-3">67</td>
+      <td class="border px-6 py-3">Volleyball Club<img></td>
       <td class="border px-6 py-3">80</td>
+      <td class="border px-6 py-3">100</td>
     </tr>
     <tr>
-      <td class="border px-6 py-3">PB MHA</td>
-      <td class="border px-6 py-3">55</td>
-      <td class="border px-6 py-3">80</td>
-    </tr>
-    <tr>
-      <td class="border px-6 py-3">GEOSOC</td>
+      <td class="border px-6 py-3">Rugby Club</td>
+      <td class="border px-6 py-3">45</td>
       <td class="border px-6 py-3">75</td>
-      <td class="border px-6 py-3">80</td>
+    </tr>
+    <tr>
+      <td class="border px-6 py-3">Swimming Club</td>
+      <td class="border px-6 py-3">101</td>
+      <td class="border px-6 py-3">115</td>
+    </tr>
+    <tr>
+      <td class="border px-6 py-3">Frisbee Club</td>
+      <td class="border px-6 py-3">34</td>
+      <td class="border px-6 py-3">50</td>
     </tr>
   </tbody>
 </table>
