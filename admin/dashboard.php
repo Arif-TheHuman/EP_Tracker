@@ -1,12 +1,9 @@
 <?php
-// Include the database connection file
-include '../database.php';
+include '../db_connection.php';
 
-// Check if the user is an admin
-session_start();
-if ($_SESSION['role'] != 'admin') {
-    header("Location: ../login.php");
-    exit;
+// Check connection
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
 }
 
 // Handle the form submission
@@ -19,9 +16,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->execute();
     } else {
         // Add a new club
-        $sql = "INSERT INTO clubs (name, description, type, quota, img1, img2, img3) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO clubs (name, description, type, quota, img1, img2, img3, profilePic, coverPic, taskbarBgImg) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssisss", $_POST['name'], $_POST['description'], $_POST['type'], $_POST['quota'], $_POST['img1'], $_POST['img2'], $_POST['img3']);
+        $stmt->bind_param("sssiissssss", $_POST['name'], $_POST['description'], $_POST['type'], $_POST['quota'], $_POST['img1'], $_POST['img2'], $_POST['img3'], $_POST['profilePic'], $_POST['coverPic'], $_POST['taskbarBgImg']);
         $stmt->execute();
     }
 }
@@ -65,6 +62,12 @@ $conn->close();
         <input type="text" id="img2" name="img2" required><br>
         <label for="img3">Image 3:</label><br>
         <input type="text" id="img3" name="img3" required><br>
+        <label for="profilePic">Profile Picture:</label><br>
+        <input type="text" id="profilePic" name="profilePic" required><br>
+        <label for="coverPic">Cover Picture:</label><br>
+        <input type="text" id="coverPic" name="coverPic" required><br>
+        <label for="taskbarBgImg">Taskbar Background Image:</label><br>
+        <input type="text" id="taskbarBgImg" name="taskbarBgImg" required><br>
         <input type="submit" value="Add Club">
     </form>
 
@@ -83,6 +86,12 @@ $conn->close();
             <td><?php echo $club['description']; ?></td>
             <td><?php echo $club['type']; ?></td>
             <td><?php echo $club['quota']; ?></td>
+            <td><?php echo $club['img1']; ?></td>
+            <td><?php echo $club['img2']; ?></td>
+            <td><?php echo $club['img3']; ?></td>
+            <td><?php echo $club['profilePic']; ?></td>
+            <td><?php echo $club['coverPic']; ?></td>
+            <td><?php echo $club['taskbarBgImg']; ?></td>
             <td>
                 <form method="POST">
                     <input type="hidden" name="id" value="<?php echo $club['id']; ?>">

@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -17,7 +19,7 @@ $result = $stmt->get_result();
 if ($result->num_rows > 0) {
   // login success
   $row = $result->fetch_assoc();
-  session_start();
+  
   $_SESSION['username'] = $_POST['username'];
   $_SESSION['role'] = $row['role'];
   if ($_SESSION['role'] == 'admin') {
