@@ -9,9 +9,13 @@
 <body class="font-sans antialiased text-gray-900 bg-gray-100">
     <?php 
     session_start();
-    if(isset($_SESSION['message'])) {
-        echo $_SESSION['message'];
-        unset($_SESSION['message']);
+    if (isset($_SESSION['username'])) {
+        if ($_SESSION['role'] == 'admin') {
+            header("Location: admin/dashboard.php");
+        } else {
+            header("Location: index.php");
+        }
+        exit;
     }
     ?>
     <div class="w-full max-w-xs mx-auto mt-20">
