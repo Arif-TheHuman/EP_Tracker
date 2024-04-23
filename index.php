@@ -16,7 +16,6 @@ if ($ep > 64) {
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="font-sans antialiased text-gray-900 bg-gray-100">
-    Changes
     <!-- Navigation Bar -->
 <nav class="p-4" style="background-image: url('https://static.vecteezy.com/system/resources/previews/007/685/830/non_2x/colorful-geometric-background-trendy-gradient-shapes-composition-cool-background-design-for-posters-free-vector.jpg'); background-size: cover;">
     <div class="container mx-auto flex items-center justify-between">
