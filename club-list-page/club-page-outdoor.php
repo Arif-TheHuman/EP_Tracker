@@ -38,31 +38,31 @@
 <table class="w-full">
   <thead>
     <tr>
-      <th class="px-6 py-3">Club</th>
-      <th class="px-6 py-3">Members</th>
-      <th class="px-6 py-3">Quota</th>
+      <th class="px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">Club</th>
+      <th class="px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">Members</th>
+      <th class="px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">Quota</th>
     </tr>
   </thead>
   <tbody class="justify-center items-center">
     <tr>
-      <td class="border px-6 py-3">Volleyball Club<img></td>
-      <td class="border px-6 py-3">80</td>
-      <td class="border px-6 py-3">100</td>
+      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">Volleyball Club<img></td>
+      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">80</td>
+      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">100</td>
     </tr>
     <tr>
-      <td class="border px-6 py-3">Rugby Club</td>
-      <td class="border px-6 py-3">45</td>
-      <td class="border px-6 py-3">75</td>
+      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">Rugby Club</td>
+      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">45</td>
+      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">75</td>
     </tr>
     <tr>
-      <td class="border px-6 py-3">Swimming Club</td>
-      <td class="border px-6 py-3">101</td>
-      <td class="border px-6 py-3">115</td>
+      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">Swimming Club</td>
+      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">101</td>
+      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">115</td>
     </tr>
     <tr>
-      <td class="border px-6 py-3">Frisbee Club</td>
-      <td class="border px-6 py-3">34</td>
-      <td class="border px-6 py-3">50</td>
+      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">Frisbee Club</td>
+      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">34</td>
+      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">50</td>
     </tr>
   </tbody>
 </table>

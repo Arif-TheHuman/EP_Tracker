@@ -38,30 +38,30 @@
 <table class="w-full">
   <thead>
     <tr>
-      <th class="px-6 py-3">Club</th>
-      <th class="px-6 py-3">Members</th>
-      <th class="px-6 py-3">Quota</th>
+      <th class="px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">Club</th>
+      <th class="px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">Members</th>
+      <th class="px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">Quota</th>
     </tr>
   </thead>
   <tbody class="justify-center items-center">
     <tr>
-      <td class="border px-6 py-3">Art Club<img></td>
-      <td class="border px-6 py-3">76</td>
+      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">Art Club<img></td>
+      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">76</td>
+      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">90</td>
+    </tr>
+    <tr>
+      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">Let's Japan</td>
+      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">45</td>
       <td class="border px-6 py-3">90</td>
     </tr>
     <tr>
-      <td class="border px-6 py-3">Let's Japan</td>
-      <td class="border px-6 py-3">45</td>
-      <td class="border px-6 py-3">90</td>
-    </tr>
-    <tr>
-      <td class="border px-6 py-3">Nasyidul Islam</td>
-      <td class="border px-6 py-3">20</td>
+      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">Nasyidul Islam</td>
+      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">20</td>
       <td class="border px-6 py-3">35</td>
     </tr>
     <td class="border px-6 py-3">Korean Culture Club</td>
-      <td class="border px-6 py-3">40</td>
-      <td class="border px-6 py-3">55</td>
+      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">40</td>
+      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">55</td>
     </tr>
   </tbody>
 </table>

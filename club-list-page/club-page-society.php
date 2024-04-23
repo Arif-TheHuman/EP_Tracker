@@ -38,26 +38,26 @@
 <table class="w-full">
   <thead>
     <tr>
-      <th class="px-6 py-3">Club</th>
-      <th class="px-6 py-3">Members</th>
-      <th class="px-6 py-3">Quota</th>
+      <th class="px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">Club</th>
+      <th class="px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">Members</th>
+      <th class="px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">Quota</th>
     </tr>
   </thead>
   <tbody class="justify-center items-center">
     <tr>
-      <td class="border px-6 py-3">KAWAN Club</td>
-      <td class="border px-6 py-3">67</td>
-      <td class="border px-6 py-3">80</td>
+      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">KAWAN Club</td>
+      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">67</td>
+      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">80</td>
     </tr>
     <tr>
-      <td class="border px-6 py-3">PB MHA</td>
-      <td class="border px-6 py-3">55</td>
-      <td class="border px-6 py-3">80</td>
+      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">PB MHA</td>
+      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">55</td>
+      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">80</td>
     </tr>
     <tr>
-      <td class="border px-6 py-3">GEOSOC</td>
-      <td class="border px-6 py-3">75</td>
-      <td class="border px-6 py-3">80</td>
+      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">GEOSOC</td>
+      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">75</td>
+      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">80</td>
     </tr>
   </tbody>
 </table>
