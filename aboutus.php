@@ -72,7 +72,7 @@ em {
         <h5>ABOUT US</h5>
     </div>
     <div class="centered-image-container">
-        <img class="centered-image" src="path/to/your/image.jpg" alt="Your Image">
+        <img class="centered-image" src="https://b.fssta.com/uploads/application/soccer/headshots/885.vresize.350.350.medium.14.png" alt="Your Image">
     </div>
     <h5>Welcome to ECPS!</h5>
     <em>Our journey began with a classroom assignment, transforming into a powerful EP points tracker for Politeknik Brunei students. Through our collaboration with CSDI, we've crafted a user-friendly app to simplify students' academic lives. With a shared passion for education, we're excited about the impact this app will make. Thank you for joining us on this empowering venture!</em>
