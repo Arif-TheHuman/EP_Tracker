@@ -1,4 +1,6 @@
 <?php
+$port = 3306;
+$dbName = 'ECPS';
 $servername = "localhost";
 $username = "root";
 $password = "";
