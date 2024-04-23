@@ -16,6 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->execute();
     } else {
         // Add a new club
+        echo "Debug: img1 value is: " . $_POST['img1'];
         $sql = "INSERT INTO clubs (name, description, type, quota, img1, img2, img3, profilePic, coverPic, taskbarBgImg) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("sssiisssss", $_POST['name'], $_POST['description'], $_POST['type'], $_POST['quota'], $_POST['img1'], $_POST['img2'], $_POST['img3'], $_POST['profilePic'], $_POST['coverPic'], $_POST['taskbarBgImg']);
