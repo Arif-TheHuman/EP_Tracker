@@ -7,17 +7,6 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="font-sans antialiased text-gray-900 bg-gray-100">
-    <?php 
-    session_start();
-    if (isset($_SESSION['username'])) {
-        if ($_SESSION['role'] == 'admin') {
-            header("Location: admin/dashboard.php");
-        } else {
-            header("Location: index.php");
-        }
-        exit;
-    }
-    ?>
     <div class="w-full max-w-xs mx-auto mt-20">
         <form action="login_process.php" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             <div class="mb-4">

@@ -75,6 +75,14 @@ $sql = "CREATE TABLE IF NOT EXISTS clubs (
 
 $stmt->close();
 $conn->close();
+// Start the session
+session_start();
 
+// Redirect to the appropriate page based on the user role
+if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
+    header("Location: dashboard.php");
+} else {
+    header("Location: login.php");
+}
 exit;
 ?>
