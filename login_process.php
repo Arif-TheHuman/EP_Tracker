@@ -21,7 +21,7 @@ if ($result->num_rows > 0) {
   $_SESSION['username'] = $_POST['username'];
   $_SESSION['role'] = $row['role'];
   if ($_SESSION['role'] == 'admin') {
-    header('Location: admin/dashboard.php');
+    header('Location: ./admin/dashboard.php'); // Update the location here
   } else {
     header('Location: index.php');
   }

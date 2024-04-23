@@ -75,7 +75,6 @@ $sql = "CREATE TABLE IF NOT EXISTS clubs (
 
 $stmt->close();
 $conn->close();
-// Redirect to login page
-header("Location: login.php");
+
 exit;
 ?>

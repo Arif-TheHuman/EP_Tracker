@@ -5,7 +5,7 @@ include '../database.php';
 // Check if the user is an admin
 session_start();
 if ($_SESSION['role'] != 'admin') {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit;
 }
 
