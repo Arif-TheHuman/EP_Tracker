@@ -17,6 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         // Add a new club
         $target_dir = "../assets/";
+        $img1 = $target_dir . basename($_FILES["img1"]["name"]);
         $img2 = $target_dir . basename($_FILES["img2"]["name"]);
         $img3 = $target_dir . basename($_FILES["img3"]["name"]);
         $profilePic = $target_dir . basename($_FILES["profilePic"]["name"]);
@@ -24,36 +25,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $taskbarBgImg = $target_dir . basename($_FILES["taskbarBgImg"]["name"]);
 
         // Move the uploaded files to the target directory
-        if (!move_uploaded_file($_FILES["img2"]["tmp_name"], $img2)) {
-            echo "Error uploading img2";
-        }
-        if (!move_uploaded_file($_FILES["img3"]["tmp_name"], $img3)) {
-            echo "Error uploading img3";
-        }
-        if (!move_uploaded_file($_FILES["profilePic"]["tmp_name"], $profilePic)) {
-            echo "Error uploading profilePic";
-        }
-        if (!move_uploaded_file($_FILES["coverPic"]["tmp_name"], $coverPic)) {
-            echo "Error uploading coverPic";
-        }
-        if (!move_uploaded_file($_FILES["taskbarBgImg"]["tmp_name"], $taskbarBgImg)) {
-            echo "Error uploading taskbarBgImg";
-        }
+        move_uploaded_file($_FILES["img1"]["tmp_name"], $img1);
+        move_uploaded_file($_FILES["img2"]["tmp_name"], $img2);
+        move_uploaded_file($_FILES["img3"]["tmp_name"], $img3);
+        move_uploaded_file($_FILES["profilePic"]["tmp_name"], $profilePic);
+        move_uploaded_file($_FILES["coverPic"]["tmp_name"], $coverPic);
+        move_uploaded_file($_FILES["taskbarBgImg"]["tmp_name"], $taskbarBgImg);
 
-        $sql = "INSERT INTO clubs (name, description, type, quota, img2, img3, profilePic, coverPic, taskbarBgImg) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO clubs (name, description, type, quota, img1, img2, img3, profilePic, coverPic, taskbarBgImg) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssiisssss", $_POST['name'], $_POST['description'], $_POST['type'], $_POST['quota'], $img2, $img3, $profilePic, $coverPic, $taskbarBgImg);
+        $stmt->bind_param("sssiisssss", $_POST['name'], $_POST['description'], $_POST['type'], $_POST['quota'], $img1, $img2, $img3, $profilePic, $coverPic, $taskbarBgImg);
         $stmt->execute();
     }
 }
+
 // Get all clubs
 $sql = "SELECT * FROM clubs";
 $result = $conn->query($sql);
 $clubs = $result->fetch_all(MYSQLI_ASSOC);
+
 // Close the connection
 $conn->close();
 ?>
-<!-- HTML for the admin dashboard goes here -->
 
 <!-- HTML for the admin dashboard goes here -->
 <!DOCTYPE html>
@@ -79,6 +72,8 @@ $conn->close();
         </select><br>
         <label for="quota">Quota:</label><br>
         <input type="number" id="quota" name="quota" required><br>
+        <label for="img1">Image 1:</label><br>
+        <input type="file" id="img1" name="img1" required><br>
         <label for="img2">Image 2:</label><br>
         <input type="file" id="img2" name="img2" required><br>
         <label for="img3">Image 3:</label><br>
@@ -107,6 +102,7 @@ $conn->close();
             <td><?php echo $club['description']; ?></td>
             <td><?php echo $club['type']; ?></td>
             <td><?php echo $club['quota']; ?></td>
+            <td><img src="<?php echo $club['img1']; ?>" alt="Image 1"></td>
             <td><img src="<?php echo $club['img2']; ?>" alt="Image 2"></td>
             <td><img src="<?php echo $club['img3']; ?>" alt="Image 3"></td>
             <td><img src="<?php echo $club['profilePic']; ?>" alt="Profile Picture"></td>
