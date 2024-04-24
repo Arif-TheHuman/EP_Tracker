@@ -57,7 +57,6 @@ $sql = "CREATE TABLE IF NOT EXISTS clubs (
     type ENUM('indoor', 'outdoor') NOT NULL,
     current_members INT(6) NOT NULL DEFAULT 0,
     quota INT(6) NOT NULL DEFAULT 0,
-    img1 VARCHAR(255) NOT NULL,
     img2 VARCHAR(255) NOT NULL,
     img3 VARCHAR(255) NOT NULL,
     profilePic VARCHAR(255) NOT NULL,
@@ -69,8 +68,8 @@ $sql = "CREATE TABLE IF NOT EXISTS clubs (
   }
 // Insert dummy data into clubs table
 $clubs = [
-    ['Hiking Club', 'A club for outdoor enthusiasts who love hiking.', 'outdoor', 20, 50, 'img1.jpg', 'img2.jpg', 'img3.jpg','prof1.jpg', 'coverimg1.jpg','taskbarimg1.jpg'],
-    ['Chess Club', 'A club for those who enjoy playing chess.', 'indoor', 15, 30, 'img4.jpg', 'img5.jpg', 'img6.jpg','prof2.jpg', 'coverimg2.jpg','taskbarimg2.jpg'],
+    ['Hiking Club', 'A club for outdoor enthusiasts who love hiking.', 'outdoor', 20, 50, 'img2.jpg', 'img3.jpg','prof1.jpg', 'coverimg1.jpg','taskbarimg1.jpg'],
+    ['Chess Club', 'A club for those who enjoy playing chess.', 'indoor', 15, 30, 'img5.jpg', 'img6.jpg','prof2.jpg', 'coverimg2.jpg','taskbarimg2.jpg'],
     // Add more clubs as needed
 ];
 
@@ -84,16 +83,15 @@ foreach ($clubs as $club) {
 
     // If the club does not exist, insert it
     if ($result->num_rows == 0) {
-        $sql = "INSERT INTO clubs (name, description, type, current_members, quota, img1, img2, img3, profilePic, coverPic, taskbarBgImg) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO clubs (name, description, type, quota, img2, img3, profilePic, coverPic, taskbarBgImg) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssiissssss", $club[0], $club[1], $club[2], $club[3], $club[4], $club[5], $club[6], $club[7], $club[8], $club[9], $club[10]);
-        if ($stmt->execute() !== TRUE) {
-            echo "Error inserting club: " . $conn->error;
-        }
+        $stmt->bind_param("sssiissss", $club[0], $club[1], $club[2], $club[3], $club[4], $club[5], $club[6], $club[7], $club[8]);
+        $stmt->execute();
     }
 }
 $stmt->close();
 $conn->close();
+
 // Start the session
 session_start();
 // Redirect to the appropriate page based on the user role

@@ -79,7 +79,6 @@ $conn->close();
     <div class="overflow-x-auto whitespace-nowrap py-4">
     <?php foreach ($clubs as $club) : ?>
     <div class="inline-block mx-2">
-        <img class="w-64 h-64 object-cover" src="<?php echo $club['img1']; ?>" alt="<?php echo $club['name']; ?>">
         <img class="w-64 h-64 object-cover" src="<?php echo $club['img2']; ?>" alt="<?php echo $club['name']; ?>">
         <img class="w-64 h-64 object-cover" src="<?php echo $club['img3']; ?>" alt="<?php echo $club['name']; ?>">
         <p class="text-center"><?php echo $club['name']; ?></p>
