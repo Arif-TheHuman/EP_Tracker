@@ -102,7 +102,6 @@ $conn->close();
             <td><?php echo $club['description']; ?></td>
             <td><?php echo $club['type']; ?></td>
             <td><?php echo $club['quota']; ?></td>
-            <td><img src="<?php echo $club['img1']; ?>" alt="Image 1"></td>
             <td><img src="<?php echo $club['img2']; ?>" alt="Image 2"></td>
             <td><img src="<?php echo $club['img3']; ?>" alt="Image 3"></td>
             <td><img src="<?php echo $club['profilePic']; ?>" alt="Profile Picture"></td>
