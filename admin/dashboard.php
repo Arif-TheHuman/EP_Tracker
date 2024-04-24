@@ -45,7 +45,7 @@ $conn->close();
     <h1>Admin Dashboard</h1>
 
     <h2>Add New Club</h2>
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         <label for="name">Name:</label><br>
         <input type="text" id="name" name="name" required><br>
         <label for="description">Description:</label><br>
@@ -58,19 +58,19 @@ $conn->close();
         <label for="quota">Quota:</label><br>
         <input type="number" id="quota" name="quota" required><br>
         <label for="img1">Image 1:</label><br>
-        <input type="text" id="img1" name="img1" required><br>
+        <input type="file" id="img1" name="img1" required><br>
         <label for="img2">Image 2:</label><br>
-        <input type="text" id="img2" name="img2" required><br>
+        <input type="file" id="img2" name="img2" required><br>
         <label for="img3">Image 3:</label><br>
-        <input type="text" id="img3" name="img3" required><br>
+        <input type="file" id="img3" name="img3" required><br>
         <label for="profilePic">Profile Picture:</label><br>
-        <input type="text" id="profilePic" name="profilePic" required><br>
+        <input type="file" id="profilePic" name="profilePic" required><br>
         <label for="coverPic">Cover Picture:</label><br>
-        <input type="text" id="coverPic" name="coverPic" required><br>
+        <input type="file" id="coverPic" name="coverPic" required><br>
         <label for="taskbarBgImg">Taskbar Background Image:</label><br>
-        <input type="text" id="taskbarBgImg" name="taskbarBgImg" required><br>
+        <input type="file" id="taskbarBgImg" name="taskbarBgImg" required><br>
         <input type="submit" value="Add Club">
-    </form>
+</form>
 
     <h2>All Clubs</h2>
     <table>
