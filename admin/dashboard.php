@@ -16,10 +16,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->execute();
     } else {
         // Add a new club
-        echo "Debug: img1 value is: " . $_POST['img1'];
+        $target_dir = "uploads/";
+        $img1 = $target_dir . basename($_FILES["img1"]["name"]);
+        $img2 = $target_dir . basename($_FILES["img2"]["name"]);
+        $img3 = $target_dir . basename($_FILES["img3"]["name"]);
+        $profilePic = $target_dir . basename($_FILES["profilePic"]["name"]);
+        $coverPic = $target_dir . basename($_FILES["coverPic"]["name"]);
+        $taskbarBgImg = $target_dir . basename($_FILES["taskbarBgImg"]["name"]);
+
+        // Move the uploaded files to the target directory
+        move_uploaded_file($_FILES["img1"]["tmp_name"], $img1);
+        move_uploaded_file($_FILES["img2"]["tmp_name"], $img2);
+        move_uploaded_file($_FILES["img3"]["tmp_name"], $img3);
+        move_uploaded_file($_FILES["profilePic"]["tmp_name"], $profilePic);
+        move_uploaded_file($_FILES["coverPic"]["tmp_name"], $coverPic);
+        move_uploaded_file($_FILES["taskbarBgImg"]["tmp_name"], $taskbarBgImg);
+
         $sql = "INSERT INTO clubs (name, description, type, quota, img1, img2, img3, profilePic, coverPic, taskbarBgImg) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssiisssss", $_POST['name'], $_POST['description'], $_POST['type'], $_POST['quota'], $_POST['img1'], $_POST['img2'], $_POST['img3'], $_POST['profilePic'], $_POST['coverPic'], $_POST['taskbarBgImg']);
+        $stmt->bind_param("sssiisssss", $_POST['name'], $_POST['description'], $_POST['type'], $_POST['quota'], $img1, $img2, $img3, $profilePic, $coverPic, $taskbarBgImg);
         $stmt->execute();
     }
 }
@@ -87,12 +102,12 @@ $conn->close();
             <td><?php echo $club['description']; ?></td>
             <td><?php echo $club['type']; ?></td>
             <td><?php echo $club['quota']; ?></td>
-            <td><?php echo $club['img1']; ?></td>
-            <td><?php echo $club['img2']; ?></td>
-            <td><?php echo $club['img3']; ?></td>
-            <td><?php echo $club['profilePic']; ?></td>
-            <td><?php echo $club['coverPic']; ?></td>
-            <td><?php echo $club['taskbarBgImg']; ?></td>
+            <td><img src="<?php echo $club['img1']; ?>" alt="Image 1"></td>
+            <td><img src="<?php echo $club['img2']; ?>" alt="Image 2"></td>
+            <td><img src="<?php echo $club['img3']; ?>" alt="Image 3"></td>
+            <td><img src="<?php echo $club['profilePic']; ?>" alt="Profile Picture"></td>
+            <td><img src="<?php echo $club['coverPic']; ?>" alt="Cover Picture"></td>
+            <td><img src="<?php echo $club['taskbarBgImg']; ?>" alt="Taskbar Background Image"></td>
             <td>
                 <form method="POST">
                     <input type="hidden" name="id" value="<?php echo $club['id']; ?>">
