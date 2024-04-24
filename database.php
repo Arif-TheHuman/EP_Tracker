@@ -33,12 +33,22 @@ if ($result->num_rows == 0) {
         echo "Error adding column: " . $conn->error;
     }
 }
-$sql = "INSERT INTO users (username, password, role) VALUES (?, ?, ?)";
+// Check if the admin user already exists
+$sql = "SELECT * FROM users WHERE username = ?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("sss", $adminUsername, $adminPassword, $adminRole);
-if ($stmt->execute() !== TRUE) {
-    echo "Error creating admin user: " . $conn->error;
+$stmt->bind_param("s", $adminUsername);
+$stmt->execute();
+$result = $stmt->get_result();
+if ($result->num_rows == 0) {
+    // The admin user does not exist, so insert it
+    $sql = "INSERT INTO users (username, password, role) VALUES (?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sss", $adminUsername, $adminPassword, $adminRole);
+    if ($stmt->execute() !== TRUE) {
+        echo "Error creating admin user: " . $conn->error;
+    }
 }
+$stmt->close();
 // Create clubs table if it doesn't exist
 $sql = "CREATE TABLE IF NOT EXISTS clubs (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
