@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->execute();
     } else {
         // Add a new club
-        $target_dir = "uploads/";
+        $target_dir = "../assets/";
         $img1 = $target_dir . basename($_FILES["img1"]["name"]);
         $img2 = $target_dir . basename($_FILES["img2"]["name"]);
         $img3 = $target_dir . basename($_FILES["img3"]["name"]);
