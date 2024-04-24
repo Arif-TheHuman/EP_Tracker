@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         // Add a new club
         $target_dir = "../assets/";
-        $img1 = $target_dir . basename($_FILES["img1"]["name"]);
+        $img1 = isset($_FILES["img1"]["name"]) ? $target_dir . basename($_FILES["img1"]["name"]) : 0;
         $img2 = $target_dir . basename($_FILES["img2"]["name"]);
         $img3 = $target_dir . basename($_FILES["img3"]["name"]);
         $profilePic = $target_dir . basename($_FILES["profilePic"]["name"]);
@@ -25,7 +25,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $taskbarBgImg = $target_dir . basename($_FILES["taskbarBgImg"]["name"]);
 
         // Move the uploaded files to the target directory
-        move_uploaded_file($_FILES["img1"]["tmp_name"], $img1);
         move_uploaded_file($_FILES["img2"]["tmp_name"], $img2);
         move_uploaded_file($_FILES["img3"]["tmp_name"], $img3);
         move_uploaded_file($_FILES["profilePic"]["tmp_name"], $profilePic);
@@ -55,6 +54,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body>
     <h1>Admin Dashboard</h1>
@@ -72,8 +72,7 @@ $conn->close();
         </select><br>
         <label for="quota">Quota:</label><br>
         <input type="number" id="quota" name="quota" required><br>
-        <label for="img1">Image 1:</label><br>
-        <input type="file" id="img1" name="img1" required><br>
+        <input type="hidden" id="img1" name="img1">
         <label for="img2">Image 2:</label><br>
         <input type="file" id="img2" name="img2" required><br>
         <label for="img3">Image 3:</label><br>
