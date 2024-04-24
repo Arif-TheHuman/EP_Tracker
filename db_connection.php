@@ -2,10 +2,10 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "ECPS";
+$dbName = "ECPS";
 
 // Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($servername, $username, $password, $dbName);
 
 // Check connection
 if ($conn->connect_error) {

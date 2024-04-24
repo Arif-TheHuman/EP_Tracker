@@ -6,13 +6,13 @@ $adminPassword = "admin";
 $adminRole = "admin";
 
 // Create database if it doesn't exist
-$sql = "CREATE DATABASE IF NOT EXISTS $dbname";
+$sql = "CREATE DATABASE IF NOT EXISTS $dbName";
 if ($conn->query($sql) !== TRUE) {
     die("Error creating database: " . $conn->error);
 }
 
 // Select the database
-if (!$conn->select_db($dbname)) {
+if (!$conn->select_db($dbName)) {
     die("Error selecting database: " . $conn->error);
 }
 // Create users table if it doesn't exist
