@@ -25,7 +25,7 @@ if ($result->num_rows > 0) {
   if ($_SESSION['role'] == 'admin') {
     header('Location: ./admin/dashboard.php'); // Update the location here
   } else {
-    header('Location: index.php');
+    header('Location: ./home/index.php');
   }
 } else {
   // login failed
