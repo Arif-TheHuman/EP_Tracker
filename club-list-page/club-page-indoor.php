@@ -1,3 +1,7 @@
+<?php
+    include 'database.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,25 +48,21 @@
     </tr>
   </thead>
   <tbody class="justify-center items-center">
-    <tr>
-      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">Art Club<img></td>
-      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">76</td>
-      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">90</td>
-    </tr>
-    <tr>
-      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">Let's Japan</td>
-      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">45</td>
-      <td class="border px-6 py-3">90</td>
-    </tr>
-    <tr>
-      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">Nasyidul Islam</td>
-      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">20</td>
-      <td class="border px-6 py-3">35</td>
-    </tr>
-    <td class="border px-6 py-3">Korean Culture Club</td>
-      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">40</td>
-      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">55</td>
-    </tr>
+    <?php
+        $sql = "SELECT * FROM indoorClubs";
+        $result = mysqli_query($conn, $sql);
+
+        if (mysqli_num_rows($result) > 0) {
+            // output data of each row
+            while($row = mysqli_fetch_assoc($result)) {
+                echo "<tr><td class='border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl'>".$row["clubname"]."</td>
+                      <td class='border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl'>".$row["members"]."</td>
+                      <td class='border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl'>".$row["quota"]."</td></tr>";
+            }
+        } else {
+            echo "0 results";
+        }
+    ?>
   </tbody>
 </table>
 
