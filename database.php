@@ -76,22 +76,24 @@ $clubs = [
 
 
 // Create table for indoor club if it doesn't exist
-$sql = "CREATE TABLE IF NOT EXISTS indoorClubs (
-    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
-    description TEXT NOT NULL,
-    current_members INT(6) NOT NULL DEFAULT 0,
-    quota INT(6) NOT NULL DEFAULT 0,
-    img1 VARCHAR(255) NOT NULL,
-    img2 VARCHAR(255) NOT NULL,
-    img3 VARCHAR(255) NOT NULL,
-    profilePic VARCHAR(255) NOT NULL,
-    coverPic VARCHAR(255) NOT NULL,
-    taskbarBgImg VARCHAR(255) NOT NULL
-  )";
-  if ($conn->query($sql) !== TRUE) {
-      echo "Error creating table: " . $conn->error;
-  }
+
+// No need for this, we are using a single clubs table for both indoor and outdoor clubs, and club type is stored in the 'type' column
+// $sql = "CREATE TABLE IF NOT EXISTS indoorClubs (
+//     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+//     name VARCHAR(50) NOT NULL,
+//     description TEXT NOT NULL,
+//     current_members INT(6) NOT NULL DEFAULT 0,
+//     quota INT(6) NOT NULL DEFAULT 0,
+//     img1 VARCHAR(255) NOT NULL,
+//     img2 VARCHAR(255) NOT NULL,
+//     img3 VARCHAR(255) NOT NULL,
+//     profilePic VARCHAR(255) NOT NULL,
+//     coverPic VARCHAR(255) NOT NULL,
+//     taskbarBgImg VARCHAR(255) NOT NULL
+//   )";
+//   if ($conn->query($sql) !== TRUE) {
+//       echo "Error creating table: " . $conn->error;
+//   }
 
 
 foreach ($clubs as $club) {

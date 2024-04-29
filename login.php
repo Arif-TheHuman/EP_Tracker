@@ -30,7 +30,6 @@
                 </div>
                 <div class="flex items-center justify-between">
                     <input class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-8 lg:py-4 lg:px-8 rounded focus:outline-none focus:shadow-outline" type="submit" value="Sign In">
-                    <input class="bg-blue-500 hover:bg-blue-300 text-white font-bold py-3 px-8 lg:py-4 lg:px-8 rounded focus:outline-none focus:shadow-outline" type="submit" value="Sign Up">
                 </div>
             </form>
         </div>

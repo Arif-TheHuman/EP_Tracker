@@ -16,7 +16,7 @@ $stmt->bind_param("ss", $_POST['username'], $_POST['password']);
 $stmt->execute();
 if ($stmt->affected_rows > 0) {
   $_SESSION['message'] = "Account created successfully";
-  header('Location: ./home/login.php');
+  header('Location: ./home/index.php');
 } else {
   echo "Error: " . $stmt->error;
 }
