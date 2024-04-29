@@ -1,3 +1,7 @@
+<?php
+    include '../db_connection.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,7 +36,7 @@
     <img class="sm:w-1/4 md:w-1/2 lg:w-full" src="" alt="">
 </div>
 
-<h1 class="text-center sm:text-3xl md:text-4xl lg:text-5xl">OUTDOOR</h1>
+<h1 class="text-center sm:text-3xl md:text-4xl lg:text-5xl ">OUTDOOR</h1>
 
 <div class="justify-center items-center text-center">
 <table class="w-full">
@@ -44,26 +48,21 @@
     </tr>
   </thead>
   <tbody class="justify-center items-center">
-    <tr>
-      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">Volleyball Club<img></td>
-      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">80</td>
-      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">100</td>
-    </tr>
-    <tr>
-      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">Rugby Club</td>
-      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">45</td>
-      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">75</td>
-    </tr>
-    <tr>
-      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">Swimming Club</td>
-      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">101</td>
-      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">115</td>
-    </tr>
-    <tr>
-      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">Frisbee Club</td>
-      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">34</td>
-      <td class="border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl">50</td>
-    </tr>
+    <?php
+        $sql = "SELECT * FROM clubs WHERE type='outdoor'";
+        $result = mysqli_query($conn, $sql);
+
+        if (mysqli_num_rows($result) > 0) {
+            // output data of each row
+            while($row = mysqli_fetch_assoc($result)) {
+                echo "<tr><td class='border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl'>".$row["name"]."</td>
+                      <td class='border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl'>".$row["current_members"]."</td>
+                      <td class='border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl'>".$row["quota"]."</td></tr>";
+            }
+        } else {
+            echo "0 results";
+        }
+    ?>
   </tbody>
 </table>
 

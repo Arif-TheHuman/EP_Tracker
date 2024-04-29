@@ -8,16 +8,26 @@ if ($ep > 64) {
     $req = 0;
 }
 
-// Fetch clubs from the database
-$sql = "SELECT * FROM clubs";
+// Fetch indoor clubs from the database
+$sql = "SELECT * FROM clubs WHERE type='indoor'";
 $result = $conn->query($sql);
-$clubs = [];
+$indoorClubs = [];
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
-        $clubs[] = $row;
+        $indoorClubs[] = $row;
     }
 }
-$conn->close();
+
+// Fetch outdoor clubs from the database
+$sql = "SELECT * FROM clubs WHERE type='outdoor'";
+$result = $conn->query($sql);
+$outdoorClubs = [];
+if ($result->num_rows > 0) {
+    while($row = $result->fetch_assoc()) {
+        $outdoorClubs[] = $row;
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -75,9 +85,21 @@ $conn->close();
 </div>
 <br>
 <div>
+    <h1>Indoor Clubs</h1>
+    <div class="overflow-x-auto whitespace-nowrap py-4">
+    <?php foreach ($indoorClubs as $club) : ?>
+    <div class="inline-block mx-2">
+        <img class="w-64 h-64 object-cover" src="<?php echo $club['img2']; ?>" alt="<?php echo $club['name']; ?>">
+        <img class="w-64 h-64 object-cover" src="<?php echo $club['img3']; ?>" alt="<?php echo $club['name']; ?>">
+        <p class="text-center"><?php echo $club['name']; ?></p>
+    </div>
+<?php endforeach; ?>
+    </div>
+</div>
+<div>
     <h1>Outdoor Clubs</h1>
     <div class="overflow-x-auto whitespace-nowrap py-4">
-    <?php foreach ($clubs as $club) : ?>
+    <?php foreach ($outdoorClubs as $club) : ?>
     <div class="inline-block mx-2">
         <img class="w-64 h-64 object-cover" src="<?php echo $club['img2']; ?>" alt="<?php echo $club['name']; ?>">
         <img class="w-64 h-64 object-cover" src="<?php echo $club['img3']; ?>" alt="<?php echo $club['name']; ?>">
