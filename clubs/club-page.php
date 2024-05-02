@@ -39,9 +39,9 @@
                         $result = mysqli_query($conn, $sql);
                         if (mysqli_num_rows($result) > 0) {
                             while($row = mysqli_fetch_assoc($result)) {
-                                echo "<tr><td class='border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl'><a href='club-details.php?name=".$row["name"]."'>".$row["name"]."</a></td>
-                                      <td class='border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl'>".$row["current_members"]."</td>
-                                      <td class='border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl'>".$row["quota"]."</td></tr>";
+                                echo "<tr><td class='border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl flex items-center'><img class='w-12 h-12 rounded-full mr-4' src='".$row["profilePic"]."' alt='Club Profile Pic'><a href='club-details.php?name=".$row["name"]."'>".$row["name"]."</a></td>
+                                    <td class='border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl'>".$row["current_members"]."</td>
+                                    <td class='border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl'>".$row["quota"]."</td></tr>";
                             }
                         } else {
                             echo "0 results";

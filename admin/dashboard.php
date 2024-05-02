@@ -69,6 +69,7 @@ $conn->close();
         <select id="type" name="type" required>
             <option value="outdoor">Outdoor</option>
             <option value="indoor">Indoor</option>
+            <option value="society">Society</option>
         </select><br>
         <label for="quota">Quota:</label><br>
         <input type="number" id="quota" name="quota" required><br>

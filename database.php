@@ -53,7 +53,7 @@ $sql = "CREATE TABLE IF NOT EXISTS clubs (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     description TEXT NOT NULL,
-    type ENUM('indoor', 'outdoor') NOT NULL,
+    type ENUM('indoor', 'outdoor', 'society') NOT NULL,
     current_members INT(6) NOT NULL DEFAULT 0,
     quota INT(6) NOT NULL DEFAULT 0,
     img1 VARCHAR(255) NOT NULL,
@@ -173,7 +173,7 @@ $conn->close();
 session_start();
 // Redirect to the appropriate page based on the user role
 if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
-    header("Location: dashboard.php");
+    header("Location: ./admin/dashboard.php");
 } else {
     header("Location: login.php");
 }
