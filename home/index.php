@@ -88,9 +88,9 @@ if ($result->num_rows > 0) {
     <h1>Indoor Clubs</h1>
     <div class="overflow-x-auto whitespace-nowrap py-4">
     <?php foreach ($indoorClubs as $club) : ?>
-    <div class="inline-block mx-2">
+    <div class="inline-block mx-2 relative">
         <img class="w-64 h-64 object-cover" src="<?php echo $club['img2']; ?>" alt="<?php echo $club['name']; ?>">
-        <img class="w-64 h-64 object-cover" src="<?php echo $club['img3']; ?>" alt="<?php echo $club['name']; ?>">
+        <img class="w-16 h-16 object-cover rounded-full absolute bottom-0 transform -translate-x-1/2 -translate-y-3/4 left-1/2" src="<?php echo $club['img3']; ?>" alt="<?php echo $club['name']; ?>">
         <p class="text-center"><?php echo $club['name']; ?></p>
     </div>
 <?php endforeach; ?>
@@ -100,9 +100,9 @@ if ($result->num_rows > 0) {
     <h1>Outdoor Clubs</h1>
     <div class="overflow-x-auto whitespace-nowrap py-4">
     <?php foreach ($outdoorClubs as $club) : ?>
-    <div class="inline-block mx-2">
+    <div class="inline-block mx-2 relative">
         <img class="w-64 h-64 object-cover" src="<?php echo $club['img2']; ?>" alt="<?php echo $club['name']; ?>">
-        <img class="w-64 h-64 object-cover" src="<?php echo $club['img3']; ?>" alt="<?php echo $club['name']; ?>">
+        <img class="w-16 h-16 object-cover rounded-full absolute bottom-0 transform -translate-x-1/2 -translate-y-3/4 left-1/2" src="<?php echo $club['img3']; ?>" alt="<?php echo $club['name']; ?>">
         <p class="text-center"><?php echo $club['name']; ?></p>
     </div>
 <?php endforeach; ?>

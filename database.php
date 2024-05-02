@@ -27,7 +27,6 @@ if ($conn->query($sql) !== TRUE) {
 $sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '$dbName' AND TABLE_NAME = 'users' AND COLUMN_NAME = 'role'";
 $result = $conn->query($sql);
 if ($result->num_rows == 0) {
-    // The 'role' column doesn't exist, so add it
     $sql = "ALTER TABLE users ADD COLUMN role ENUM('user', 'admin') NOT NULL DEFAULT 'user'";
     if ($conn->query($sql) !== TRUE) {
         echo "Error adding column: " . $conn->error;
