@@ -45,7 +45,7 @@ if ($result->num_rows > 0) {
         <div class="flex items-center space-x-4">
             <a class="text-white hover:text-gray-300" href="#">Home</a>
             <a class="text-white hover:text-gray-300" href="../clubs/club-page.php">Clubs</a>
-            <a class="text-white hover:text-gray-300" href="#">News</a>
+            <a class="text-white hover:text-gray-300" href="../newsPage/newspage.php">News</a>
             <a class="text-white hover:text-gray-300" href="#">Calendar</a>
             <img class="h-8 w-8 rounded-full" src="https://b.fssta.com/uploads/application/soccer/headshots/885.vresize.350.350.medium.14.png" alt="Profile Image">
         </div>

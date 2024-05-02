@@ -1,3 +1,8 @@
+<?php
+include '../db_connection.php';
+$sql = "SELECT * FROM news";
+$result = mysqli_query($conn, $sql);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,111 +10,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>News</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
-    </head>
-    <style>
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: url('assets/images/head.png') no-repeat center center / cover;
-            width: 100%;
-            height: 200px;
-        }
-
-        .card {
-            background: url('assets/images/bgcard.png') no-repeat center center / cover;
-            border-radius: 5px;
-            padding: 20px;
-            color: white;
-            width: 80%;
-            height: 20%;
-            text-align: center;
-            align-items: center;
-            margin-left : 10%;
-
-        }
-
-        .avatar {
-            border-radius: 50%;
-            height: 100px;
-        }
-        
-        .align-center {
-            text-align: center;
-        }
-
-        .text4em{
-            font-size: 4em;}
-
-        .text3em{
-            font-size: 3em;
-            font-weight: bold;
-            color: black;}
-
-        .cardimage{
-            width: 65%;
-            height: 14%;
-            border-radius: 5%;
-        }
-
-        .flex-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .frontie {
-            width: 50px;
-            height: 50px;
-            margin-left:75px;
-        }
-
-    </style>
-
-<body>
-    <div class="header">
-        <img class="avatar" src="assets/images/ronaldo.png" alt="Your Avatar Description">
+</head>
+<body class="bg-gray-100">
+    <div class="p-10 flex justify-between items-center bg-center bg-cover" style="background-image: url('assets/images/head.png');">
+        <img class="w-24 h-24 rounded-full" src="assets/images/ronaldo.png" alt="Your Avatar Description">
     </div>
-
-    <div class="flex-container">
-    <h1 class="text3em align-center">News & Announcement</h1>
-<a href="newspage.php">
-    <img class="frontie" src="assets/images/frontie.png" alt="Your Avatar Description">
-</a>
+    <div class="container mx-auto my-10">
+        <div class="flex justify-center items-center mb-10">
+            <h1 class="text-3xl font-bold text-center">News & Announcement</h1>
+            <a href="newspage.php">
+                <img class="w-12 h-12 ml-16" src="assets/images/frontie.png" alt="Your Avatar Description">
+            </a>
+        </div>
+        <?php
+        if (mysqli_num_rows($result) > 0) {
+            while($row = mysqli_fetch_assoc($result)) {
+                echo '<a href="newspage-details.php?id='.$row["id"].'">
+                <div class="mx-auto w-3/4 bg-center bg-cover rounded p-5 mb-5" style="background-image: url(\'assets/images/bgcard.png\');">
+                    <img class="w-full h-64 rounded" src="'.$row["image"].'" alt="Image Description">
+                    <p class="text-3xl font-bold mt-4">'.$row["title"].'</p>
+                </div>
+                </a>';
+            }
+        } else {
+            echo "No news items found.";
+        }
+        ?>
     </div>
-    <br>
-
-    <a href="convoVolunteer.php">
-    <div class="card">
-    <img class="cardimage" src="assets/images/imgcard1.png" alt="Image Description">
-        <p class="text3em">CONVO VOLUNTEER IN NEED</p>
-    </div>
-    </a>
-
-    <br>
-    <br>
-
-    <a href="HivAware.php">
-    <div class="card">
-    <img class="cardimage" src="assets/images/imgcard2.png" alt="Image Description">
-        <p class="text3em">HIV AWARENESS PROGRAMME</p>
-    </div>
-    </a>
-
-    <br>
-    <br>
-
-    <a href="SignWorkshop.php">
-    <div class="card">
-    <img class="cardimage" src="assets/images/imgcard3.png" alt="Image Description">
-        <p class="text3em">SIGN LANGUAGE WORKSHOP</p>
-    </div>  
-    </a>
-    
-    <br>
-    <br>
-
-
-    
 </body>
 </html>
+<?php
+mysqli_close($conn);
+?>
