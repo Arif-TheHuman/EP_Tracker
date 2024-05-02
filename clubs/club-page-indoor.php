@@ -53,9 +53,8 @@
         $result = mysqli_query($conn, $sql);
 
         if (mysqli_num_rows($result) > 0) {
-            // output data of each row
             while($row = mysqli_fetch_assoc($result)) {
-                echo "<tr><td class='border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl'>".$row["name"]."</td>
+                echo "<tr><td class='border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl'><a href='club-details.php?name=".$row["name"]."'>".$row["name"]."</a></td>
                       <td class='border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl'>".$row["current_members"]."</td>
                       <td class='border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl'>".$row["quota"]."</td></tr>";
             }
