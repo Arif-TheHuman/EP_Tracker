@@ -10,11 +10,11 @@
     <div class="w-full max-w-6xl mx-auto flex flex-col md:flex-row">
         <div class="md:w-3/5 md:pr-8 md:py-6">
             <div class="mb-4">
-                <h1 class="text-3xl font-bold text-center md:text-left">LOGIN</h1>
-                <h2 class="text-sm text-center md:text-left mb-4">Use your LMS login credentials to access ECPS</h2>
+                <h1 class="text-3xl font-bold text-center">LOGIN</h1>
+                <h2 class="text-sm text-center mb-4">Use your LMS login credentials to access ECPS</h2>
             </div>
         </div>
-        <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 md:w-2/5">
+        <div class="bg-white shadow-md rounded-xl mr-0 md:mr-10 px-8 pt-6 pb-8 mb-4 md:w-2/5">
             <form action="login_process.php" method="post">
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
