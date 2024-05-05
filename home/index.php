@@ -38,6 +38,18 @@ if ($result->num_rows > 0) {
     }
 }
 
+session_start();
+$username = $_SESSION['username']; // Assuming the username is stored in the session
+
+// Fetch the 'sem' column for the logged-in user
+$sql = "SELECT sem FROM users WHERE username = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $username);
+$stmt->execute();
+$result = $stmt->get_result();
+$row = $result->fetch_assoc();
+$sem = $row['sem'];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,7 +61,7 @@ if ($result->num_rows > 0) {
 </head>
 <body class="font-sans antialiased text-gray-900 bg-gray-100">
     <!-- Navigation Bar -->
-<nav class="p-4" style="background-image: url('https://static.vecteezy.com/system/resources/previews/007/685/830/non_2x/colorful-geometric-background-trendy-gradient-shapes-composition-cool-background-design-for-posters-free-vector.jpg'); background-size: cover;">
+<nav class="fixed w-full top-0 z-50 p-4" style="background-image: url('https://static.vecteezy.com/system/resources/previews/007/685/830/non_2x/colorful-geometric-background-trendy-gradient-shapes-composition-cool-background-design-for-posters-free-vector.jpg'); background-size: cover;">
     <div class="container mx-auto flex items-center justify-between">
         <a class="text-lg font-semibold text-white" href="#">EP Tracker</a>
         <div class="flex items-center space-x-4">
@@ -90,9 +102,10 @@ if ($result->num_rows > 0) {
         </svg>
     </div>
     <div class="w-1/2 text-center">
-        <h1 class="text-lg"><?php echo strtoupper($ep)?> OUT OF 64 EP</h1>
-        <p class="text-lg"><?php echo $req; ?> EP REQUIRED</p>
-    </div>
+    <h1 class="text-lg"><?php echo strtoupper($ep)?> OUT OF 64 EP</h1>
+    <p class="text-lg"><?php echo $req; ?> EP REQUIRED</p>
+    <p class="text-lg">SEMESTER <?php echo $sem; ?></p>
+</div>
 </div>
 <br>
 <div>

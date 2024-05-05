@@ -47,6 +47,126 @@ if ($result->num_rows == 0) {
         echo "Error creating admin user: " . $conn->error;
     }
 }
+
+// Check if the 'ep' column exists in the 'users' table
+$sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '$dbName' AND TABLE_NAME = 'users' AND COLUMN_NAME = 'ep'";
+$result = $conn->query($sql);
+if ($result->num_rows == 0) {
+    // The 'ep' column does not exist, so add it
+    $sql = "ALTER TABLE users ADD COLUMN ep INT NOT NULL DEFAULT 0";
+    if ($conn->query($sql) !== TRUE) {
+        echo "Error adding column: " . $conn->error;
+    }
+}
+
+// Fill the 'ep' column with dummy data for existing users
+$sql = "UPDATE users SET ep = FLOOR(RAND() * 101)";
+if ($conn->query($sql) !== TRUE) {
+    echo "Error updating 'ep' column: " . $conn->error;
+}
+
+// Check if the 'sem' column exists in the 'users' table
+$sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '$dbName' AND TABLE_NAME = 'users' AND COLUMN_NAME = 'sem'";
+$result = $conn->query($sql);
+if ($result->num_rows == 0) {
+    // The 'sem' column does not exist, so add it
+    $sql = "ALTER TABLE users ADD COLUMN sem INT NOT NULL DEFAULT 1";
+    if ($conn->query($sql) !== TRUE) {
+        echo "Error adding column: " . $conn->error;
+    }
+}
+
+$userUsername = "UserMan";
+$userPassword = "dummyPassword";
+$userRole = "user";
+
+$sql = "SELECT * FROM users WHERE username = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $userUsername);
+$stmt->execute();
+$result = $stmt->get_result();
+if ($result->num_rows == 0) {
+    // The 'UserMan' user does not exist, so insert it
+    $sql = "INSERT INTO users (username, password, role) VALUES (?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sss", $userUsername, $userPassword, $userRole);
+    if ($stmt->execute() !== TRUE) {
+        echo "Error creating 'UserMan' user: " . $conn->error;
+    }
+}
+
+// Create events table if it doesn't exist
+$sql = "CREATE TABLE IF NOT EXISTS events (
+    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    description TEXT NOT NULL,
+    date DATE NOT NULL
+)";
+if ($conn->query($sql) !== TRUE) {
+    echo "Error creating table: " . $conn->error;
+}
+
+// Create user_events table if it doesn't exist
+$sql = "CREATE TABLE IF NOT EXISTS user_events (
+    user_id INT(6) UNSIGNED NOT NULL,
+    event_id INT(6) UNSIGNED NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (event_id) REFERENCES events(id)
+)";
+if ($conn->query($sql) !== TRUE) {
+    echo "Error creating table: " . $conn->error;
+}
+
+// Modify events table to include 'ep' column
+$sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '$dbName' AND TABLE_NAME = 'events' AND COLUMN_NAME = 'ep'";
+$result = $conn->query($sql);
+if ($result->num_rows == 0) {
+    $sql = "ALTER TABLE events ADD COLUMN ep INT NOT NULL DEFAULT 0";
+    if ($conn->query($sql) !== TRUE) {
+        echo "Error adding column: " . $conn->error;
+    }
+}
+
+// Insert dummy data into events table
+$events = [
+    ['Volleyball 3K Tournament', 'A tournament for Volleball 3K', '2023-4-11', 30],
+    ['Hari Raya', 'Hari Raya celebrations in OSP Politeknik Brunei', '2023-5-04', 10],
+    // Add more events as needed
+];
+foreach ($events as $event) {
+    // Check if the event already exists
+    $sql = "SELECT * FROM events WHERE name = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $event[0]);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    // If the event does not exist, insert it
+    if ($result->num_rows == 0) {
+        $sql = "INSERT INTO events (name, description, date, ep) VALUES (?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sssi", $event[0], $event[1], $event[2], $event[3]);
+        if ($stmt->execute() !== TRUE) {
+            echo "Error inserting event: " . $conn->error;
+        }
+    }
+}
+
+// Insert dummy data into user_events table
+// Assuming the user ID and event IDs are known
+$userEvents = [
+    [1, 1], // User 1 attended event 1
+    [1, 2], // User 1 attended event 2
+    // Add more user events as needed
+];
+foreach ($userEvents as $userEvent) {
+    $sql = "INSERT INTO user_events (user_id, event_id) VALUES (?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ii", $userEvent[0], $userEvent[1]);
+    if ($stmt->execute() !== TRUE) {
+        echo "Error inserting user event: " . $conn->error;
+    }
+}
+
 $stmt->close();
 // Create clubs table if it doesn't exist
 $sql = "CREATE TABLE IF NOT EXISTS clubs (
