@@ -68,7 +68,9 @@ $sql = "CREATE TABLE IF NOT EXISTS clubs (
   }
 // Insert dummy data into clubs table
 $clubs = [
-    ['Hiking Club', 'A club for outdoor enthusiasts who love hiking.', 'outdoor', 20, 50, 'img1.jpg', 'img2.jpg', 'img3.jpg','prof1.jpg', 'coverimg1.jpg','taskbarimg1.jpg'],
+    ['Volleyball Club', 'A club for volleyball enthusiasts.', 'outdoor', 20, 50, 'img1.jpg', '../assets/volleyballclubbg.png', '../assets/volleyballclub.png','../assets/volleyballclub.png', '../assets/volleyballclubbg.png','taskbarimg1.jpg'],
+    ['Touch Rugby Club', 'A club for rough and tough Rugby enthusiasts.', 'outdoor', 20, 50, 'img1.jpg', '../assets/rugbyclub.png', 'img3.jpg','prof1.jpg', '../assets/rugbybg.png','taskbarimg1.jpg'],
+    ['Swimming Club', 'A club for fighting dreamers, fighting swimmers.', 'outdoor', 20, 50, 'swimmingclub.png', 'img2.jpg', 'img3.jpg','prof1.jpg', 'swimmingclubbg.png','taskbarimg1.jpg'],
     ['Chess Club', 'A club for those who enjoy playing chess.', 'indoor', 15, 30, 'img4.jpg', 'img5.jpg', 'img6.jpg','prof2.jpg', 'coverimg2.jpg','taskbarimg2.jpg'],
     // Add more clubs as needed
 ];
