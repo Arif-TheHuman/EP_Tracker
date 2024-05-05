@@ -127,10 +127,27 @@ if ($result->num_rows == 0) {
     }
 }
 
+// Check if the 'sem' column exists in the 'events' table
+$sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '$dbName' AND TABLE_NAME = 'events' AND COLUMN_NAME = 'sem'";
+$result = $conn->query($sql);
+if ($result->num_rows == 0) {
+    // The 'sem' column does not exist, so add it
+    $sql = "ALTER TABLE events ADD COLUMN sem ENUM('1', '2', '3', '4') NOT NULL DEFAULT '1'";
+    if ($conn->query($sql) !== TRUE) {
+        echo "Error adding column: " . $conn->error;
+    }
+}
+
 // Insert dummy data into events table
 $events = [
-    ['Volleyball 3K Tournament', 'A tournament for Volleball 3K', '2023-4-11', 30],
-    ['Hari Raya', 'Hari Raya celebrations in OSP Politeknik Brunei', '2023-5-04', 10],
+    ['Football Tournament', 'A tournament for football enthusiasts', '2023-6-15', 50, 1],
+    ['Coding Hackathon', 'A 24-hour coding challenge', '2023-7-20', 100, 2],
+    ['Art Exhibition', 'An exhibition showcasing local artists', '2023-8-10', 30, 3],
+    ['Music Festival', 'A festival featuring local bands', '2023-9-05', 150, 4],
+    ['Science Fair', 'A fair for showcasing science projects', '2023-10-15', 20, 1],
+    ['Literature Conference', 'A conference for literature enthusiasts', '2023-11-20', 40, 2],
+    ['Tech Expo', 'An expo showcasing latest tech innovations', '2023-12-10', 200, 3],
+    ['New Year Party', 'A party to celebrate the new year', '2024-1-01', 100, 4],
     // Add more events as needed
 ];
 foreach ($events as $event) {
@@ -142,9 +159,9 @@ foreach ($events as $event) {
     $result = $stmt->get_result();
     // If the event does not exist, insert it
     if ($result->num_rows == 0) {
-        $sql = "INSERT INTO events (name, description, date, ep) VALUES (?, ?, ?, ?)";
+        $sql = "INSERT INTO events (name, description, date, ep, sem) VALUES (?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssi", $event[0], $event[1], $event[2], $event[3]);
+        $stmt->bind_param("sssii", $event[0], $event[1], $event[2], $event[3], $event[4]);
         if ($stmt->execute() !== TRUE) {
             echo "Error inserting event: " . $conn->error;
         }

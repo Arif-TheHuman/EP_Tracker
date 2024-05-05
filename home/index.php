@@ -61,23 +61,25 @@ $sem = $row['sem'];
 </head>
 <body class="font-sans antialiased text-gray-900 bg-gray-100">
     <!-- Navigation Bar -->
-<nav class="fixed w-full top-0 z-50 p-4" style="background-image: url('https://static.vecteezy.com/system/resources/previews/007/685/830/non_2x/colorful-geometric-background-trendy-gradient-shapes-composition-cool-background-design-for-posters-free-vector.jpg'); background-size: cover;">
+<nav class="bg-blue-500 p-4 text-white fixed w-full z-50">
     <div class="container mx-auto flex items-center justify-between">
-        <a class="text-lg font-semibold text-white" href="#">EP Tracker</a>
+        <a class="text-lg font-semibold" href="#">EP Tracker</a>
         <div class="flex items-center space-x-4">
-            <a class="text-white hover:text-gray-300" href="#">Home</a>
-            <a class="text-white hover:text-gray-300" href="../clubs/club-page.php">Clubs</a>
-            <a class="text-white hover:text-gray-300" href="../newsPage/newspage.php">News</a>
-            <a class="text-white hover:text-gray-300" href="#">Calendar</a>
+            <a class="hover:text-gray-300" href="#">Home</a>
+            <a class="hover:text-gray-300" href="../clubs/club-page.php">Clubs</a>
+            <a class="hover:text-gray-300" href="../newsPage/newspage.php">News</a>
+            <a class="hover:text-gray-300" href="#">Calendar</a>
             <img class="h-8 w-8 rounded-full" src="https://b.fssta.com/uploads/application/soccer/headshots/885.vresize.350.350.medium.14.png" alt="Profile Image">
         </div>
     </div>
 </nav>
-<br>
+<br><br><br>
 <div style="background-image: url('https://i0.wp.com/boingboing.net/wp-content/uploads/2018/05/cool-background1.png?fit=930%2C468&ssl=1'); background-size: cover;" class="relative flex justify-center items-center h-64 w-3/4 bg-gray-400 mx-auto">
+<a href="progress.php">
     <button class="absolute top-0 right-0 m-4 bg-transparent text-black font-bold py-2 px-4 rounded-full border-2 border-black">
         +
     </button>
+</a>
     <div class="w-1/2">
         <svg class="w-64 h-64 mx-auto" viewBox="0 0 36 36">
             <path class="circle-bg"
