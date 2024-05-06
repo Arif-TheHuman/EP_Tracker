@@ -17,20 +17,45 @@ $stmt->execute();
 $result = $stmt->get_result();
 $row = $result->fetch_assoc();
 $userId = $row['id'];
-$ep = $row['ep'];
-$percentage = round($ep / 64 * 100);
-$req = 64 - $ep;
-if ($ep > 64) {
-    $req = 0;
-}
 
-// Fetch all the events for the current semester
-$sql = "SELECT * FROM events WHERE sem = ?";
+// Fetch all the events for the current semester that the user has participated in
+$sql = "SELECT events.* FROM events 
+        JOIN user_events ON events.id = user_events.event_id 
+        WHERE user_events.user_id = ? AND events.sem = ?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $sem);
+$stmt->bind_param("ii", $userId, $sem);
 $stmt->execute();
 $result = $stmt->get_result();
 $events = $result->fetch_all(MYSQLI_ASSOC);
+
+$totalEP = 0; // Initialize total EP
+foreach ($events as $event) {
+    $totalEP += $event['ep']; // Add the EP of each event to the total
+}
+
+// Fetch all the events that the user has participated in, regardless of the semester
+$sql = "SELECT events.* FROM events 
+        JOIN user_events ON events.id = user_events.event_id 
+        WHERE user_events.user_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $userId);
+$stmt->execute();
+$result = $stmt->get_result();
+$allEvents = $result->fetch_all(MYSQLI_ASSOC);
+
+$totalAllEP = 0; // Initialize total EP for all events
+foreach ($allEvents as $event) {
+    $totalAllEP += $event['ep']; // Add the EP of each event to the total
+}
+
+$percentage = round($totalAllEP / 64 * 100); // Calculate the percentage based on total EP
+if ($totalAllEP > 64) {
+    $percentage = 100;
+}
+$req = 64 - $totalAllEP; // Calculate the required EP based on total EP
+if ($totalAllEP > 64) {
+    $req = 0;
+}
 ?>
 
 
@@ -85,7 +110,7 @@ $events = $result->fetch_all(MYSQLI_ASSOC);
         </div>
         
 <div class="container mx-auto text-center my-8">
-    <h1 class="text-2xl font-bold"><?php echo strtoupper($ep)?> OUT OF 64 EP</h1>
+    <h1 class="text-2xl font-bold"><?php echo strtoupper($totalAllEP)?> OUT OF 64 EP</h1>
     <p class="text-lg text-gray-700"><?php echo $req; ?> EP REQUIRED</p>
     <div class="flex justify-center items-center space-x-4">
     <form method="POST">

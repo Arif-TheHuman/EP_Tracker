@@ -105,7 +105,8 @@ $sql = "CREATE TABLE IF NOT EXISTS user_events (
     user_id INT(6) UNSIGNED NOT NULL,
     event_id INT(6) UNSIGNED NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (event_id) REFERENCES events(id)
+    FOREIGN KEY (event_id) REFERENCES events(id),
+    UNIQUE(user_id, event_id)
 )";
 if ($conn->query($sql) !== TRUE) {
     echo "Error creating table: " . $conn->error;
@@ -167,10 +168,17 @@ foreach ($events as $event) {
 $userEvents = [
     [1, 1], // User 1 attended event 1
     [1, 2], // User 1 attended event 2
-    // Add more user events as needed
+    [1, 7],
+    [1, 8],
+    [2, 1],
+    [2, 2],
+    [2, 3],
+    [2, 4],
+    [2, 5],
+    [2, 6],
 ];
 foreach ($userEvents as $userEvent) {
-    $sql = "INSERT INTO user_events (user_id, event_id) VALUES (?, ?)";
+    $sql = "INSERT IGNORE INTO user_events (user_id, event_id) VALUES (?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ii", $userEvent[0], $userEvent[1]);
     if ($stmt->execute() !== TRUE) {
@@ -259,28 +267,6 @@ foreach ($newsItems as $newsItem) {
     }
 }
 $stmt->close();
-
-
-// Create table for indoor club if it doesn't exist
-
-// No need for this, we are using a single clubs table for both indoor and outdoor clubs, and club type is stored in the 'type' column
-// $sql = "CREATE TABLE IF NOT EXISTS indoorClubs (
-//     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-//     name VARCHAR(50) NOT NULL,
-//     description TEXT NOT NULL,
-//     current_members INT(6) NOT NULL DEFAULT 0,
-//     quota INT(6) NOT NULL DEFAULT 0,
-//     img1 VARCHAR(255) NOT NULL,
-//     img2 VARCHAR(255) NOT NULL,
-//     img3 VARCHAR(255) NOT NULL,
-//     profilePic VARCHAR(255) NOT NULL,
-//     coverPic VARCHAR(255) NOT NULL,
-//     taskbarBgImg VARCHAR(255) NOT NULL
-//   )";
-//   if ($conn->query($sql) !== TRUE) {
-//       echo "Error creating table: " . $conn->error;
-//   }
-
 
 foreach ($clubs as $club) {
     // Check if the club already exists

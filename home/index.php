@@ -1,31 +1,59 @@
 <?php 
 session_start(); // Start the session
+include '../db_connection.php';
 if (isset($_SESSION['user']['username'])) {
-    $userUsername = $_SESSION['user']['username']; // Set the $userUsername variable
+    $username = $_SESSION['user']['username']; // Set the $username variable
 } else {
     echo "Username is not set in the session";
     exit(); // Stop the script if the username is not set in the session
 }
+$sem = isset($_POST['sem']) ? $_POST['sem'] + 1 : 1; // Get the semester from POST data or default to 1
 
-include '../db_connection.php';
-$sql = "SELECT ep FROM users WHERE username = ?";
+// Fetch user data
+$sql = "SELECT id, sem, ep FROM users WHERE username = ?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $userUsername);
+$stmt->bind_param("s", $username);
 $stmt->execute();
 $result = $stmt->get_result();
 $row = $result->fetch_assoc();
+$userId = $row['id'];
 
-if ($row) {
-    $ep = $row['ep'];
-    // rest of your code
-} else {
-    echo "No results found for the given username";
+// Fetch all the events for the current semester that the user has participated in
+$sql = "SELECT events.* FROM events 
+        JOIN user_events ON events.id = user_events.event_id 
+        WHERE user_events.user_id = ? AND events.sem = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("ii", $userId, $sem);
+$stmt->execute();
+$result = $stmt->get_result();
+$events = $result->fetch_all(MYSQLI_ASSOC);
+
+$totalEP = 0; // Initialize total EP
+foreach ($events as $event) {
+    $totalEP += $event['ep']; // Add the EP of each event to the total
 }
 
-$ep = $row['ep'];
-$percentage = round($ep / 64 * 100);
-$req = 64 - $ep;
-if ($ep > 64) {
+// Fetch all the events that the user has participated in, regardless of the semester
+$sql = "SELECT events.* FROM events 
+        JOIN user_events ON events.id = user_events.event_id 
+        WHERE user_events.user_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $userId);
+$stmt->execute();
+$result = $stmt->get_result();
+$allEvents = $result->fetch_all(MYSQLI_ASSOC);
+
+$totalAllEP = 0; // Initialize total EP for all events
+foreach ($allEvents as $event) {
+    $totalAllEP += $event['ep']; // Add the EP of each event to the total
+}
+
+$percentage = round($totalAllEP / 64 * 100); // Calculate the percentage based on total EP
+if ($totalAllEP > 64) {
+    $percentage = 100;
+}
+$req = 64 - $totalAllEP; // Calculate the required EP based on total EP
+if ($totalAllEP > 64) {
     $req = 0;
 }
 
@@ -66,7 +94,6 @@ $stmt->bind_param("s", $userUsername);
 $stmt->execute();
 $result = $stmt->get_result();
 $row = $result->fetch_assoc();
-$sem = $row['sem'];
 
 ?>
 <!DOCTYPE html>
@@ -92,13 +119,14 @@ $sem = $row['sem'];
     </div>
 </nav>
 <br><br><br>
-<div style="background-image: url('https://i0.wp.com/boingboing.net/wp-content/uploads/2018/05/cool-background1.png?fit=930%2C468&ssl=1'); background-size: cover;" class="relative flex justify-center items-center h-64 w-3/4 bg-gray-400 mx-auto">
+<div class="mt-16">
+<div class="container mx-auto flex justify-center items-center h-64 w-3/4 bg-gray-400 relative"> <!-- Add relative here -->
+            
 <a href="progress.php">
     <button class="absolute top-0 right-0 m-4 bg-transparent text-black font-bold py-2 px-4 rounded-full border-2 border-black">
         +
     </button>
 </a>
-    <div class="w-1/2">
         <svg class="w-64 h-64 mx-auto" viewBox="0 0 36 36">
             <path class="circle-bg"
                 d="M18 2.0845
@@ -120,11 +148,11 @@ $sem = $row['sem'];
                 />
                 <text x="18" y="18" class="percentage" fill="#4c51bf" text-anchor="middle" dy=".3em" font-size="8"><?php echo $percentage; ?>%</text>
         </svg>
-    </div>
     <div class="w-1/2 text-center">
-    <h1 class="text-lg"><?php echo strtoupper($ep)?> OUT OF 64 EP</h1>
-    <p class="text-lg"><?php echo $req; ?> EP REQUIRED</p>
+    <h1 class="text-2xl font-bold"><?php echo strtoupper($totalAllEP)?> OUT OF 64 EP</h1>
+    <p class="text-lg text-gray-700"><?php echo $req; ?> EP REQUIRED</p>
     <p class="text-lg">SEMESTER <?php echo $sem; ?></p>
+        </div>
 </div>
 </div>
 <br>
