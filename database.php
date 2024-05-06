@@ -59,12 +59,6 @@ if ($result->num_rows == 0) {
     }
 }
 
-// Fill the 'ep' column with dummy data for existing users
-$sql = "UPDATE users SET ep = FLOOR(RAND() * 101)";
-if ($conn->query($sql) !== TRUE) {
-    echo "Error updating 'ep' column: " . $conn->error;
-}
-
 // Check if the 'sem' column exists in the 'users' table
 $sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '$dbName' AND TABLE_NAME = 'users' AND COLUMN_NAME = 'sem'";
 $result = $conn->query($sql);

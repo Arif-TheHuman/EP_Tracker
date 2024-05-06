@@ -1,7 +1,28 @@
 <?php 
-include '../db_connection.php';
+session_start(); // Start the session
+if (isset($_SESSION['user']['username'])) {
+    $userUsername = $_SESSION['user']['username']; // Set the $userUsername variable
+} else {
+    echo "Username is not set in the session";
+    exit(); // Stop the script if the username is not set in the session
+}
 
-$ep = 40;
+include '../db_connection.php';
+$sql = "SELECT ep FROM users WHERE username = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $userUsername);
+$stmt->execute();
+$result = $stmt->get_result();
+$row = $result->fetch_assoc();
+
+if ($row) {
+    $ep = $row['ep'];
+    // rest of your code
+} else {
+    echo "No results found for the given username";
+}
+
+$ep = $row['ep'];
 $percentage = round($ep / 64 * 100);
 $req = 64 - $ep;
 if ($ep > 64) {
@@ -38,13 +59,10 @@ if ($result->num_rows > 0) {
     }
 }
 
-session_start();
-$username = $_SESSION['username']; // Assuming the username is stored in the session
-
 // Fetch the 'sem' column for the logged-in user
 $sql = "SELECT sem FROM users WHERE username = ?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $username);
+$stmt->bind_param("s", $userUsername);
 $stmt->execute();
 $result = $stmt->get_result();
 $row = $result->fetch_assoc();

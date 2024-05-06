@@ -1,6 +1,12 @@
 <?php 
+session_start(); // Start the session
 include '../db_connection.php';
-$username = 'UserMan';
+if (isset($_SESSION['user']['username'])) {
+    $username = $_SESSION['user']['username']; // Set the $username variable
+} else {
+    echo "Username is not set in the session";
+    exit(); // Stop the script if the username is not set in the session
+}
 $sem = isset($_POST['sem']) ? $_POST['sem'] + 1 : 1; // Get the semester from POST data or default to 1
 
 // Fetch user data

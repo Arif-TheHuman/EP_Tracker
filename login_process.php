@@ -1,17 +1,9 @@
 <?php
 session_start();
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "ECPS";
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-// Check connection
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
-}
-$sql = "SELECT id, role FROM users WHERE username = ? AND password = ?";
+include 'db_connection.php';
+
+$sql = "SELECT * FROM users WHERE username = ? AND password = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("ss", $_POST['username'], $_POST['password']);
 $stmt->execute();
@@ -20,8 +12,7 @@ if ($result->num_rows > 0) {
   // login success
   $row = $result->fetch_assoc();
   
-  $_SESSION['username'] = $_POST['username'];
-  $_SESSION['role'] = $row['role'];
+  $_SESSION['user'] = $row;
   if ($_SESSION['role'] == 'admin') {
     header('Location: ./admin/dashboard.php'); // Update the location here
   } else {
