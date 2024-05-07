@@ -27,6 +27,7 @@
     </nav>
     <br>
     <h1><?php echo $club['name']; ?></h1>
+    <h2><?php echo $club['description'] ?></h2>
     <p>Members: <?php echo $club['current_members']; ?></p>
     <p>Quota: <?php echo $club['quota']; ?></p>
 </body>

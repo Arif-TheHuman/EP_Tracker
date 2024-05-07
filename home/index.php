@@ -1,10 +1,59 @@
 <?php 
+session_start(); // Start the session
 include '../db_connection.php';
+if (isset($_SESSION['user']['username'])) {
+    $username = $_SESSION['user']['username']; // Set the $username variable
+} else {
+    echo "Username is not set in the session";
+    exit(); // Stop the script if the username is not set in the session
+}
+$sem = isset($_POST['sem']) ? $_POST['sem'] + 1 : 1; // Get the semester from POST data or default to 1
 
-$ep = 40;
-$percentage = round($ep / 64 * 100);
-$req = 64 - $ep;
-if ($ep > 64) {
+// Fetch user data
+$sql = "SELECT id, sem, ep FROM users WHERE username = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $username);
+$stmt->execute();
+$result = $stmt->get_result();
+$row = $result->fetch_assoc();
+$userId = $row['id'];
+
+// Fetch all the events for the current semester that the user has participated in
+$sql = "SELECT events.* FROM events 
+        JOIN user_events ON events.id = user_events.event_id 
+        WHERE user_events.user_id = ? AND events.sem = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("ii", $userId, $sem);
+$stmt->execute();
+$result = $stmt->get_result();
+$events = $result->fetch_all(MYSQLI_ASSOC);
+
+$totalEP = 0; // Initialize total EP
+foreach ($events as $event) {
+    $totalEP += $event['ep']; // Add the EP of each event to the total
+}
+
+// Fetch all the events that the user has participated in, regardless of the semester
+$sql = "SELECT events.* FROM events 
+        JOIN user_events ON events.id = user_events.event_id 
+        WHERE user_events.user_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $userId);
+$stmt->execute();
+$result = $stmt->get_result();
+$allEvents = $result->fetch_all(MYSQLI_ASSOC);
+
+$totalAllEP = 0; // Initialize total EP for all events
+foreach ($allEvents as $event) {
+    $totalAllEP += $event['ep']; // Add the EP of each event to the total
+}
+
+$percentage = round($totalAllEP / 64 * 100); // Calculate the percentage based on total EP
+if ($totalAllEP > 64) {
+    $percentage = 100;
+}
+$req = 64 - $totalAllEP; // Calculate the required EP based on total EP
+if ($totalAllEP > 64) {
     $req = 0;
 }
 
@@ -38,17 +87,13 @@ if ($result->num_rows > 0) {
     }
 }
 
-session_start();
-$username = $_SESSION['username']; // Assuming the username is stored in the session
-
 // Fetch the 'sem' column for the logged-in user
 $sql = "SELECT sem FROM users WHERE username = ?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $username);
+$stmt->bind_param("s", $userUsername);
 $stmt->execute();
 $result = $stmt->get_result();
 $row = $result->fetch_assoc();
-$sem = $row['sem'];
 
 ?>
 <!DOCTYPE html>
@@ -74,13 +119,14 @@ $sem = $row['sem'];
     </div>
 </nav>
 <br><br><br>
-<div style="background-image: url('https://i0.wp.com/boingboing.net/wp-content/uploads/2018/05/cool-background1.png?fit=930%2C468&ssl=1'); background-size: cover;" class="relative flex justify-center items-center h-64 w-3/4 bg-gray-400 mx-auto">
+<div class="mt-16">
+<div class="container mx-auto flex justify-center items-center h-64 w-3/4 bg-gray-400 relative"> <!-- Add relative here -->
+            
 <a href="progress.php">
     <button class="absolute top-0 right-0 m-4 bg-transparent text-black font-bold py-2 px-4 rounded-full border-2 border-black">
         +
     </button>
 </a>
-    <div class="w-1/2">
         <svg class="w-64 h-64 mx-auto" viewBox="0 0 36 36">
             <path class="circle-bg"
                 d="M18 2.0845
@@ -102,11 +148,11 @@ $sem = $row['sem'];
                 />
                 <text x="18" y="18" class="percentage" fill="#4c51bf" text-anchor="middle" dy=".3em" font-size="8"><?php echo $percentage; ?>%</text>
         </svg>
-    </div>
     <div class="w-1/2 text-center">
-    <h1 class="text-lg"><?php echo strtoupper($ep)?> OUT OF 64 EP</h1>
-    <p class="text-lg"><?php echo $req; ?> EP REQUIRED</p>
+    <h1 class="text-2xl font-bold"><?php echo strtoupper($totalAllEP)?> OUT OF 64 EP</h1>
+    <p class="text-lg text-gray-700"><?php echo $req; ?> EP REQUIRED</p>
     <p class="text-lg">SEMESTER <?php echo $sem; ?></p>
+        </div>
 </div>
 </div>
 <br>
@@ -115,11 +161,13 @@ $sem = $row['sem'];
     <div class="overflow-x-auto whitespace-nowrap py-4">
     <?php foreach ($indoorClubs as $club) : ?>
     <div class="inline-block mx-2 relative">
-        <img class="w-64 h-64 object-cover" src="<?php echo $club['img2']; ?>" alt="<?php echo $club['name']; ?>">
-        <img class="w-16 h-16 object-cover rounded-full absolute bottom-0 transform -translate-x-1/2 -translate-y-3/4 left-1/2" src="<?php echo $club['img3']; ?>" alt="<?php echo $club['name']; ?>">
-        <p class="text-center"><?php echo $club['name']; ?></p>
+        <a href="../clubs/club-details.php?name=<?php echo urlencode($club['name']); ?>">
+            <img class="w-64 h-64 object-cover" src="<?php echo $club['img2']; ?>" alt="<?php echo $club['name']; ?>">
+            <img class="w-16 h-16 object-cover rounded-full absolute bottom-0 transform -translate-x-1/2 -translate-y-3/4 left-1/2" src="<?php echo $club['img3']; ?>" alt="<?php echo $club['name']; ?>">
+            <p class="text-center"><?php echo $club['name']; ?></p>
+        </a>
     </div>
-<?php endforeach; ?>
+    <?php endforeach; ?>
     </div>
 </div>
 <div>
@@ -127,11 +175,13 @@ $sem = $row['sem'];
     <div class="overflow-x-auto whitespace-nowrap py-4">
     <?php foreach ($outdoorClubs as $club) : ?>
     <div class="inline-block mx-2 relative">
-        <img class="w-64 h-64 object-cover" src="<?php echo $club['img2']; ?>" alt="<?php echo $club['name']; ?>">
-        <img class="w-16 h-16 object-cover rounded-full absolute bottom-0 transform -translate-x-1/2 -translate-y-3/4 left-1/2" src="<?php echo $club['img3']; ?>" alt="<?php echo $club['name']; ?>">
-        <p class="text-center"><?php echo $club['name']; ?></p>
+        <a href="../clubs/club-details.php?name=<?php echo urlencode($club['name']); ?>">
+            <img class="w-64 h-64 object-cover" src="<?php echo $club['img2']; ?>" alt="<?php echo $club['name']; ?>">
+            <img class="w-16 h-16 object-cover rounded-full absolute bottom-0 transform -translate-x-1/2 -translate-y-3/4 left-1/2" src="<?php echo $club['img3']; ?>" alt="<?php echo $club['name']; ?>">
+            <p class="text-center"><?php echo $club['name']; ?></p>
+        </a>
     </div>
-<?php endforeach; ?>
+    <?php endforeach; ?>
     </div>
 </div>
 <div>
@@ -139,11 +189,13 @@ $sem = $row['sem'];
     <div class="overflow-x-auto whitespace-nowrap py-4">
     <?php foreach ($societyClubs as $club) : ?>
     <div class="inline-block mx-2 relative">
-        <img class="w-64 h-64 object-cover" src="<?php echo $club['img2']; ?>" alt="<?php echo $club['name']; ?>">
-        <img class="w-16 h-16 object-cover rounded-full absolute bottom-0 transform -translate-x-1/2 -translate-y-3/4 left-1/2" src="<?php echo $club['img3']; ?>" alt="<?php echo $club['name']; ?>">
-        <p class="text-center"><?php echo $club['name']; ?></p>
+        <a href="../clubs/club-details.php?name=<?php echo urlencode($club['name']); ?>">
+            <img class="w-64 h-64 object-cover" src="<?php echo $club['img2']; ?>" alt="<?php echo $club['name']; ?>">
+            <img class="w-16 h-16 object-cover rounded-full absolute bottom-0 transform -translate-x-1/2 -translate-y-3/4 left-1/2" src="<?php echo $club['img3']; ?>" alt="<?php echo $club['name']; ?>">
+            <p class="text-center"><?php echo $club['name']; ?></p>
+        </a>
     </div>
-<?php endforeach; ?>
+    <?php endforeach; ?>
     </div>
 </div>
     <!-- Footer -->

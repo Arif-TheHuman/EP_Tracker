@@ -59,12 +59,6 @@ if ($result->num_rows == 0) {
     }
 }
 
-// Fill the 'ep' column with dummy data for existing users
-$sql = "UPDATE users SET ep = FLOOR(RAND() * 101)";
-if ($conn->query($sql) !== TRUE) {
-    echo "Error updating 'ep' column: " . $conn->error;
-}
-
 // Check if the 'sem' column exists in the 'users' table
 $sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '$dbName' AND TABLE_NAME = 'users' AND COLUMN_NAME = 'sem'";
 $result = $conn->query($sql);
@@ -111,7 +105,8 @@ $sql = "CREATE TABLE IF NOT EXISTS user_events (
     user_id INT(6) UNSIGNED NOT NULL,
     event_id INT(6) UNSIGNED NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (event_id) REFERENCES events(id)
+    FOREIGN KEY (event_id) REFERENCES events(id),
+    UNIQUE(user_id, event_id)
 )";
 if ($conn->query($sql) !== TRUE) {
     echo "Error creating table: " . $conn->error;
@@ -137,6 +132,7 @@ if ($result->num_rows == 0) {
         echo "Error adding column: " . $conn->error;
     }
 }
+
 
 // Insert dummy data into events table
 $events = [
@@ -173,14 +169,23 @@ foreach ($events as $event) {
 $userEvents = [
     [1, 1], // User 1 attended event 1
     [1, 2], // User 1 attended event 2
-    // Add more user events as needed
+    [1, 7],
+    [1, 8],
+    [2, 1],
+    [2, 2],
+    [2, 3],
+    [2, 4],
+    [2, 5],
+    [2, 6],
 ];
 foreach ($userEvents as $userEvent) {
-    $sql = "INSERT INTO user_events (user_id, event_id) VALUES (?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ii", $userEvent[0], $userEvent[1]);
-    if ($stmt->execute() !== TRUE) {
-        echo "Error inserting user event: " . $conn->error;
+    if (!empty($userEvent)) {
+        $sql = "INSERT IGNORE INTO user_events (user_id, event_id) VALUES (?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ii", $userEvent[0], $userEvent[1]);
+        if ($stmt->execute() !== TRUE) {
+            echo "Error inserting user event: " . $conn->error;
+        }
     }
 }
 
@@ -205,10 +210,12 @@ $sql = "CREATE TABLE IF NOT EXISTS clubs (
   }
 // Insert dummy data into clubs table
 $clubs = [
-    ['Volleyball Club', 'A club for volleyball enthusiasts.', 'outdoor', 20, 50, 'img1.jpg', '../assets/volleyballclubbg.png', '../assets/volleyballclub.png','../assets/volleyballclub.png', '../assets/volleyballclubbg.png','taskbarimg1.jpg'],
-    ['Touch Rugby Club', 'A club for rough and tough Rugby enthusiasts.', 'outdoor', 20, 50, 'img1.jpg', '../assets/rugbyclub.png', 'img3.jpg','prof1.jpg', '../assets/rugbybg.png','taskbarimg1.jpg'],
-    ['Swimming Club', 'A club for fighting dreamers, fighting swimmers.', 'outdoor', 20, 50, 'swimmingclub.png', 'img2.jpg', 'img3.jpg','prof1.jpg', 'swimmingclubbg.png','taskbarimg1.jpg'],
-    ['Chess Club', 'A club for those who enjoy playing chess.', 'indoor', 15, 30, 'img4.jpg', 'img5.jpg', 'img6.jpg','prof2.jpg', 'coverimg2.jpg','taskbarimg2.jpg'],
+    ['Volleyball Club', 'A club for volleyball enthusiasts.', 'outdoor', 20, 50, 'img1.jpg', '../assets/clubs/outdoor/volleyballclubbg.png', '../assets/clubs/outdoor/volleyballclub.png','../assets/clubs/outdoor/volleyballclub.png', '../assets/clubs/outdoor/volleyballclubbg.png','taskbarimg1.jpg'],
+    ['Touch Rugby Club', 'A club for rough and tough Rugby enthusiasts.', 'outdoor', 20, 50, 'img1.jpg', '../assets/clubs/outdoor/rugbybg.png', '../assets/clubs/outdoor/rugbyclub.png','../assets/clubs/outdoor/rugbyclub.png', '../assets/clubs/outdoor/rugbybg.png','taskbarimg1.jpg'],
+    ['Swimming Club', 'A club for fighting dreamers, fighting swimmers.', 'outdoor', 20, 50, 'img1.jpg', '../assets/clubs/outdoor/swimmingclubbg.png', '../assets/clubs/outdoor/swimmingclub.png', '../assets/clubs/outdoor/swimmingclub.png', '../assets/clubs/outdoor/swimmingclubbg.png','taskbarimg1.jpg'],
+    ['Kelab Nasyidul Islam', 'A club for those who enjoys religious songs and nasyids', 'indoor', 15, 30, 'img1.jpg', '../assets/clubs/indoor/knibg.png', '../assets/clubs/indoor/kni.png','../assets/clubs/indoor/kni.png', '../assets/clubs/indoor/knibg.png','taskbarimg2.jpg'],
+    ['Lets Japan Club', 'A club for those who enjoy learning Japanese Cultures.', 'indoor', 15, 30, 'img1.jpg', '../assets/clubs/indoor/letsjapanbg.png', '../assets/clubs/indoor/letsjapan.png','../assets/clubs/indoor/letsjapan.png', '../assets/clubs/indoor/letsjapanbg.png','taskbarimg2.jpg'],
+    ['Art Club', 'A club for those who enjoy creating and appreciating art', 'indoor', 15, 30, 'img1.jpg', '../assets/clubs/indoor/artclubbg.png', '../assets/clubs/indoor/artclub.png','../assets/clubs/indoor/artclub.png', '../assets/clubs/indoor/artclubbg.png','taskbarimg2.jpg'],
     // Add more clubs as needed
 ];
 
@@ -265,28 +272,6 @@ foreach ($newsItems as $newsItem) {
     }
 }
 $stmt->close();
-
-
-// Create table for indoor club if it doesn't exist
-
-// No need for this, we are using a single clubs table for both indoor and outdoor clubs, and club type is stored in the 'type' column
-// $sql = "CREATE TABLE IF NOT EXISTS indoorClubs (
-//     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-//     name VARCHAR(50) NOT NULL,
-//     description TEXT NOT NULL,
-//     current_members INT(6) NOT NULL DEFAULT 0,
-//     quota INT(6) NOT NULL DEFAULT 0,
-//     img1 VARCHAR(255) NOT NULL,
-//     img2 VARCHAR(255) NOT NULL,
-//     img3 VARCHAR(255) NOT NULL,
-//     profilePic VARCHAR(255) NOT NULL,
-//     coverPic VARCHAR(255) NOT NULL,
-//     taskbarBgImg VARCHAR(255) NOT NULL
-//   )";
-//   if ($conn->query($sql) !== TRUE) {
-//       echo "Error creating table: " . $conn->error;
-//   }
-
 
 foreach ($clubs as $club) {
     // Check if the club already exists
