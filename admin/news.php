@@ -1,7 +1,7 @@
 <?php
 include '../db_connection.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['title'], $_POST['description'], $_FILES['image'])) {
     $title = $_POST['title'];
     $description = $_POST['description'];
     $target_dir = "../assets/";
@@ -13,6 +13,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $sql = "INSERT INTO news (title, description, image) VALUES (?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("sss", $title, $description, $image);
+    $stmt->execute();
+}
+
+// Handle the delete action
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
+    $id = $_POST['id'];
+    $sql = "DELETE FROM news WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id);
     $stmt->execute();
 }
 
@@ -55,13 +64,19 @@ $conn->close();
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-                <?php foreach ($newsItems as $news): ?>
+            <?php foreach ($newsItems as $news): ?>
                 <tr>
                     <td class="px-6 py-4 whitespace-nowrap"><?php echo $news['title']; ?></td>
                     <td class="px-6 py-4 whitespace-nowrap"><?php echo $news['description']; ?></td>
                     <td class="px-6 py-4 whitespace-nowrap"><img src="<?php echo $news['image']; ?>" alt="<?php echo $news['title']; ?>"></td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <form method="POST">
+                            <input type="hidden" name="id" value="<?php echo $news['id']; ?>">
+                            <input type="submit" name="delete" value="Delete">
+                        </form>
+                    </td>
                 </tr>
-                <?php endforeach; ?>
+            <?php endforeach; ?>
             </tbody>
         </table>
     </div>
