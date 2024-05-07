@@ -161,11 +161,13 @@ $row = $result->fetch_assoc();
     <div class="overflow-x-auto whitespace-nowrap py-4">
     <?php foreach ($indoorClubs as $club) : ?>
     <div class="inline-block mx-2 relative">
-        <img class="w-64 h-64 object-cover" src="<?php echo $club['img2']; ?>" alt="<?php echo $club['name']; ?>">
-        <img class="w-16 h-16 object-cover rounded-full absolute bottom-0 transform -translate-x-1/2 -translate-y-3/4 left-1/2" src="<?php echo $club['img3']; ?>" alt="<?php echo $club['name']; ?>">
-        <p class="text-center"><?php echo $club['name']; ?></p>
+        <a href="../clubs/club-details.php?name=<?php echo urlencode($club['name']); ?>">
+            <img class="w-64 h-64 object-cover" src="<?php echo $club['img2']; ?>" alt="<?php echo $club['name']; ?>">
+            <img class="w-16 h-16 object-cover rounded-full absolute bottom-0 transform -translate-x-1/2 -translate-y-3/4 left-1/2" src="<?php echo $club['img3']; ?>" alt="<?php echo $club['name']; ?>">
+            <p class="text-center"><?php echo $club['name']; ?></p>
+        </a>
     </div>
-<?php endforeach; ?>
+    <?php endforeach; ?>
     </div>
 </div>
 <div>
@@ -173,11 +175,13 @@ $row = $result->fetch_assoc();
     <div class="overflow-x-auto whitespace-nowrap py-4">
     <?php foreach ($outdoorClubs as $club) : ?>
     <div class="inline-block mx-2 relative">
-        <img class="w-64 h-64 object-cover" src="<?php echo $club['img2']; ?>" alt="<?php echo $club['name']; ?>">
-        <img class="w-16 h-16 object-cover rounded-full absolute bottom-0 transform -translate-x-1/2 -translate-y-3/4 left-1/2" src="<?php echo $club['img3']; ?>" alt="<?php echo $club['name']; ?>">
-        <p class="text-center"><?php echo $club['name']; ?></p>
+        <a href="../clubs/club-details.php?name=<?php echo urlencode($club['name']); ?>">
+            <img class="w-64 h-64 object-cover" src="<?php echo $club['img2']; ?>" alt="<?php echo $club['name']; ?>">
+            <img class="w-16 h-16 object-cover rounded-full absolute bottom-0 transform -translate-x-1/2 -translate-y-3/4 left-1/2" src="<?php echo $club['img3']; ?>" alt="<?php echo $club['name']; ?>">
+            <p class="text-center"><?php echo $club['name']; ?></p>
+        </a>
     </div>
-<?php endforeach; ?>
+    <?php endforeach; ?>
     </div>
 </div>
 <div>
@@ -185,11 +189,13 @@ $row = $result->fetch_assoc();
     <div class="overflow-x-auto whitespace-nowrap py-4">
     <?php foreach ($societyClubs as $club) : ?>
     <div class="inline-block mx-2 relative">
-        <img class="w-64 h-64 object-cover" src="<?php echo $club['img2']; ?>" alt="<?php echo $club['name']; ?>">
-        <img class="w-16 h-16 object-cover rounded-full absolute bottom-0 transform -translate-x-1/2 -translate-y-3/4 left-1/2" src="<?php echo $club['img3']; ?>" alt="<?php echo $club['name']; ?>">
-        <p class="text-center"><?php echo $club['name']; ?></p>
+        <a href="../clubs/club-details.php?name=<?php echo urlencode($club['name']); ?>">
+            <img class="w-64 h-64 object-cover" src="<?php echo $club['img2']; ?>" alt="<?php echo $club['name']; ?>">
+            <img class="w-16 h-16 object-cover rounded-full absolute bottom-0 transform -translate-x-1/2 -translate-y-3/4 left-1/2" src="<?php echo $club['img3']; ?>" alt="<?php echo $club['name']; ?>">
+            <p class="text-center"><?php echo $club['name']; ?></p>
+        </a>
     </div>
-<?php endforeach; ?>
+    <?php endforeach; ?>
     </div>
 </div>
     <!-- Footer -->
