@@ -34,7 +34,7 @@ $conn->close();
     <div class="container mx-auto px-4">
         <h1 class="text-4xl font-bold mb-4">Admin Dashboard</h1>
     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-        <a href="createClub.php" class="text-white no-underline">Create Club</a>
+        <a href="club.php" class="text-white no-underline">Create Club</a>
     </button>
 </div>
 </body>
