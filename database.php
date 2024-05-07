@@ -133,6 +133,7 @@ if ($result->num_rows == 0) {
     }
 }
 
+
 // Insert dummy data into events table
 $events = [
     ['Football Tournament', 'A tournament for football enthusiasts', '2023-6-15', 50, 1],
@@ -178,11 +179,13 @@ $userEvents = [
     [2, 6],
 ];
 foreach ($userEvents as $userEvent) {
-    $sql = "INSERT IGNORE INTO user_events (user_id, event_id) VALUES (?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ii", $userEvent[0], $userEvent[1]);
-    if ($stmt->execute() !== TRUE) {
-        echo "Error inserting user event: " . $conn->error;
+    if (!empty($userEvent)) {
+        $sql = "INSERT IGNORE INTO user_events (user_id, event_id) VALUES (?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ii", $userEvent[0], $userEvent[1]);
+        if ($stmt->execute() !== TRUE) {
+            echo "Error inserting user event: " . $conn->error;
+        }
     }
 }
 
