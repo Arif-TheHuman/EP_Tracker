@@ -224,8 +224,7 @@ $sql = "CREATE TABLE IF NOT EXISTS news (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     description TEXT NOT NULL,
-    image VARCHAR(255) NOT NULL,
-    link VARCHAR(255) NOT NULL
+    image VARCHAR(255) NOT NULL
 )";
 if ($conn->query($sql) !== TRUE) {
     echo "Error creating table: " . $conn->error;
@@ -233,9 +232,9 @@ if ($conn->query($sql) !== TRUE) {
 
 // Insert dummy data into news table
 $newsItems = [
-    ['HIV Awareness Programme', 'HIV Awareness Programme for Peers and Youth is now open for registration. Interested students can register now. #EndorsedforEP #HAPPY #SAD', 'assets/images/happy.png', 'hivaware.php'],
-    ['Convo Volunteers', 'Open to all PB students. Join us! Interested students can register now. Deadline of registration: 11th October 2023', 'assets/images/bgcard1.png', 'convoVolunteer.php'],
-    ['Sign Language Workshop', 'Sign Language Workshop (Level 2) is now open for registration. Interested students can register now. Limit to only 40 students', 'assets/images/signal.png', 'signWorkshop.php'],
+    ['HIV Awareness Programme', 'HIV Awareness Programme for Peers and Youth is now open for registration. Interested students can register now. #EndorsedforEP #HAPPY #SAD', 'assets/images/happy.png'],
+    ['Convo Volunteers', 'Open to all PB students. Join us! Interested students can register now. Deadline of registration: 11th October 2023', 'assets/images/bgcard1.png'],
+    ['Sign Language Workshop', 'Sign Language Workshop (Level 2) is now open for registration. Interested students can register now. Limit to only 40 students', 'assets/images/signal.png'],
     // Add more news items as needed
 ];
 
@@ -263,9 +262,9 @@ foreach ($newsItems as $newsItem) {
     $result = $stmt->get_result();
     // If the news item does not exist, insert it
     if ($result->num_rows == 0) {
-        $sql = "INSERT INTO news (title, description, image, link) VALUES (?, ?, ?, ?)";
+        $sql = "INSERT INTO news (title, description, image) VALUES (?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssss", $newsItem[0], $newsItem[1], $newsItem[2], $newsItem[3]);
+        $stmt->bind_param("sss", $newsItem[0], $newsItem[1], $newsItem[2]);
         if ($stmt->execute() !== TRUE) {
             echo "Error inserting news item: " . $conn->error;
         }
