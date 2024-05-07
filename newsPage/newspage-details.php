@@ -45,10 +45,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !$registered) {
             <a href="newspage.php">
                 <img class="w-12 h-12 mr-16" src="assets/images/backie.png" alt="Your Avatar Description">
             </a>
-            <h1 class="text-3xl font-bold text-center"><?php echo $newsItem['title']; ?></h1>
+            <h1 class="text-3xl font-bold mt-4 text-center"><?php echo $newsItem['title']; ?></h1>
         </div>
         <div class="mx-auto w-3/4 bg-center bg-cover rounded p-5 mb-5" style="background-image: url('assets/images/bgcard.png');">
-            <img class="w-full h-64 rounded" src="<?php echo $newsItem['image']; ?>" alt="News Image">
+            <img class="w-full h-full rounded items-center object-cover" src="<?php echo $newsItem['image']; ?>" alt="News Image">
             <p class="text-3xl font-bold mt-4"><?php echo $newsItem['description']; ?></p>
         </div>
         <?php if (isset($registered) && $registered): ?>
