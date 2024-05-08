@@ -136,14 +136,14 @@ if ($result->num_rows == 0) {
 
 // Insert dummy data into events table
 $events = [
-    ['Football Tournament', 'A tournament for football enthusiasts', '2023-6-15', 50, 1],
-    ['Coding Hackathon', 'A 24-hour coding challenge', '2023-7-20', 100, 2],
-    ['Art Exhibition', 'An exhibition showcasing local artists', '2023-8-10', 30, 3],
-    ['Music Festival', 'A festival featuring local bands', '2023-9-05', 150, 4],
-    ['Science Fair', 'A fair for showcasing science projects', '2023-10-15', 20, 1],
-    ['Literature Conference', 'A conference for literature enthusiasts', '2023-11-20', 40, 2],
-    ['Tech Expo', 'An expo showcasing latest tech innovations', '2023-12-10', 200, 3],
-    ['New Year Party', 'A party to celebrate the new year', '2024-1-01', 100, 4],
+    ['Football Tournament', 'A tournament for football enthusiasts', '2023-6-15', 5, 1],
+    ['Coding Hackathon', 'A 24-hour coding challenge', '2023-7-20', 10, 2],
+    ['Art Exhibition', 'An exhibition showcasing local artists', '2023-8-10', 5, 3],
+    ['Music Festival', 'A festival featuring local bands', '2023-9-05', 5, 4],
+    ['Science Fair', 'A fair for showcasing science projects', '2023-10-15', 5, 1],
+    ['Literature Conference', 'A conference for literature enthusiasts', '2023-11-20', 10, 2],
+    ['Tech Expo', 'An expo showcasing latest tech innovations', '2023-12-10', 10, 3],
+    ['New Year Party', 'A party to celebrate the new year', '2024-1-01', 10, 4],
     // Add more events as needed
 ];
 foreach ($events as $event) {
@@ -164,31 +164,47 @@ foreach ($events as $event) {
     }
 }
 
+// Remove 'sem' column from 'events' table
+$sql = "ALTER TABLE events DROP COLUMN sem";
+if ($conn->query($sql) !== TRUE) {
+    echo "Error removing column: " . $conn->error;
+}
+
+// Check if the 'sem' column exists in the 'user_events' table
+$sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '$dbName' AND TABLE_NAME = 'user_events' AND COLUMN_NAME = 'sem'";
+$result = $conn->query($sql);
+if ($result->num_rows == 0) {
+    // The 'sem' column does not exist, so add it
+    $sql = "ALTER TABLE user_events ADD COLUMN sem ENUM('1', '2', '3', '4', '5', '6') NOT NULL";
+    if ($conn->query($sql) !== TRUE) {
+        echo "Error adding column: " . $conn->error;
+    }
+}
+
 // Insert dummy data into user_events table
 // Assuming the user ID and event IDs are known
 $userEvents = [
-    [1, 1], // User 1 attended event 1
-    [1, 2], // User 1 attended event 2
-    [1, 7],
-    [1, 8],
-    [2, 1],
-    [2, 2],
-    [2, 3],
-    [2, 4],
-    [2, 5],
-    [2, 6],
+    [1, 1, 3], // User 1 attended event 1
+    [1, 2, 3], // User 1 attended event 2
+    [1, 7, 4],
+    [1, 8, 4],
+    [2, 1, 4],
+    [2, 2, 4],
+    [2, 3, 4],
+    [2, 4, 4],
+    [2, 5, 5],
+    [2, 6, 5],
 ];
 foreach ($userEvents as $userEvent) {
     if (!empty($userEvent)) {
-        $sql = "INSERT IGNORE INTO user_events (user_id, event_id) VALUES (?, ?)";
+        $sql = "INSERT IGNORE INTO user_events (user_id, event_id, sem) VALUES (?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ii", $userEvent[0], $userEvent[1]);
+        $stmt->bind_param("iii", $userEvent[0], $userEvent[1], $userEvent[2]);
         if ($stmt->execute() !== TRUE) {
             echo "Error inserting user event: " . $conn->error;
         }
     }
 }
-
 $stmt->close();
 // Create clubs table if it doesn't exist
 $sql = "CREATE TABLE IF NOT EXISTS clubs (

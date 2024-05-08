@@ -7,7 +7,14 @@ if (isset($_SESSION['user']['username'])) {
     echo "Username is not set in the session";
     exit(); // Stop the script if the username is not set in the session
 }
-$sem = isset($_POST['sem']) ? $_POST['sem'] + 1 : 1; // Get the semester from POST data or default to 1
+
+$sql = "SELECT sem FROM users WHERE username = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $username);
+$stmt->execute();
+$result = $stmt->get_result();
+$row = $result->fetch_assoc();
+$sem = $row['sem'];
 
 // Fetch user data
 $sql = "SELECT id, sem, ep FROM users WHERE username = ?";
@@ -21,9 +28,9 @@ $userId = $row['id'];
 // Fetch all the events for the current semester that the user has participated in
 $sql = "SELECT events.* FROM events 
         JOIN user_events ON events.id = user_events.event_id 
-        WHERE user_events.user_id = ? AND events.sem = ?";
+        WHERE user_events.user_id = ?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("ii", $userId, $sem);
+$stmt->bind_param("i", $userId);
 $stmt->execute();
 $result = $stmt->get_result();
 $events = $result->fetch_all(MYSQLI_ASSOC);
@@ -113,7 +120,7 @@ $row = $result->fetch_assoc();
             <a class="hover:text-gray-300" href="#">Home</a>
             <a class="hover:text-gray-300" href="../clubs/club-page.php">Clubs</a>
             <a class="hover:text-gray-300" href="../newsPage/newspage.php">News</a>
-            <a class="hover:text-gray-300" href="#">Calendar</a>
+            <a class="hover:text-gray-300" href="../calendar/calendar.php">Calendar</a>
             <img class="h-8 w-8 rounded-full" src="https://b.fssta.com/uploads/application/soccer/headshots/885.vresize.350.350.medium.14.png" alt="Profile Image">
         </div>
     </div>
