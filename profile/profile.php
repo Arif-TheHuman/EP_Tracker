@@ -6,7 +6,10 @@
 <body>
     <div class="flex flex-col">
         <!-- Red colored div -->
-        <div class="w-full bg-red-500 h-50 flex items-center justify-center">
+        <div class="w-full bg-red-500 h-50 flex items-center justify-center relative">
+            <div class="absolute left-0 ml-4">
+                <button onclick="window.history.back()" class="bg-white rounded-full p-2">Back</button>
+            </div>
             <div class="bg-white rounded-full p-2 inline-block">
                 <img class="w-24 h-24 rounded-full mx-auto" src="https://b.fssta.com/uploads/application/soccer/headshots/885.vresize.350.350.medium.14.png" alt="Profile Image">
             </div>
@@ -43,9 +46,9 @@
                         <button onclick="window.location.href='edit_profile.php'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-2">
                             Edit Profile
                         </button>
-                        <button onclick="window.location.href='testing.php'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-2">
+                        <a href="../logout/logout.php" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-2 inline-block">
                             Log out
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>
