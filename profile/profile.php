@@ -43,9 +43,9 @@
                         <button onclick="window.location.href='edit_profile.php'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-2">
                             Edit Profile
                         </button>
-                        <button onclick="window.location.href='testing.php'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-2">
+                        <a href="../logout/logout.php" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-2 inline-block">
                             Log out
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>
