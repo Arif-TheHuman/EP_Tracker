@@ -136,15 +136,13 @@ if ($result->num_rows == 0) {
 
 // Insert dummy data into events table
 $events = [
-    ['Football Tournament', 'A tournament for football enthusiasts', '2023-6-15', 5, 1],
-    ['Coding Hackathon', 'A 24-hour coding challenge', '2023-7-20', 10, 2],
-    ['Art Exhibition', 'An exhibition showcasing local artists', '2023-8-10', 5, 3],
-    ['Music Festival', 'A festival featuring local bands', '2023-9-05', 5, 4],
-    ['Science Fair', 'A fair for showcasing science projects', '2023-10-15', 5, 1],
-    ['Literature Conference', 'A conference for literature enthusiasts', '2023-11-20', 10, 2],
-    ['Tech Expo', 'An expo showcasing latest tech innovations', '2023-12-10', 10, 3],
-    ['New Year Party', 'A party to celebrate the new year', '2024-1-01', 10, 4],
-    // Add more events as needed
+    ['Football Tournament', 'A tournament for football enthusiasts', '2024-5-15', 5, 1],
+    ['Coding Hackathon', 'A 24-hour coding challenge', '2024-5-20', 10, 2],
+    ['Art Exhibition', 'An exhibition showcasing local artists', '2024-5-30', 5, 3],
+    ['Music Festival', 'A festival featuring local bands', '2024-6-05', 5, 4],
+    ['Science Fair', 'A fair for showcasing science projects', '2024-6-15', 5, 1],
+    ['Literature Conference', 'A conference for literature enthusiasts', '2024-6-20', 10, 2],
+    ['Tech Expo', 'An expo showcasing latest tech innovations', '2024-6-30', 10, 3],
 ];
 foreach ($events as $event) {
     // Check if the event already exists
