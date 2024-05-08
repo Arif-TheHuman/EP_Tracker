@@ -16,9 +16,9 @@
         </div>
 
         <!-- White colored div -->
-        <div class="w-full bg-white-500">
-            <div class="flex flex-col items-center justify-center min-h-screen">
-                <div class="w-full max-w-md">
+        <div class="w-full bg-white-500 bg-opacity-25">
+            <div class="flex items-center justify-center min-h-screen">
+                <div class="bg-white shadow-lg rounded-lg p-6 mx-4">
                     <!-- Input Name -->
                     <h1>Name</h1>
                     <input class="mb-4 w-full px-3 py-2 placeholder-gray-500 text-gray-900 rounded-full border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" type="text" placeholder="Input 1" readonly>
@@ -35,10 +35,12 @@
                     <h1>Role Type</h1>
                     <input class="mb-4 w-full px-3 py-2 placeholder-gray-500 text-gray-900 rounded-full border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" type="text" placeholder="Input 4" readonly>
 
-                    <!-- Buttons -->
+                    <!-- Input Group & Club -->
                     <h1>Group & Club</h1>
                     <input class="mb-4 w-full px-3 py-2 placeholder-gray-500 text-gray-900 rounded-full border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" type="text" placeholder="Input 5" readonly>
 
+                    <!-- Buttons -->
+                    <h1></h1>
                     <div class="flex justify-center mt-4">
                         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-2">
                             Enrichment Point
