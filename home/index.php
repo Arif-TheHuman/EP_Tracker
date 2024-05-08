@@ -127,7 +127,7 @@ $row = $result->fetch_assoc();
 </nav>
 <br><br><br>
 <div class="mt-16">
-<div class="container mx-auto flex justify-center items-center h-64 w-3/4 bg-gray-400 relative"> <!-- Add relative here -->
+<div class="container mx-auto flex justify-center items-center h-64 w-3/4 bg-gray-400 relative rounded-xl" style="background-image: url('../assets/homerectangle.png');"> <!-- Add relative here -->
             
 <a href="progress.php">
     <button class="absolute top-0 right-0 m-4 bg-transparent text-black font-bold py-2 px-4 rounded-full border-2 border-black">
@@ -154,12 +154,13 @@ $row = $result->fetch_assoc();
                 stroke-linecap="round"
                 />
                 <text x="18" y="18" class="percentage" fill="#4c51bf" text-anchor="middle" dy=".3em" font-size="8"><?php echo $percentage; ?>%</text>
-        </svg>
-    <div class="w-1/2 text-center">
-    <h1 class="text-2xl font-bold"><?php echo strtoupper($totalAllEP)?> OUT OF 64 EP</h1>
+                <div class="w-1/2 text-center">
+    <h1 class="text-sm font-bold md:text-2xl sm:text-xl xl:text-3xl"><?php echo strtoupper($totalAllEP)?> OUT OF 64 EP</h1>
     <p class="text-lg text-gray-700"><?php echo $req; ?> EP REQUIRED</p>
     <p class="text-lg">SEMESTER <?php echo $sem; ?></p>
         </div>
+        </svg>
+
 </div>
 </div>
 <br>
