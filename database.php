@@ -306,6 +306,19 @@ foreach ($clubs as $club) {
         }
     }
 }
+
+// Create user_clubs table if it doesn't exist
+$sql = "CREATE TABLE IF NOT EXISTS user_clubs (
+    user_id INT(6) UNSIGNED NOT NULL,
+    club_id INT(6) UNSIGNED NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (club_id) REFERENCES clubs(id),
+    UNIQUE(user_id, club_id)
+)";
+if ($conn->query($sql) !== TRUE) {
+    echo "Error creating table: " . $conn->error;
+}
+
 $stmt->close();
 $conn->close();
 // Start the session
