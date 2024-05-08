@@ -18,14 +18,19 @@ $conn->commit();
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calendar</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
 </head>
+
 <body class="bg-white">
-    <header class="p-6 flex justify-between items-center bg-cover" style="background-image: url('assets/background.jpg');">
+    <header class="p-6 flex justify-between items-center bg-cover" style="background-image: url('assets/background.jpg'); position: relative;">
+        <div class="back-button">
+            <a href="../home/index.php" class="bg-white rounded-full p-2">Back</a>
+        </div>
         <h1 class="text-white text-lg"></h1>
         <div onclick="window.location.href='../profile/profile.php'" class="bg-white rounded-full">
             <img class="w-12 h-12 rounded-full" src="https://b.fssta.com/uploads/application/soccer/headshots/885.vresize.350.350.medium.14.png" alt="Profile Picture">
@@ -35,7 +40,7 @@ $conn->commit();
         <h1><?php echo $year; ?></h1>
     </div>
     <div class="mx-auto flex items-center justify-center">
-        <?php 
+        <?php
         if ($year == 2022) {
             echo '<svg class="w-4/5 h-4/5" viewBox="0 0 196 169" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g id="12 1" clip-path="url(#clip0_1_1012)">
@@ -133,9 +138,9 @@ $conn->commit();
             </clipPath>
             </defs>
             </svg>
-            ';} 
-            else if ($year == 2024) {
-                echo '<svg class="w-4/5 h-4/5" viewBox="0 0 196 169" fill="none" xmlns="http://www.w3.org/2000/svg">
+            ';
+        } else if ($year == 2024) {
+            echo '<svg class="w-4/5 h-4/5" viewBox="0 0 196 169" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g id="6 5" clip-path="url(#clip0_1_415)">
                 <path id="Vector" d="M147.278 152.511C147.066 152.677 146.848 152.839 146.628 152.999H119.849C119.695 152.839 119.541 152.677 119.39 152.511C118.153 151.148 117.065 149.676 116.14 148.117C113.941 144.475 113.184 139.7 113.184 134.837C113.184 134.54 113.186 134.243 113.193 133.946C113.218 132.582 113.3 131.216 113.422 129.872C113.445 129.638 113.467 129.407 113.491 129.175C113.69 127.248 113.968 125.371 114.284 123.618C114.325 123.395 114.365 123.173 114.407 122.954C115.052 119.472 115.916 116.027 116.995 112.636C116.995 112.636 117.031 112.644 117.1 112.661C117.298 112.712 117.773 112.833 118.47 113.023C120.39 113.548 123.996 114.605 128.155 116.176C128.382 116.26 128.612 116.348 128.843 116.438C132.362 117.772 135.767 119.345 139.032 121.143C139.235 121.256 139.435 121.371 139.635 121.486V121.502L139.197 134.565L143.117 123.69C143.917 124.249 144.681 124.829 145.409 125.429C145.61 125.593 145.81 125.761 146.004 125.935C147.659 127.33 149.071 128.95 150.192 130.738C156.057 140.462 153.595 147.611 147.278 152.511Z" fill="#F2F2F2"/>
                 <path id="Vector_2" d="M143.502 152.999H142.79C142.785 152.837 142.778 152.675 142.767 152.511C142.48 147.597 140.188 142.171 137.067 136.933C136.956 136.742 136.842 136.548 136.722 136.357C135.207 133.866 133.519 131.429 131.775 129.112C131.641 128.932 131.503 128.749 131.365 128.569C129.044 125.523 126.647 122.704 124.482 120.297C124.33 120.125 124.175 119.957 124.021 119.792C120.811 116.252 118.162 113.673 117.1 112.661C116.942 112.511 116.819 112.397 116.735 112.317C116.657 112.239 116.61 112.198 116.601 112.19L116.851 111.96L116.853 111.954L117.107 111.725C117.116 111.735 117.269 111.87 117.541 112.13C117.77 112.345 118.084 112.647 118.47 113.023C119.815 114.334 122.041 116.565 124.616 119.394C124.765 119.558 124.918 119.728 125.072 119.898C126.83 121.85 128.734 124.063 130.621 126.441C131.095 127.039 131.556 127.632 132.002 128.221C132.142 128.401 132.28 128.581 132.414 128.762C134.301 131.265 135.948 133.673 137.357 135.985L137.709 136.564C141.299 142.587 143.233 147.921 143.482 152.511C143.491 152.675 143.498 152.837 143.502 152.999Z" fill="white"/>
@@ -207,7 +212,7 @@ $conn->commit();
                 </defs>
                 </svg>
                 ';
-            }
+        }
         ?>
     </div>
     <nav class="bg-blue-500 overflow-auto">
@@ -234,4 +239,5 @@ $conn->commit();
         </tbody>
     </table>
 </body>
+
 </html>
