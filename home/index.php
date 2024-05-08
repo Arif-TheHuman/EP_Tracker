@@ -155,8 +155,8 @@ $row = $result->fetch_assoc();
                 />
                 <text x="18" y="18" class="percentage" fill="#4c51bf" text-anchor="middle" dy=".3em" font-size="8"><?php echo $percentage; ?>%</text>
                 <div class="w-1/2 text-center">
-    <h1 class="text-sm font-bold md:text-2xl sm:text-xl xl:text-3xl"><?php echo strtoupper($totalAllEP)?> OUT OF 64 EP</h1>
-    <p class="text-lg text-gray-700"><?php echo $req; ?> EP REQUIRED</p>
+    <h1 class="text-xl font-bold md:text-2xl sm:text-xl xl:text-3xl"><?php echo strtoupper($totalAllEP)?> OUT OF 64 EP</h1>
+    <p class="text-lg sm:text-xl md:text- xl:text-2xl text-gray-700"><?php echo $req; ?> EP REQUIRED</p>
     <p class="text-lg">SEMESTER <?php echo $sem; ?></p>
         </div>
         </svg>
@@ -165,12 +165,12 @@ $row = $result->fetch_assoc();
 </div>
 <br>
 <div>
-    <h1>Indoor Clubs</h1>
+    <h1 class="ml-5 text-xl">Indoor Clubs</h1>
     <div class="overflow-x-auto whitespace-nowrap py-4">
     <?php foreach ($indoorClubs as $club) : ?>
     <div class="inline-block mx-2 relative">
         <a href="../clubs/club-details.php?name=<?php echo urlencode($club['name']); ?>">
-            <img class="w-64 h-64 object-cover" src="<?php echo $club['img2']; ?>" alt="<?php echo $club['name']; ?>">
+            <img class="w-64 h-64 sm:w-64 sm:h-96 md:w-64 md:h-128 lg:w-128 lg:h-128 object-cover rounded-xl" src="<?php echo $club['img2']; ?>" alt="<?php echo $club['name']; ?>">
             <img class="w-16 h-16 object-cover rounded-full absolute bottom-0 transform -translate-x-1/2 -translate-y-3/4 left-1/2" src="<?php echo $club['img3']; ?>" alt="<?php echo $club['name']; ?>">
             <p class="text-center"><?php echo $club['name']; ?></p>
         </a>
@@ -179,12 +179,12 @@ $row = $result->fetch_assoc();
     </div>
 </div>
 <div>
-    <h1>Outdoor Clubs</h1>
+    <h1 class="ml-5 text-xl">Outdoor Clubs</h1>
     <div class="overflow-x-auto whitespace-nowrap py-4">
     <?php foreach ($outdoorClubs as $club) : ?>
     <div class="inline-block mx-2 relative">
         <a href="../clubs/club-details.php?name=<?php echo urlencode($club['name']); ?>">
-            <img class="w-64 h-64 object-cover" src="<?php echo $club['img2']; ?>" alt="<?php echo $club['name']; ?>">
+            <img class="w-64 h-64 sm:w-64 sm:h-96 md:w-64 md:h-128 lg:w-128 lg:h-128 object-cover rounded-xl" src="<?php echo $club['img2']; ?>" alt="<?php echo $club['name']; ?>">
             <img class="w-16 h-16 object-cover rounded-full absolute bottom-0 transform -translate-x-1/2 -translate-y-3/4 left-1/2" src="<?php echo $club['img3']; ?>" alt="<?php echo $club['name']; ?>">
             <p class="text-center"><?php echo $club['name']; ?></p>
         </a>
