@@ -134,7 +134,7 @@ $row = $result->fetch_assoc();
         +
     </button>
 </a>
-        <svg class="w-64 h-64 mx-auto" viewBox="0 0 36 36">
+        <svg class="w-64 h-48 mx-auto" viewBox="0 0 36 36">
             <path class="circle-bg"
                 d="M18 2.0845
                     a 15.9155 15.9155 0 0 1 0 31.831
