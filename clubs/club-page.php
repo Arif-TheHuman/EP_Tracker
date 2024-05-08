@@ -34,7 +34,7 @@ $nextType = $types[($currentIndex + 1) % count($types)];
             <a href="?type=<?php echo $nextType; ?>" class="inline-block px-4 py-2 bg-blue-500 text-white rounded-r">&gt;</a>
         </div>
         <div class="justify-center items-center text-center">
-            <table class="w-full bg-white shadow rounded">
+            <table class="w-full bg-white shadow rounded mr-5 ml-5 sm:mr-10 sm:ml-5 md:mr-15 md:ml-10 lg:mr-20 lg:ml-15">
                 <thead>
                     <tr>
                         <th class="px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl bg-blue-500 text-white">Club</th>
