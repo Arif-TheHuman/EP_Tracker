@@ -305,6 +305,117 @@ foreach ($clubs as $club) {
     }
 }
 
+// Create club_sessions table if it doesn't exist
+$sql = "CREATE TABLE IF NOT EXISTS club_sessions (
+    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    club_id INT(6) UNSIGNED NOT NULL,
+    session_date DATE NOT NULL,
+    time_slot VARCHAR(255) NOT NULL default '2pm - 4pm',
+    FOREIGN KEY (club_id) REFERENCES clubs(id)
+)";
+if ($conn->query($sql) !== TRUE) {
+    echo "Error creating table: " . $conn->error;
+}
+
+$years = [2022, 2023, 2024];
+$months = ['02' => 'February', '03' => 'March', '08' => 'August', '09' => 'September'];
+
+foreach ($years as $year) {
+    foreach ($clubs as $club) {
+        $clubName = $club[0];
+
+        // Get the club id
+        $sql = "SELECT id FROM clubs WHERE name = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $clubName);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $clubId = $result->fetch_assoc()['id'];
+
+        // Initialize the session counter for the club for this year
+        $sessionCount = 0;
+
+        foreach ($months as $monthNum => $monthName) {
+            // Start from the first day of the month
+            $sessionDate = date("Y-m-d", strtotime("$year-$monthNum-01"));
+
+            // Loop until the session date reaches the next month or the session count reaches 7
+            while (date('m', strtotime($sessionDate)) == $monthNum && $sessionCount < 7) {
+                // Check if the session already exists
+                $sql = "SELECT * FROM club_sessions WHERE club_id = ? AND session_date = ?";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("is", $clubId, $sessionDate);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                if ($result->num_rows == 0) {
+                    // Insert the session into the sessions table
+                    $sql = "INSERT INTO club_sessions (club_id, session_date) VALUES (?, ?)";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bind_param("is", $clubId, $sessionDate);
+                    if ($stmt->execute() !== TRUE) {
+                        echo "Error inserting session: " . $conn->error;
+                    } else {
+                        // Increment the session count
+                        $sessionCount++;
+                    }
+                }
+
+                // Increment the session date by 1 week
+                $sessionDate = date("Y-m-d", strtotime("$sessionDate +1 week"));
+            }
+
+            // If the session count has reached 7, break the loop for this club for this year
+            if ($sessionCount >= 7) {
+                break;
+            }
+        }
+    }
+}
+
+// Create user_sessions table if it doesn't exist
+$sql = "CREATE TABLE IF NOT EXISTS user_sessions (
+    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_id INT(6) UNSIGNED NOT NULL,
+    session_id INT(6) UNSIGNED NOT NULL,
+    attendance_status ENUM('attended', 'absent', 'cancelled') NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (session_id) REFERENCES club_sessions(id)
+)";
+if ($conn->query($sql) !== TRUE) {
+    echo "Error creating table: " . $conn->error;
+}
+
+// Define the attendance statuses
+$attendance_statuses = ['attended', 'absent', 'cancelled'];
+
+// Fetch all user IDs from the users table
+$sql = "SELECT id FROM users";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    // Output data of each row
+    while($row = $result->fetch_assoc()) {
+        $user_id = $row["id"];
+
+        for ($i = 0; $i < 10; $i++) {
+            // Generate a random session_id between 1 and 100
+            $session_id = rand(1, 100);
+
+            // Pick a random attendance status
+            $attendance_status = $attendance_statuses[array_rand($attendance_statuses)];
+
+            // Insert the dummy data into the user_sessions table
+            $sql = "INSERT INTO user_sessions (user_id, session_id, attendance_status) VALUES (?, ?, ?)";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("iis", $user_id, $session_id, $attendance_status);
+            if ($stmt->execute() !== TRUE) {
+                echo "Error inserting dummy data: " . $conn->error;
+            }
+        }
+    }
+}
+
 // Create user_clubs table if it doesn't exist
 $sql = "CREATE TABLE IF NOT EXISTS user_clubs (
     user_id INT(6) UNSIGNED NOT NULL,
@@ -337,6 +448,7 @@ $sql = "UPDATE users SET ep = (
 if ($conn->query($sql) !== TRUE) {
     echo "Error updating 'ep' column in 'users' table: " . $conn->error;
 }
+
 
 exit;
 ?>
