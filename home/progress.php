@@ -8,7 +8,6 @@ if (isset($_SESSION['user']['username'])) {
     exit(); // Stop the script if the username is not set in the session
 }
 $sem = isset($_POST['sem']) ? $_POST['sem'] + 1 : 1; // Get the semester from POST data or default to 1
-
 // Fetch user data
 $sql = "SELECT id, sem, ep FROM users WHERE username = ?";
 $stmt = $conn->prepare($sql);
@@ -17,22 +16,19 @@ $stmt->execute();
 $result = $stmt->get_result();
 $row = $result->fetch_assoc();
 $userId = $row['id'];
-
 // Fetch all the events for the current semester that the user has participated in
-$sql = "SELECT events.* FROM events 
+$sql = "SELECT events.*, user_events.sem as user_sem FROM events 
         JOIN user_events ON events.id = user_events.event_id 
-        WHERE user_events.user_id = ? AND events.sem = ?";
+        WHERE user_events.user_id = ? AND user_events.sem = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("ii", $userId, $sem);
 $stmt->execute();
 $result = $stmt->get_result();
 $events = $result->fetch_all(MYSQLI_ASSOC);
-
 $totalEP = 0; // Initialize total EP
 foreach ($events as $event) {
     $totalEP += $event['ep']; // Add the EP of each event to the total
 }
-
 // Fetch all the events that the user has participated in, regardless of the semester
 $sql = "SELECT events.* FROM events 
         JOIN user_events ON events.id = user_events.event_id 
@@ -42,12 +38,10 @@ $stmt->bind_param("i", $userId);
 $stmt->execute();
 $result = $stmt->get_result();
 $allEvents = $result->fetch_all(MYSQLI_ASSOC);
-
 $totalAllEP = 0; // Initialize total EP for all events
 foreach ($allEvents as $event) {
     $totalAllEP += $event['ep']; // Add the EP of each event to the total
 }
-
 $percentage = round($totalAllEP / 64 * 100); // Calculate the percentage based on total EP
 if ($totalAllEP > 64) {
     $percentage = 100;
@@ -57,7 +51,6 @@ if ($totalAllEP > 64) {
     $req = 0;
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -136,7 +129,7 @@ if ($totalAllEP > 64) {
         <th class="px-4 py-2">Description</th>
         <th class="px-4 py-2">Date</th>
         <th class="px-4 py-2">EP</th>
-        <th class="px-4 py-2">Semester</th> <!-- New column for semester -->
+        <th class="px-4 py-2">Semester</th>
     </tr>
 </thead>
 <tbody>
@@ -146,7 +139,7 @@ if ($totalAllEP > 64) {
         <td class="border px-4 py-2"><?php echo $event['description']; ?></td>
         <td class="border px-4 py-2"><?php echo $event['date']; ?></td>
         <td class="border px-4 py-2"><?php echo $event['ep']; ?></td>
-        <td class="border px-4 py-2"><?php echo $event['sem']; ?></td> <!-- Display the semester -->
+        <td class="border px-4 py-2"><?php echo $event['user_sem']; ?></td>
     </tr>
     <?php endforeach; ?>
 </tbody>

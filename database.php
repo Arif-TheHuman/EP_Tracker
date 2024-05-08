@@ -71,7 +71,7 @@ if ($result->num_rows == 0) {
 }
 
 $userUsername = "UserMan";
-$userPassword = "dummyPassword";
+$userPassword = "a";
 $userRole = "user";
 
 $sql = "SELECT * FROM users WHERE username = ?";
@@ -136,15 +136,13 @@ if ($result->num_rows == 0) {
 
 // Insert dummy data into events table
 $events = [
-    ['Football Tournament', 'A tournament for football enthusiasts', '2023-6-15', 50, 1],
-    ['Coding Hackathon', 'A 24-hour coding challenge', '2023-7-20', 100, 2],
-    ['Art Exhibition', 'An exhibition showcasing local artists', '2023-8-10', 30, 3],
-    ['Music Festival', 'A festival featuring local bands', '2023-9-05', 150, 4],
-    ['Science Fair', 'A fair for showcasing science projects', '2023-10-15', 20, 1],
-    ['Literature Conference', 'A conference for literature enthusiasts', '2023-11-20', 40, 2],
-    ['Tech Expo', 'An expo showcasing latest tech innovations', '2023-12-10', 200, 3],
-    ['New Year Party', 'A party to celebrate the new year', '2024-1-01', 100, 4],
-    // Add more events as needed
+    ['Football Tournament', 'A tournament for football enthusiasts', '2024-5-15', 5, 1],
+    ['Coding Hackathon', 'A 24-hour coding challenge', '2024-5-20', 10, 2],
+    ['Art Exhibition', 'An exhibition showcasing local artists', '2024-5-30', 5, 3],
+    ['Music Festival', 'A festival featuring local bands', '2024-6-05', 5, 4],
+    ['Science Fair', 'A fair for showcasing science projects', '2024-6-15', 5, 1],
+    ['Literature Conference', 'A conference for literature enthusiasts', '2024-6-20', 10, 2],
+    ['Tech Expo', 'An expo showcasing latest tech innovations', '2024-6-30', 10, 3],
 ];
 foreach ($events as $event) {
     // Check if the event already exists
@@ -164,31 +162,47 @@ foreach ($events as $event) {
     }
 }
 
+// Remove 'sem' column from 'events' table
+$sql = "ALTER TABLE events DROP COLUMN sem";
+if ($conn->query($sql) !== TRUE) {
+    echo "Error removing column: " . $conn->error;
+}
+
+// Check if the 'sem' column exists in the 'user_events' table
+$sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '$dbName' AND TABLE_NAME = 'user_events' AND COLUMN_NAME = 'sem'";
+$result = $conn->query($sql);
+if ($result->num_rows == 0) {
+    // The 'sem' column does not exist, so add it
+    $sql = "ALTER TABLE user_events ADD COLUMN sem ENUM('1', '2', '3', '4', '5', '6') NOT NULL";
+    if ($conn->query($sql) !== TRUE) {
+        echo "Error adding column: " . $conn->error;
+    }
+}
+
 // Insert dummy data into user_events table
 // Assuming the user ID and event IDs are known
 $userEvents = [
-    [1, 1], // User 1 attended event 1
-    [1, 2], // User 1 attended event 2
-    [1, 7],
-    [1, 8],
-    [2, 1],
-    [2, 2],
-    [2, 3],
-    [2, 4],
-    [2, 5],
-    [2, 6],
+    [1, 1, 3], // User 1 attended event 1
+    [1, 2, 3], // User 1 attended event 2
+    [1, 7, 4],
+    [1, 8, 4],
+    [2, 1, 4],
+    [2, 2, 4],
+    [2, 3, 4],
+    [2, 4, 4],
+    [2, 5, 5],
+    [2, 6, 5],
 ];
 foreach ($userEvents as $userEvent) {
     if (!empty($userEvent)) {
-        $sql = "INSERT IGNORE INTO user_events (user_id, event_id) VALUES (?, ?)";
+        $sql = "INSERT IGNORE INTO user_events (user_id, event_id, sem) VALUES (?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ii", $userEvent[0], $userEvent[1]);
+        $stmt->bind_param("iii", $userEvent[0], $userEvent[1], $userEvent[2]);
         if ($stmt->execute() !== TRUE) {
             echo "Error inserting user event: " . $conn->error;
         }
     }
 }
-
 $stmt->close();
 // Create clubs table if it doesn't exist
 $sql = "CREATE TABLE IF NOT EXISTS clubs (
@@ -290,6 +304,130 @@ foreach ($clubs as $club) {
         }
     }
 }
+
+// Create club_sessions table if it doesn't exist
+$sql = "CREATE TABLE IF NOT EXISTS club_sessions (
+    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    club_id INT(6) UNSIGNED NOT NULL,
+    session_date DATE NOT NULL,
+    time_slot VARCHAR(255) NOT NULL default '2pm - 4pm',
+    FOREIGN KEY (club_id) REFERENCES clubs(id)
+)";
+if ($conn->query($sql) !== TRUE) {
+    echo "Error creating table: " . $conn->error;
+}
+
+$years = [2022, 2023, 2024];
+$months = ['02' => 'February', '03' => 'March', '08' => 'August', '09' => 'September'];
+
+foreach ($years as $year) {
+    foreach ($clubs as $club) {
+        $clubName = $club[0];
+
+        // Get the club id
+        $sql = "SELECT id FROM clubs WHERE name = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $clubName);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $clubId = $result->fetch_assoc()['id'];
+
+        // Initialize the session counter for the club for this year
+        $sessionCount = 0;
+
+        foreach ($months as $monthNum => $monthName) {
+            // Start from the first day of the month
+            $sessionDate = date("Y-m-d", strtotime("$year-$monthNum-01"));
+
+            // Loop until the session date reaches the next month or the session count reaches 7
+            while (date('m', strtotime($sessionDate)) == $monthNum && $sessionCount < 7) {
+                // Check if the session already exists
+                $sql = "SELECT * FROM club_sessions WHERE club_id = ? AND session_date = ?";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("is", $clubId, $sessionDate);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                if ($result->num_rows == 0) {
+                    // Insert the session into the sessions table
+                    $sql = "INSERT INTO club_sessions (club_id, session_date) VALUES (?, ?)";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bind_param("is", $clubId, $sessionDate);
+                    if ($stmt->execute() !== TRUE) {
+                        echo "Error inserting session: " . $conn->error;
+                    } else {
+                        // Increment the session count
+                        $sessionCount++;
+                    }
+                }
+
+                // Increment the session date by 1 week
+                $sessionDate = date("Y-m-d", strtotime("$sessionDate +1 week"));
+            }
+
+            // If the session count has reached 7, break the loop for this club for this year
+            if ($sessionCount >= 7) {
+                break;
+            }
+        }
+    }
+}
+
+// Create user_sessions table if it doesn't exist
+$sql = "CREATE TABLE IF NOT EXISTS user_sessions (
+    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_id INT(6) UNSIGNED NOT NULL,
+    session_id INT(6) UNSIGNED NOT NULL,
+    attendance_status ENUM('attended', 'absent', 'cancelled') NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (session_id) REFERENCES club_sessions(id)
+)";
+if ($conn->query($sql) !== TRUE) {
+    echo "Error creating table: " . $conn->error;
+}
+
+// Define the attendance statuses
+$attendance_statuses = ['attended', 'absent', 'cancelled'];
+
+// Fetch all user IDs from the users table
+$sql = "SELECT id FROM users";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    // Output data of each row
+    while($row = $result->fetch_assoc()) {
+        $user_id = $row["id"];
+
+        for ($i = 0; $i < 10; $i++) {
+            // Generate a random session_id between 1 and 100
+            $session_id = rand(1, 100);
+
+            // Pick a random attendance status
+            $attendance_status = $attendance_statuses[array_rand($attendance_statuses)];
+
+            // Insert the dummy data into the user_sessions table
+            $sql = "INSERT INTO user_sessions (user_id, session_id, attendance_status) VALUES (?, ?, ?)";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("iis", $user_id, $session_id, $attendance_status);
+            if ($stmt->execute() !== TRUE) {
+                echo "Error inserting dummy data: " . $conn->error;
+            }
+        }
+    }
+}
+
+// Create user_clubs table if it doesn't exist
+$sql = "CREATE TABLE IF NOT EXISTS user_clubs (
+    user_id INT(6) UNSIGNED NOT NULL,
+    club_id INT(6) UNSIGNED NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (club_id) REFERENCES clubs(id),
+    UNIQUE(user_id, club_id)
+)";
+if ($conn->query($sql) !== TRUE) {
+    echo "Error creating table: " . $conn->error;
+}
+
 $stmt->close();
 $conn->close();
 // Start the session
@@ -300,5 +438,17 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
 } else {
     header("Location: login.php");
 }
+
+$sql = "UPDATE users SET ep = (
+    SELECT SUM(events.ep) 
+    FROM user_events 
+    JOIN events ON user_events.event_id = events.id 
+    WHERE user_events.user_id = users.id
+)";
+if ($conn->query($sql) !== TRUE) {
+    echo "Error updating 'ep' column in 'users' table: " . $conn->error;
+}
+
+
 exit;
 ?>

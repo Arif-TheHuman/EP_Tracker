@@ -7,7 +7,14 @@ if (isset($_SESSION['user']['username'])) {
     echo "Username is not set in the session";
     exit(); // Stop the script if the username is not set in the session
 }
-$sem = isset($_POST['sem']) ? $_POST['sem'] + 1 : 1; // Get the semester from POST data or default to 1
+
+$sql = "SELECT sem FROM users WHERE username = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $username);
+$stmt->execute();
+$result = $stmt->get_result();
+$row = $result->fetch_assoc();
+$sem = $row['sem'];
 
 // Fetch user data
 $sql = "SELECT id, sem, ep FROM users WHERE username = ?";
@@ -21,9 +28,9 @@ $userId = $row['id'];
 // Fetch all the events for the current semester that the user has participated in
 $sql = "SELECT events.* FROM events 
         JOIN user_events ON events.id = user_events.event_id 
-        WHERE user_events.user_id = ? AND events.sem = ?";
+        WHERE user_events.user_id = ?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("ii", $userId, $sem);
+$stmt->bind_param("i", $userId);
 $stmt->execute();
 $result = $stmt->get_result();
 $events = $result->fetch_all(MYSQLI_ASSOC);
@@ -113,21 +120,21 @@ $row = $result->fetch_assoc();
             <a class="hover:text-gray-300" href="#">Home</a>
             <a class="hover:text-gray-300" href="../clubs/club-page.php">Clubs</a>
             <a class="hover:text-gray-300" href="../newsPage/newspage.php">News</a>
-            <a class="hover:text-gray-300" href="#">Calendar</a>
+            <a class="hover:text-gray-300" href="../calendar/calendar.php">Calendar</a>
             <img class="h-8 w-8 rounded-full" src="https://b.fssta.com/uploads/application/soccer/headshots/885.vresize.350.350.medium.14.png" alt="Profile Image">
         </div>
     </div>
 </nav>
 <br><br><br>
 <div class="mt-16">
-<div class="container mx-auto flex justify-center items-center h-64 w-3/4 bg-gray-400 relative"> <!-- Add relative here -->
+<div class="container mx-auto flex justify-center items-center h-64 w-3/4 bg-gray-400 relative rounded-xl" style="background-image: url('../assets/homerectangle.png');"> <!-- Add relative here -->
             
 <a href="progress.php">
     <button class="absolute top-0 right-0 m-4 bg-transparent text-black font-bold py-2 px-4 rounded-full border-2 border-black">
         +
     </button>
 </a>
-        <svg class="w-64 h-64 mx-auto" viewBox="0 0 36 36">
+        <svg class="w-64 h-48 mx-auto" viewBox="0 0 36 36">
             <path class="circle-bg"
                 d="M18 2.0845
                     a 15.9155 15.9155 0 0 1 0 31.831
@@ -147,12 +154,13 @@ $row = $result->fetch_assoc();
                 stroke-linecap="round"
                 />
                 <text x="18" y="18" class="percentage" fill="#4c51bf" text-anchor="middle" dy=".3em" font-size="8"><?php echo $percentage; ?>%</text>
-        </svg>
-    <div class="w-1/2 text-center">
-    <h1 class="text-2xl font-bold"><?php echo strtoupper($totalAllEP)?> OUT OF 64 EP</h1>
+                <div class="w-1/2 text-center">
+    <h1 class="text-sm font-bold md:text-2xl sm:text-xl xl:text-3xl"><?php echo strtoupper($totalAllEP)?> OUT OF 64 EP</h1>
     <p class="text-lg text-gray-700"><?php echo $req; ?> EP REQUIRED</p>
     <p class="text-lg">SEMESTER <?php echo $sem; ?></p>
         </div>
+        </svg>
+
 </div>
 </div>
 <br>
