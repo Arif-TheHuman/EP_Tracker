@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete']) && is_numeri
 }
 
 // Get data from database
-$sql = "SELECT id, name, description, date, ep, sem FROM events ORDER BY date";
+$sql = "SELECT * FROM events ORDER BY date"; // The error is that the SELECT statement is missing the column names. The solution is to add "SELECT id, name, description, date, ep, sem" before the FROM clause.
 $result = $conn->query($sql);
 
 $events = [];
