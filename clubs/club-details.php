@@ -45,5 +45,12 @@
 <?php if ($isMember) : ?>
     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Session</button>
 <?php endif; ?>
+<?php if ($isMember) : ?>
+    <form action="leave_club.php" method="post">
+        <input type="hidden" name="clubId" value="<?php echo $club['id']; ?>">
+        <input type="hidden" name="clubName" value="<?php echo $club['name']; ?>">
+        <button type="submit">Leave</button>
+    </form>
+<?php endif; ?>
 </body>
 </html>
