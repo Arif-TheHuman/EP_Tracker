@@ -71,7 +71,7 @@ if ($result->num_rows == 0) {
 }
 
 $userUsername = "UserMan";
-$userPassword = "dummyPassword";
+$userPassword = "a";
 $userRole = "user";
 
 $sql = "SELECT * FROM users WHERE username = ?";
@@ -329,5 +329,16 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
 } else {
     header("Location: login.php");
 }
+
+$sql = "UPDATE users SET ep = (
+    SELECT SUM(events.ep) 
+    FROM user_events 
+    JOIN events ON user_events.event_id = events.id 
+    WHERE user_events.user_id = users.id
+)";
+if ($conn->query($sql) !== TRUE) {
+    echo "Error updating 'ep' column in 'users' table: " . $conn->error;
+}
+
 exit;
 ?>

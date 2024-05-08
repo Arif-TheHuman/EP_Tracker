@@ -18,6 +18,7 @@
     <div class="p-10 text-center bg-center bg-cover bg-blue-500 text-white" style="background-image: url('header.jpg');">
         <img id="pfp" class="w-24 h-24 mx-auto rounded-full" src="https://b.fssta.com/uploads/application/soccer/headshots/885.vresize.350.350.medium.14.png" alt="Profile Image">
     </div>
+    <a href="../home/index.php" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Back</a>
     <div class="container mx-auto my-10">
         <div class="text-center mb-10">
             <a href="?type=<?php echo $previousType; ?>" class="inline-block px-4 py-2 bg-blue-500 text-white rounded-l">&lt;</a>

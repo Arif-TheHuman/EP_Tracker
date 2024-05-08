@@ -1,10 +1,16 @@
 <?php
     session_start();
     include '../db_connection.php';
+    $userId = $_SESSION['user']['id']; // Get userId from session
     $clubName = $_GET['name'];
     $sql = "SELECT * FROM clubs WHERE name='$clubName'";
     $result = mysqli_query($conn, $sql);
     $club = mysqli_fetch_assoc($result);
+
+    // Check if user is already a member of the club
+    $sql = "SELECT * FROM user_clubs WHERE user_id=$userId AND club_id={$club['id']}";
+    $result = mysqli_query($conn, $sql);
+    $isMember = mysqli_num_rows($result) > 0;
 ?>
 
 <!DOCTYPE html>
@@ -26,6 +32,7 @@
         </div>
     </nav>
     <br>
+    <a href="club-page.php" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Back</a>
     <h1><?php echo $club['name']; ?></h1>
     <h2><?php echo $club['description'] ?></h2>
     <p>Members: <?php echo $club['current_members']; ?></p>
@@ -33,7 +40,10 @@
     <form action="join_club.php" method="post">
     <input type="hidden" name="clubId" value="<?php echo $club['id']; ?>">
     <input type="hidden" name="clubName" value="<?php echo $club['name']; ?>">
-    <button type="submit">Join</button>
+    <button type="submit" <?php if ($isMember) echo 'disabled'; ?>><?php echo $isMember ? 'Joined' : 'Join'; ?></button>
 </form>
+<?php if ($isMember) : ?>
+    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Session</button>
+<?php endif; ?>
 </body>
 </html>
