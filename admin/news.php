@@ -101,7 +101,7 @@ $conn->close();
     </div>
     <div class=" flex justify-center text-center mt-10 mb-10">
     <h1 class="text-3xl sm:text-5xl md:text-6xl font-bold leading-tight text-gray-900">
-        <span class="block">Events Details</span>
+        <span class="block">Endorsed-events Details</span>
     </h1>
 </div>
     <div class="mt-10">
