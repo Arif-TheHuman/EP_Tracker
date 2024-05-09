@@ -50,22 +50,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !$registered) {
 </div>
 </nav>
 <div class="container mx-auto pt-16"> <!-- Kept pt-16 to make space for the fixed navbar -->
-    <div class="flex justify-center items-center mb-10 mt-10"> <!-- Added mt-10 to add space at the top -->
-            <a href="newspage.php">
-                <img class="w-12 h-12 mr-16" src="assets/images/backie.png" alt="Your Avatar Description">
-            </a>
-            <h1 class="text-3xl font-bold mt-4 text-center"><?php echo $newsItem['title']; ?></h1>
-        </div>
-        <div class="mx-auto w-3/4 bg-center bg-cover rounded p-5 mb-5" style="background-image: url('assets/images/bgcard.png');">
+    <div class="flex justify-center items-center mb-10 mt-10">
+        <a href="newspage.php">
+        <img class="w-12 h-12 mr-4" src="assets/images/backie.png" alt="Your Avatar Description">
+        </a>
+        <h1 class="text-4xl font-bold mt-4 text-center"><?php echo $newsItem['title']; ?></h1>
+    </div>
+        <!-- <div class="mx-auto w-3/4 bg-center bg-cover rounded p-5 mb-5" style="background-image: url('assets/images/bgcard.png');"> -->
             <img class="w-full h-full rounded items-center object-cover" src="<?php echo $newsItem['image']; ?>" alt="News Image">
-            <p class="text-3xl font-bold mt-4"><?php echo $newsItem['description']; ?></p>
+            <p class="text-5xl font-bold mt-4"><?php echo $newsItem['description']; ?></p>
         </div>
         <?php if (isset($registered) && $registered): ?>
             <div class="text-center text-green-500 text-2xl">Thank you for registering!</div>
         <?php else: ?>
             <div class="flex justify-center">
                 <form method="post">
-                    <button type="submit" class="bg-blue-500 text-white px-10 py-4 rounded font-bold text-xl">REGISTER NOW</button>
+                    <button type="submit" class="mt-10 mb-10 bg-blue-500 text-white px-10 py-4 rounded font-bold text-xl tracking-widest">REGISTER NOW</button>
                 </form>
             </div>
         <?php endif; ?>

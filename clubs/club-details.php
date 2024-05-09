@@ -32,15 +32,33 @@
         </div>
     </nav>
     <br>
-    <a href="club-page.php" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Back</a>
-    <h1><?php echo $club['name']; ?></h1>
+    <!-- <a href="club-page.php" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Back</a> -->
+    <div style="background-image: url('<?php echo $club['img2']; ?>'); background-size: cover;">
+    <div class="flex items-center">
+    <a href="club-page.php">
+        <img class="mt-10 w-12 h-12 ml-32 mr-8" src="assets/images/backie.png" alt="Your Avatar Description">
+    </a>
+    <h1 class=" font-semibold mt-10 text-4xl"><?php echo $club['name']; ?></h1>
+    </div>
+
+        <div class="flex space-x-10 mt-8">
+                <div>
+                    <img class="mb-16 ml-64 w-36 h-36 object-cover rounded-full" src="<?php echo $club['img3']; ?>" alt="Club Image">
+                </div>
+                    <div>
+                <p class="ml-96 font-semibold text-3xl text-center mt-12 items-center"><?php echo $club['current_members']; ?><br>Members</p>
+                    </div>
+                <div>
+                    <p class="ml-96 font-semibold text-3xl text-center mt-12"><?php echo $club['quota']; ?><br>Quota</p>
+                </div>
+        </div>
+        <button type="submit" class="ml-96 text-3xl bg-white text-center px-16 py-2 rounded mb-10 " <?php if ($isMember) echo 'disabled'; ?>><?php echo $isMember ? 'Joined' : 'Join'; ?></button>    
+    </div>
+
     <h2><?php echo $club['description'] ?></h2>
-    <p>Members: <?php echo $club['current_members']; ?></p>
-    <p>Quota: <?php echo $club['quota']; ?></p>
     <form action="join_club.php" method="post">
     <input type="hidden" name="clubId" value="<?php echo $club['id']; ?>">
     <input type="hidden" name="clubName" value="<?php echo $club['name']; ?>">
-    <button type="submit" <?php if ($isMember) echo 'disabled'; ?>><?php echo $isMember ? 'Joined' : 'Join'; ?></button>
 </form>
 <?php if ($isMember) : ?>
     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Session</button>
