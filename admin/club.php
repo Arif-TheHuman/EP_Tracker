@@ -44,77 +44,107 @@ $conn->close();
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body>
+
 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="window.location.href='dashboard.php'">Back to Dashboard</button>
-<div class="bg-white p-4 rounded shadow">
-    <h2 class="text-2xl font-bold mb-2">Add New Club</h2>
-    <form method="POST" enctype="multipart/form-data">
-        <label for="name">Name:</label><br>
-        <input type="text" id="name" name="name" required><br>
-        <label for="description">Description:</label><br>
-        <textarea id="description" name="description" required></textarea><br>
-        <label for="type">Type:</label><br>
-        <select id="type" name="type" required>
+
+<div class=" flex justify-center text-center mt-10 mb-10">
+    <h1 class="text-3xl sm:text-5xl md:text-6xl font-bold leading-tight text-gray-900">
+        <span class="block">Add new clubs</span>
+    </h1>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div class="bg-white p-4 rounded shadow">
+        <h2 class="text-2xl font-bold mb-2">Name</h2>
+        <input type="text" class="w-full bg-gray-100 hover:bg-gray-200 rounded-xl" id="name" name="name" required>
+    </div>
+    <div class="bg-white p-4 rounded shadow">
+        <h2 class="text-2xl font-bold mb-2">Description</h2>
+        <textarea class="w-full bg-gray-100 hover:bg-gray-200 rounded-sm" id="description" name="description" required></textarea>
+    </div>
+    <div class="bg-white p-4 rounded shadow">
+        <h2 class="text-2xl font-bold mb-2">Type</h2>
+        <select class="w-full" id="type" name="type" required>
             <option value="outdoor">Outdoor</option>
             <option value="indoor">Indoor</option>
             <option value="society">Society</option>
-        </select><br>
-        <label for="quota">Quota:</label><br>
-        <input type="number" id="quota" name="quota" required><br>
-        <input type="hidden" id="img1" name="img1">
-        <label for="img2">Image 2:</label><br>
-        <input type="file" id="img2" name="img2" required><br>
-        <label for="img3">Image 3:</label><br>
-        <input type="file" id="img3" name="img3" required><br>
-        <label for="profilePic">Profile Picture:</label><br>
-        <input type="file" id="profilePic" name="profilePic" required><br>
-        <label for="coverPic">Cover Picture:</label><br>
-        <input type="file" id="coverPic" name="coverPic" required><br>
-        <label for="taskbarBgImg">Taskbar Background Image:</label><br>
-        <input type="file" id="taskbarBgImg" name="taskbarBgImg" required><br>
-        <input type="submit" value="Add Club">
-    </form>
-</div>
-<div class="bg-white p-4 rounded shadow">
-    <h2 class="text-2xl font-bold mb-2">All Clubs</h2>
-    <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
-                <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quota</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Image 2</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Image 3</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Profile Picture</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cover Picture</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Taskbar Background Image</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
-                <?php foreach ($clubs as $club): ?>
-                <tr>
-                    <td class="px-6 py-4 whitespace-nowrap"><?php echo $club['name']; ?></td>
-                    <td class="px-6 py-4 whitespace-nowrap"><?php echo $club['description']; ?></td>
-                    <td class="px-6 py-4 whitespace-nowrap"><?php echo $club['type']; ?></td>
-                    <td class="px-6 py-4 whitespace-nowrap"><?php echo $club['quota']; ?></td>
-                    <td class="px-6 py-4 whitespace-nowrap"><img src="<?php echo $club['img2']; ?>" alt="Image 2"></td>
-                    <td class="px-6 py-4 whitespace-nowrap"><img src="<?php echo $club['img3']; ?>" alt="Image 3"></td>
-                    <td class="px-6 py-4 whitespace-nowrap"><img src="<?php echo $club['profilePic']; ?>" alt="Profile Picture"></td>
-                    <td class="px-6 py-4 whitespace-nowrap"><img src="<?php echo $club['coverPic']; ?>" alt="Cover Picture"></td>
-                    <td class="px-6 py-4 whitespace-nowrap"><img src="<?php echo $club['taskbarBgImg']; ?>" alt="Taskbar Background Image"></td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <form method="POST">
-                            <input type="hidden" name="id" value="<?php echo $club['id']; ?>">
-                            <input type="submit" name="delete" value="Delete">
-                        </form>
-                    </td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+        </select>
     </div>
+    <div class="bg-white p-4 rounded shadow">
+        <h2 class="text-2xl font-bold mb-2 ">Quota</h2>
+        <input type="number" class="w-full bg-gray-100 hover:bg-gray-200 rounded-sm" id="quota" name="quota" required>
+    </div>
+    <div class="bg-white p-4 rounded shadow">
+        <h2 class="text-2xl font-bold mb-2">Image 2</h2>
+        <input type="file" id="img2" name="img2" required>
+    </div>
+    <div class="bg-white p-4 rounded shadow">
+        <h2 class="text-2xl font-bold mb-2">Image 3</h2>
+        <input type="file" id="img3" name="img3" required>
+    </div>
+    <div class="bg-white p-4 rounded shadow">
+        <h2 class="text-2xl font-bold mb-2">Profile Picture</h2>
+        <input type="file" id="profilePic" name="profilePic" required>
+    </div>
+    <div class="bg-white p-4 rounded shadow">
+        <h2 class="text-2xl font-bold mb-2">Cover Picture</h2>
+        <input type="file" id="coverPic" name="coverPic" required>
+    </div>
+    <div class="bg-white p-4 rounded shadow">
+        <h2 class="text-2xl font-bold mb-2">Taskbar Background Image</h2>
+        <input type="file" id="taskbarBgImg" name="taskbarBgImg" required>
+    </div>
+</div>
+
+<div class=" flex justify-center text-center mt-10">
+    <h1 class="text-3xl sm:text-5xl md:text-6xl font-bold leading-tight text-gray-900">
+        <span class="block">Club Details</span>
+    </h1>
+</div>
+
+<div class="flex flex-wrap -mx-4 mt-10">
+    <?php foreach ($clubs as $club): ?>
+    <div class="w-full md:w-1/2 lg:w-1/3 px-4 mb-4">
+        <div class="bg-white rounded-lg shadow-lg">
+            <div class="flex items-center justify-between px-6 py-4">
+                <div class="flex items-center">
+                    <div class="text-xl font-bold text-gray-900"><?php echo $club['name']; ?></div>
+                </div>
+                <div>
+                    <form method="POST">
+                        <input type="hidden" name="id" value="<?php echo $club['id']; ?>">
+                        <input type="submit" name="delete" value="Delete" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                    </form>
+                </div>
+            </div>
+            <div class="px-6 py-4">
+                <p class="text-gray-700 text-base"><?php echo $club['description']; ?></p>
+            </div>
+            <div class="px-6 py-4">
+                <span class="text-gray-700 text-sm"><?php echo $club['type']; ?></span>
+            </div>
+            <div class="px-6 py-4">
+                <span class="text-gray-700 text-sm"><?php echo $club['quota']; ?></span>
+            </div>
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+                <div class="px-6 py-4">
+                    <img src="<?php echo $club['img2']; ?>" alt="Image 2" class="w-full h-full object-cover">
+                </div>
+                <div class="px-6 py-4">
+                    <img src="<?php echo $club['img3']; ?>" alt="Image 3" class="w-full h-full object-cover">
+                </div>
+                <div class="px-6 py-4">
+                    <img src="<?php echo $club['profilePic']; ?>" alt="Profile Picture" class="w-full h-full object-cover">
+                </div>
+                <div class="px-6 py-4">
+                    <img src="<?php echo $club['coverPic']; ?>" alt="Cover Picture" class="w-full h-full object-cover">
+                </div>
+                <div class="px-6 py-4">
+                    <img src="<?php echo $club['taskbarBgImg']; ?>" alt="Taskbar Background Image" class="w-full h-full object-cover">
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php endforeach; ?>
 </div>
 </body>
 </html>
