@@ -63,7 +63,7 @@ if ($totalAllEP > 64) {
 <body class="bg-gray-100">
 <nav class="bg-blue-500 p-4 text-white fixed w-full z-50">
     <div class="container mx-auto flex items-center justify-between">
-    <button onclick="location.href='index.php'" class="m-4 bg-transparent text-white font-bold py-2 px-4 rounded-full border-2 border-white">
+    <button onclick="location.href='index.php'" class="m-4 bg-transparent text-white font-bold py-2 px-4 rounded-full border-2 border-white hover:bg-white hover:text-blue-500">
         Back
     </button>
         <a class="text-lg font-semibold" href="#">EP Tracker</a>
@@ -78,7 +78,7 @@ if ($totalAllEP > 64) {
 </nav>
 <br><br>
 <div class="mt-16">
-    <div class="container mx-auto flex justify-center items-center h-64 w-3/4 bg-gray-400">
+    <div class="container mx-auto flex justify-center items-center h-64 w-3/4 sm:w-3/5 md:w-3/4 lg:w-4/5 bg-gray-400 rounded-xl" style="background-image: url('../assets/homerectangle.png'); background-size: cover; background-repeat: no-repeat;">
         <svg class="w-64 h-64 mx-auto" viewBox="0 0 36 36">
             <path class="circle-bg"
                 d="M18 2.0845
@@ -103,19 +103,19 @@ if ($totalAllEP > 64) {
         </div>
         
 <div class="container mx-auto text-center my-8">
-    <h1 class="text-2xl font-bold"><?php echo strtoupper($totalAllEP)?> OUT OF 64 EP</h1>
-    <p class="text-lg text-gray-700"><?php echo $req; ?> EP REQUIRED</p>
+    <h1 class="text-2xl sm:ml-40 lg:ml-64 md:ml-48 font-bold p-2 bg-blue-500 text-white rounded-lg w-1/2"><?php echo strtoupper($totalAllEP)?> OUT OF 64 EP</h1>
+    <p class="text-lg sm:ml-40 lg:ml-64 md:ml-48 p-2 bg-red-500 text-white w-1/2 rounded-lg"><?php echo $req; ?> EP REQUIRED!!</p>
     <div class="flex justify-center items-center space-x-4">
     <form method="POST">
         <input type="hidden" name="sem" value="<?php echo $sem - 2; ?>">
-        <button type="submit" class="m-4 bg-transparent text-black font-bold py-2 px-4 rounded-full border-2 border-black <?php echo $sem <= 1 ? 'opacity-0' : ''; ?>" <?php echo $sem <= 1 ? 'disabled' : ''; ?>>
+        <button type="submit" class="m-4 hover:text-gray-600 hover:bg-gray-900 bg-transparent text-black font-bold py-2 px-4 rounded-full border-2 border-black  <?php echo $sem <= 1 ? 'opacity-0' : ''; ?>" <?php echo $sem <= 1 ? 'disabled' : ''; ?>>
             <
         </button>
     </form>
     <p class="text-lg text-gray-700">SEMESTER <?php echo $sem; ?></p>
     <form method="POST">
         <input type="hidden" name="sem" value="<?php echo $sem; ?>">
-        <button type="submit" class="m-4 bg-transparent text-black font-bold py-2 px-4 rounded-full border-2 border-black <?php echo $sem >= 6 ? 'opacity-0' : ''; ?>" <?php echo $sem >= 6 ? 'disabled' : ''; ?>>
+        <button type="submit" class="m-4 hover:text-gray-600 hover:bg-gray-900 bg-transparent text-black font-bold py-2 px-4 rounded-full border-2 border-black <?php echo $sem >= 6 ? 'opacity-0' : ''; ?>" <?php echo $sem >= 6 ? 'disabled' : ''; ?>>
             >
         </button>
     </form>
