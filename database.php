@@ -316,7 +316,8 @@ $sql = "CREATE TABLE IF NOT EXISTS club_sessions (
     club_id INT(6) UNSIGNED NOT NULL,
     session_date DATE NOT NULL,
     time_slot VARCHAR(255) NOT NULL default '2pm - 4pm',
-    FOREIGN KEY (club_id) REFERENCES clubs(id)
+    FOREIGN KEY (club_id) REFERENCES clubs(id),
+    attendance ENUM('Absent', 'Present', 'Cancelled', 'None') NOT NULL DEFAULT 'None'
 )";
 if ($conn->query($sql) !== TRUE) {
     echo "Error creating table: " . $conn->error;
@@ -324,6 +325,7 @@ if ($conn->query($sql) !== TRUE) {
 
 $years = [2022, 2023, 2024];
 $months = ['02' => 'February', '03' => 'March', '08' => 'August', '09' => 'September'];
+$attendance_statuses = ['Absent', 'Present', 'Cancelled', 'None'];
 
 foreach ($years as $year) {
     foreach ($clubs as $club) {
@@ -355,9 +357,23 @@ foreach ($years as $year) {
 
                 if ($result->num_rows == 0) {
                     // Insert the session into the sessions table
-                    $sql = "INSERT INTO club_sessions (club_id, session_date) VALUES (?, ?)";
+                    $sql = "INSERT INTO club_sessions (club_id, session_date, attendance) VALUES (?, ?, ?)";
                     $stmt = $conn->prepare($sql);
-                    $stmt->bind_param("is", $clubId, $sessionDate);
+                    switch ($sessionCount) {
+                        case 0:
+                            $attendance = 'Present';
+                            break;
+                        case 1:
+                            $attendance = 'Absent';
+                            break;
+                        case 2:
+                            $attendance = 'Cancelled';
+                            break;
+                        default:
+                            $attendance = (rand(0, 2) == 0) ? 'Present' : ((rand(0, 1) == 0) ? 'Absent' : 'Cancelled');
+                            break;
+                    }
+                    $stmt->bind_param("iss", $clubId, $sessionDate, $attendance);
                     if ($stmt->execute() !== TRUE) {
                         echo "Error inserting session: " . $conn->error;
                     } else {
@@ -390,10 +406,16 @@ if ($conn->query($sql) !== TRUE) {
 }
 
 
-// Add user_id column to user_sessions table
-$sql = "ALTER TABLE user_sessions ADD COLUMN user_id INT(6) UNSIGNED NOT NULL AFTER session_id, ADD FOREIGN KEY (user_id) REFERENCES users(id)";
-if ($conn->query($sql) !== TRUE) {
-    echo "Error adding column: " . $conn->error;
+// Check if user_id column already exists in user_sessions table
+$result = $conn->query("SHOW COLUMNS FROM `user_sessions` LIKE 'user_id'");
+if ($result->num_rows == 0) {
+    // Add user_id column to user_sessions table
+    $sql = "ALTER TABLE user_sessions ADD COLUMN user_id INT(6) UNSIGNED NOT NULL AFTER session_id, ADD FOREIGN KEY (user_id) REFERENCES users(id)";
+    if ($conn->query($sql) !== TRUE) {
+        echo "Error adding column: " . $conn->error;
+    }
+} else {
+    echo "Column user_id already exists.";
 }
 
 // Define the attendance statuses

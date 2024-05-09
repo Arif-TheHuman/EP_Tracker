@@ -26,13 +26,12 @@
     $club = $result->fetch_assoc();
     $clubId = $club['id'];
 
-    $sql = "SELECT cs.session_date, GROUP_CONCAT(cs.time_slot) as time_slots, GROUP_CONCAT(us.attendance_status) as attendance_statuses
-        FROM club_sessions cs 
-        LEFT JOIN user_sessions us ON cs.id = us.session_id AND us.user_id = ?
-        WHERE cs.club_id = ?
-        GROUP BY cs.session_date";
+    $sql = "SELECT cs.session_date, cs.attendance, GROUP_CONCAT(cs.time_slot) as time_slots
+    FROM club_sessions cs 
+    WHERE cs.club_id = ?
+    GROUP BY cs.session_date, cs.attendance";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("ii", $userId, $clubId);
+$stmt->bind_param("i", $clubId);
 $stmt->execute();
 $result = $stmt->get_result();
 $sessions = $result->fetch_all(MYSQLI_ASSOC);
@@ -67,30 +66,37 @@ $sessions = $result->fetch_all(MYSQLI_ASSOC);
         </thead>
         <tbody>
         <?php 
-$total_time_slots = array_sum(array_map(function($session) {
-    return count(explode(',', $session['time_slots']));
-}, $sessions));
+$total_sessions = count($sessions);
+$current_session = 0;
 $current_time_slot = 0;
+$first_none = true;
 foreach ($sessions as $session): 
     $time_slots = isset($session['time_slots']) ? explode(',', $session['time_slots']) : [];
     for ($i = 0; $i < count($time_slots); $i++, $current_time_slot++): ?>
-        <tr>
-            <td class="border px-4 py-2"><?php echo $session['session_date']; ?></td>
-            <td class="border px-4 py-2"><?php echo $time_slots[$i]; ?></td>
-            <td class="border px-4 py-2">
-                <?php 
-                if ($current_time_slot < $total_time_slots * 0.7) { // 70% of the total time slots
-                    echo 'Present';
-                } elseif ($current_time_slot < $total_time_slots * 0.9) { // Next 20% of the total time slots
-                    echo 'Absent';
-                } else { // Last 10% of the total time slots
-                    echo 'Submit';
+    <tr>
+        <td class="border px-4 py-2"><?php echo $session['session_date']; ?></td>
+        <td class="border px-4 py-2"><?php echo $time_slots[$i]; ?></td>
+        <td class="border px-4 py-2">
+            <?php 
+            if ($current_session >= $total_sessions - 2) {
+                if ($first_none) {
+                    if (isset($_SESSION['attendance_status']) && $_SESSION['attendance_status'] == 'Present') {
+                        echo 'Present';
+                    } else {
+                        echo '<a href="sessionpassword.php?name=' . urlencode($clubName) . '">Submit</a>';
+                    }
+                    $first_none = false;
+                } else {
+                    echo '-';
                 }
-                ?>
-            </td>
-        </tr>
-    <?php endfor; endforeach; ?>
-        </tbody>
-    </table>
+            } else {
+                echo $session['attendance'];
+            }
+            ?>
+        </td>
+    </tr>
+<?php endfor; $current_session++; endforeach; ?>
+</tbody>
+</table>
 </body>
 </html>
