@@ -77,6 +77,12 @@ while ($row = $result->fetch_assoc()) {
         </div>
     </div>
 
+    <div class=" flex justify-center text-center mt-10 mb-10">
+    <h1 class="text-3xl sm:text-5xl md:text-6xl font-bold leading-tight text-gray-900">
+        <span class="block">List of Events</span>
+    </h1>
+</div>
+
     <div class="flex flex-wrap -mx-2">
         <?php foreach ($events as $event) : ?>
             <div class="w-full p-2 md:w-1/2 lg:w-1/3 xl:w-1/4">
