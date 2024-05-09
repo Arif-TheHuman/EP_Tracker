@@ -26,7 +26,7 @@ $result = mysqli_query($conn, $sql);
 
     <div class="container mx-auto my-10">
         <div class="flex justify-center items-center mb-10">
-            <h1 class="text-4xl font-bold text-center">News & Announcement</h1>
+            <h1 class="text-4xl font-bold text-center sm:text-2xl md:text-3xl">News & Announcement</h1>
             <a href="EP_Hub.php">
                 <img class="w-12 h-12 ml-16" src="assets/images/frontie.png" alt="Your Avatar Description">
             </a>

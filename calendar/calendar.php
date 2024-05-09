@@ -29,20 +29,20 @@ $conn->commit();
 <body class="bg-white">
     <header class="p-6 flex justify-between items-center bg-cover" style="background-image: url('assets/background.jpg'); position: relative;">
         <div class="back-button">
-            <a href="../home/index.php" class="bg-white rounded-full p-2">Back</a>
+            <a href="../home/index.php" class="bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-full p-4">Back</a>
         </div>
-        <h1 class="text-white text-lg"></h1>
+        <h1 class="text-white text-lg p-4 bg-blue-700 rounded-xl">Calendar</h1>
         <div onclick="window.location.href='../profile/profile.php'" class="bg-white rounded-full">
             <img class="w-12 h-12 rounded-full" src="https://b.fssta.com/uploads/application/soccer/headshots/885.vresize.350.350.medium.14.png" alt="Profile Picture">
         </div>
     </header>
-    <div class="p-5">
-        <h1><?php echo $year; ?></h1>
+    <div class="p-5 flex justify-center text-center bg-gray-100 mb-8 text-4xl">
+        <h1 class="w-2/4 h-2/4"><?php echo $year; ?></h1>
     </div>
     <div class="mx-auto flex items-center justify-center">
         <?php
         if ($year == 2022) {
-            echo '<svg class="w-4/5 h-4/5" viewBox="0 0 196 169" fill="none" xmlns="http://www.w3.org/2000/svg">
+            echo '<svg class="w-128 h-128 md:w-256 md:h-256 sm:w-3/4 sm:h-3/4 lg:w-1/4 lg:w-1/4 " viewBox="0 0 196 169" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g id="12 1" clip-path="url(#clip0_1_1012)">
             <path id="Vector" d="M75.6759 153.928L70.5717 158.092L74.6281 152.06C71.4323 146.923 66.2056 142.484 66.2056 142.484C66.2056 142.484 55.3619 151.692 55.3619 158.93C55.3619 166.168 60.2168 168.695 66.2056 168.695C72.1943 168.695 77.0491 166.168 77.0491 158.93C77.0491 157.319 76.5111 155.61 75.6759 153.928Z" fill="#F2F2F2"/>
             <path id="Vector_2" d="M69.2591 158.318V158.674C69.2352 162.822 68.4461 166.057 66.8977 168.336C66.8758 168.369 66.8519 168.401 66.8299 168.435L66.6566 168.341L66.4912 168.249C68.2089 165.789 68.8167 162.311 68.8386 158.694C68.8406 158.577 68.8426 158.459 68.8406 158.341C68.8346 156.809 68.729 155.26 68.5596 153.756C68.5477 153.639 68.5338 153.521 68.5198 153.402C68.2847 151.417 67.9459 149.52 67.5991 147.872C67.5752 147.756 67.5493 147.639 67.5234 147.524C66.9236 144.737 66.3118 142.719 66.1723 142.272C66.1564 142.217 66.1464 142.187 66.1444 142.18L66.3337 142.132L66.3357 142.13L66.527 142.083C66.529 142.09 66.5629 142.191 66.6187 142.378C66.8319 143.077 67.3859 144.976 67.9299 147.48C67.9538 147.593 67.9798 147.71 68.0037 147.826C68.2866 149.163 68.5636 150.658 68.7828 152.226C68.8386 152.62 68.8885 153.009 68.9323 153.392C68.9482 153.51 68.9622 153.628 68.9742 153.745C69.1575 155.372 69.2525 156.896 69.2591 158.318Z" fill="white"/>
@@ -90,7 +90,7 @@ $conn->commit();
             </svg>
             ';
         } else if ($year == 2023) {
-            echo '<svg class="w-4/5 h-4/5" viewBox="0 0 196 169" fill="none" xmlns="http://www.w3.org/2000/svg">
+            echo '<svg class="w-128 h-128 md:w-256 md:h-256 sm:w-3/4 sm:h-3/4 lg:w-1/4 lg:h-1/4" viewBox="0 0 196 169" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g id="11 1" clip-path="url(#clip0_1_950)">
             <path id="Vector" d="M207.705 129.863C207.45 129.557 207.26 129.194 207.149 128.799C207.037 128.405 207.006 127.988 207.058 127.58C207.111 127.171 207.245 126.779 207.451 126.433C207.658 126.087 207.931 125.794 208.253 125.575L206.194 115.794L210.686 117.621L211.953 126.629C212.255 127.241 212.34 127.953 212.193 128.629C212.045 129.305 211.674 129.898 211.15 130.297C210.627 130.696 209.987 130.872 209.352 130.792C208.717 130.712 208.131 130.381 207.705 129.863Z" fill="#FFB8B8"/>
             <path id="Vector_2" d="M207.394 122.1L203.446 113.801L203.98 92.9016L204.233 93.4829C204.529 94.16 211.457 110.106 210.963 115.444L211.755 120.323L207.394 122.1Z" fill="#3F3D56"/>
@@ -140,7 +140,7 @@ $conn->commit();
             </svg>
             ';
         } else if ($year == 2024) {
-            echo '<svg class="w-4/5 h-4/5" viewBox="0 0 196 169" fill="none" xmlns="http://www.w3.org/2000/svg">
+            echo '<svg class="w-128 h-128 md:w-256 md:h-256 sm:w-3/4 sm:h-3/4 lg:w-1/4 lg:h-1/4" viewBox="0 0 196 169" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g id="6 5" clip-path="url(#clip0_1_415)">
                 <path id="Vector" d="M147.278 152.511C147.066 152.677 146.848 152.839 146.628 152.999H119.849C119.695 152.839 119.541 152.677 119.39 152.511C118.153 151.148 117.065 149.676 116.14 148.117C113.941 144.475 113.184 139.7 113.184 134.837C113.184 134.54 113.186 134.243 113.193 133.946C113.218 132.582 113.3 131.216 113.422 129.872C113.445 129.638 113.467 129.407 113.491 129.175C113.69 127.248 113.968 125.371 114.284 123.618C114.325 123.395 114.365 123.173 114.407 122.954C115.052 119.472 115.916 116.027 116.995 112.636C116.995 112.636 117.031 112.644 117.1 112.661C117.298 112.712 117.773 112.833 118.47 113.023C120.39 113.548 123.996 114.605 128.155 116.176C128.382 116.26 128.612 116.348 128.843 116.438C132.362 117.772 135.767 119.345 139.032 121.143C139.235 121.256 139.435 121.371 139.635 121.486V121.502L139.197 134.565L143.117 123.69C143.917 124.249 144.681 124.829 145.409 125.429C145.61 125.593 145.81 125.761 146.004 125.935C147.659 127.33 149.071 128.95 150.192 130.738C156.057 140.462 153.595 147.611 147.278 152.511Z" fill="#F2F2F2"/>
                 <path id="Vector_2" d="M143.502 152.999H142.79C142.785 152.837 142.778 152.675 142.767 152.511C142.48 147.597 140.188 142.171 137.067 136.933C136.956 136.742 136.842 136.548 136.722 136.357C135.207 133.866 133.519 131.429 131.775 129.112C131.641 128.932 131.503 128.749 131.365 128.569C129.044 125.523 126.647 122.704 124.482 120.297C124.33 120.125 124.175 119.957 124.021 119.792C120.811 116.252 118.162 113.673 117.1 112.661C116.942 112.511 116.819 112.397 116.735 112.317C116.657 112.239 116.61 112.198 116.601 112.19L116.851 111.96L116.853 111.954L117.107 111.725C117.116 111.735 117.269 111.87 117.541 112.13C117.77 112.345 118.084 112.647 118.47 113.023C119.815 114.334 122.041 116.565 124.616 119.394C124.765 119.558 124.918 119.728 125.072 119.898C126.83 121.85 128.734 124.063 130.621 126.441C131.095 127.039 131.556 127.632 132.002 128.221C132.142 128.401 132.28 128.581 132.414 128.762C134.301 131.265 135.948 133.673 137.357 135.985L137.709 136.564C141.299 142.587 143.233 147.921 143.482 152.511C143.491 152.675 143.498 152.837 143.502 152.999Z" fill="white"/>
@@ -217,9 +217,9 @@ $conn->commit();
     </div>
     <nav class="bg-blue-500 overflow-auto">
         <ul class="flex list-none m-0 p-0">
-            <li class="float-left"><a href="calendar.php?year=2022" class="block text-white text-center px-4 py-2 no-underline">2022</a></li>
-            <li class="float-left"><a href="calendar.php?year=2023" class="block text-white text-center px-4 py-2 no-underline">2023</a></li>
-            <li class="float-left"><a href="calendar.php?year=2024" class="block text-white text-center px-4 py-2 no-underline">2024</a></li>
+            <li class="float-left"><a href="calendar.php?year=2022" class="block text-white text-center px-4 py-2 no-underline hover:bg-blue-700">2022</a></li>
+            <li class="float-left"><a href="calendar.php?year=2023" class="block text-white text-center px-4 py-2 no-underline hover:bg-blue-700">2023</a></li>
+            <li class="float-left"><a href="calendar.php?year=2024" class="block text-white text-center px-4 py-2 no-underline hover:bg-blue-700">2024</a></li>
         </ul>
     </nav>
     <table class="table-auto w-full mx-auto border-collapse">
