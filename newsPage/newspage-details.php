@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !$registered) {
 <div class="container mx-auto pt-16"> <!-- Kept pt-16 to make space for the fixed navbar -->
     <div class="flex justify-center items-center mb-10 mt-10">
         <a href="newspage.php">
-        <img class="w-12 h-12 mr-4" src="assets/images/backie.png" alt="Your Avatar Description">
+        <img class="w-12 h-12 mr-4" src="assets/images/backaru.png" alt="Your Avatar Description">
         </a>
         <h1 class="text-4xl font-bold mt-4 text-center"><?php echo $newsItem['title']; ?></h1>
     </div>
