@@ -43,26 +43,59 @@ while ($row = $result->fetch_assoc()) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
 </head>
 
-<body>
-    <form method="post">
-        <input type="text" name="name" placeholder="Name">
-        <input type="text" name="description" placeholder="Description">
-        <input type="text" name="date" placeholder="Date">
-        <input type="text" name="ep" placeholder="EP">
-        <button type="submit">Create</button>
-    </form>
+<div class=" flex justify-center text-center mt-10 mb-10">
+    <h1 class="text-3xl sm:text-5xl md:text-6xl font-bold leading-tight text-gray-900">
+        <span class="block">Add New Events</span>
+    </h1>
+</div>
 
-    <?php foreach ($events as $event) : ?>
-        <p>
-            <?php echo $event['date'] . ': ' . $event['name']; ?>
-            <form method="post">
-                <input type="hidden" name="delete" value="<?php echo $event['id']; ?>">
-                <button type="submit">Delete</button>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-4">
+        <div class="bg-white rounded-lg shadow-lg p-8 flex flex-col md:flex-row flex-wrap md:flex-no-wrap">
+            <form class="w-full md:w-1/2 p-2" method="post">
+                <div class="flex flex-col">
+                    <input class="w-full p-2 border rounded" type="text" name="name" placeholder="Name">
+                </div>
+                <div class="flex flex-col mt-4">
+                    <input class="w-full p-2 border rounded" type="text" name="ep" placeholder="EP">
+                </div>
             </form>
-        </p>
-    <?php endforeach; ?>
+            <form class="w-full md:w-1/2 p-2" method="post">
+                <div class="flex flex-col">
+                    <textarea class="w-full p-2 border rounded" name="description" placeholder="Description"></textarea>
+                </div>
+                <div class="flex flex-col mt-4">
+                    <input class="w-full p-2 border rounded" type="text" name="date" placeholder="Date">
+                </div>
+                <div class="flex flex-col mt-4">
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="flex flex-wrap -mx-2">
+        <?php foreach ($events as $event) : ?>
+            <div class="w-full p-2 md:w-1/2 lg:w-1/3 xl:w-1/4">
+                <div class="bg-white rounded-lg shadow-lg p-4 flex flex-col">
+                    <div class="flex justify-between">
+                        <h3 class="text-lg font-bold"><?php echo $event['name']; ?></h3>
+                        <form method="post">
+                            <input type="hidden" name="delete" value="<?php echo $event['id']; ?>">
+                            <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">
+                                Delete
+                            </button>
+                        </form>
+                    </div>
+                    <p class="mt-2"><?php echo $event['date']; ?></p>
+                    <p class="mt-2"><?php echo $event['description']; ?></p>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
 </body>
 
 </html>
