@@ -219,20 +219,20 @@ $sql = "CREATE TABLE IF NOT EXISTS clubs (
     coverPic VARCHAR(255) NOT NULL,
     taskbarBgImg VARCHAR(255) NOT NULL,
     headnav VARCHAR(255) NOT NULL,
-    bgforcontent VARCHAR(255) NOT NULL
-
+    bgforcontent VARCHAR(255) NOT NULL,
+    contentNO1 VARCHAR(255) NOT NULL
   )";
   if ($conn->query($sql) !== TRUE) {
       echo "Error creating table: " . $conn->error;
   }
 // Insert dummy data into clubs table
 $clubs = [
-    ['Volleyball Club', 'A club for volleyball enthusiasts.', 'outdoor', 20, 50, 'img1.jpg', '../assets/clubs/outdoor/volleyballclubbg.png', '../assets/clubs/outdoor/volleyballclub.png','../assets/clubs/outdoor/volleyballclub.png', '../assets/clubs/outdoor/volleyballclubbg.png','../assets/clubs/outdoor/taskbarimg1.jpg', '../assets/clubs/outdoor/VB HEADER.png', '../assets/clubs/outdoor/VB BG FOR CONTENT.png'],
-    ['Touch Rugby Club', 'A club for rough and tough Rugby enthusiasts.', 'outdoor', 20, 50, 'img1.jpg', '../assets/clubs/outdoor/rugbybg.png', '../assets/clubs/outdoor/rugbyclub.png','../assets/clubs/outdoor/rugbyclub.png', '../assets/clubs/outdoor/rugbybg.png','../assets/clubs/outdoor/taskbarimg1.jpg', '../assets/clubs/outdoor/RUG HEADER.png', '../assets/clubs/outdoor/RUG BG FOR CONTENT.png'],
-    ['Swimming Club', 'A club for fighting dreamers, fighting swimmers.', 'outdoor', 20, 50, 'img1.jpg', '../assets/clubs/outdoor/swimmingclubbg.png', '../assets/clubs/outdoor/swimmingclub.png', '../assets/clubs/outdoor/swimmingclub.png', '../assets/clubs/outdoor/swimmingclubbg.png','../assets/clubs/outdoor/taskbarimg1.jpg', '../assets/clubs/outdoor/SWIM HEADER.png', '../assets/clubs/outdoor/SWIM BG FOR CONTENT.png'],
-    ['Kelab Nasyidul Islam', 'A club for those who enjoys religious songs and nasyids', 'indoor', 15, 30, 'img1.jpg', '../assets/clubs/indoor/knibg.png', '../assets/clubs/indoor/kni.png','../assets/clubs/indoor/kni.png', '../assets/clubs/indoor/knibg.png','../assets/clubs/indoor/taskbarimg2.jpg', '../assets/clubs/indoor/KNI HEADER.png', '../assets/clubs/indoor/KNI BG FOR CONTENT.png'],
-    ['Lets Japan Club', 'A club for those who enjoy learning Japanese Cultures.', 'indoor', 15, 30, 'img1.jpg', '../assets/clubs/indoor/letsjapanbg.png', '../assets/clubs/indoor/letsjapan.png','../assets/clubs/indoor/letsjapan.png', '../assets/clubs/indoor/letsjapanbg.png','../assets/clubs/indoor/taskbarimg2.jpg', '../assets/clubs/indoor/JP HEADER.png', '../assets/clubs/indoor/JP BG FOR CONTENT.png'],
-    ['Art Club', 'A club for those who enjoy creating and appreciating art', 'indoor', 15, 30, 'img1.jpg', '../assets/clubs/indoor/artclubbg.png', '../assets/clubs/indoor/artclub.png','../assets/clubs/indoor/artclub.png', '../assets/clubs/indoor/artclubbg.png','../assets/clubs/indoor/taskbarimg2.jpg', '../assets/clubs/indoor/ART HEADER.png', '../assets/clubs/indoor/ART BG FOR CONTENT.png'],
+    ['Volleyball Club', 'A club for volleyball enthusiasts.', 'outdoor', 20, 50, 'img1.jpg', '../assets/clubs/outdoor/volleyballclubbg.png', '../assets/clubs/outdoor/volleyballclub.png','../assets/clubs/outdoor/volleyballclub.png', '../assets/clubs/outdoor/volleyballclubbg.png','../assets/clubs/outdoor/taskbarimg1.jpg', '../assets/clubs/outdoor/VB HEADER.png', '../assets/clubs/outdoor/VB BG FOR CONTENT.png', '../assets/clubs/outdoor/VB CONTENT NO1.png'],
+    ['Touch Rugby Club', 'A club for rough and tough Rugby enthusiasts.', 'outdoor', 20, 50, 'img1.jpg', '../assets/clubs/outdoor/rugbybg.png', '../assets/clubs/outdoor/rugbyclub.png','../assets/clubs/outdoor/rugbyclub.png', '../assets/clubs/outdoor/rugbybg.png','../assets/clubs/outdoor/taskbarimg1.jpg', '../assets/clubs/outdoor/RUG HEADER.png', '../assets/clubs/outdoor/RUG BG FOR CONTENT.png', '../assets/clubs/outdoor/RUG CONTENT NO1.png'],
+    ['Swimming Club', 'A club for fighting dreamers, fighting swimmers.', 'outdoor', 20, 50, 'img1.jpg', '../assets/clubs/outdoor/swimmingclubbg.png', '../assets/clubs/outdoor/swimmingclub.png', '../assets/clubs/outdoor/swimmingclub.png', '../assets/clubs/outdoor/swimmingclubbg.png','../assets/clubs/outdoor/taskbarimg1.jpg', '../assets/clubs/outdoor/SWIM HEADER.png', '../assets/clubs/outdoor/SWIM BG FOR CONTENT.png', '../assets/clubs/outdoor/SWIM CONTENT NO1.png'],
+    ['Kelab Nasyidul Islam', 'A club for those who enjoys religious songs and nasyids', 'indoor', 15, 30, 'img1.jpg', '../assets/clubs/indoor/knibg.png', '../assets/clubs/indoor/kni.png','../assets/clubs/indoor/kni.png', '../assets/clubs/indoor/knibg.png','../assets/clubs/indoor/taskbarimg2.jpg', '../assets/clubs/indoor/KNI HEADER.png', '../assets/clubs/indoor/KNI BG FOR CONTENT.png', '../assets/clubs/indoor/KNI CONTENT NO1.png'],
+    ['Lets Japan Club', 'A club for those who enjoy learning Japanese Cultures.', 'indoor', 15, 30, 'img1.jpg', '../assets/clubs/indoor/letsjapanbg.png', '../assets/clubs/indoor/letsjapan.png','../assets/clubs/indoor/letsjapan.png', '../assets/clubs/indoor/letsjapanbg.png','../assets/clubs/indoor/taskbarimg2.jpg', '../assets/clubs/indoor/JP HEADER.png', '../assets/clubs/indoor/JP BG FOR CONTENT.png', '../assets/clubs/indoor/JP CONTENT NO1.png'],
+    ['Art Club', 'A club for those who enjoy creating and appreciating art', 'indoor', 15, 30, 'img1.jpg', '../assets/clubs/indoor/artclubbg.png', '../assets/clubs/indoor/artclub.png','../assets/clubs/indoor/artclub.png', '../assets/clubs/indoor/artclubbg.png','../assets/clubs/indoor/taskbarimg2.jpg', '../assets/clubs/indoor/ART HEADER.png', '../assets/clubs/indoor/ART BG FOR CONTENT.png', '../assets/clubs/indoor/ART CONTENT NO1.png'],
     // Add more clubs as needed
 ];
 
@@ -299,9 +299,9 @@ foreach ($clubs as $club) {
 
     // If the club does not exist, insert it
     if ($result->num_rows == 0) {
-        $sql = "INSERT INTO clubs (name, description, type, current_members, quota, img1, img2, img3, profilePic, coverPic, taskbarBgImg, headnav, bgforcontent) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO clubs (name, description, type, current_members, quota, img1, img2, img3, profilePic, coverPic, taskbarBgImg, headnav, bgforcontent, contentNO1) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssiissssssss", $club[0], $club[1], $club[2], $club[3], $club[4], $club[5], $club[6], $club[7], $club[8], $club[9], $club[10], $club[11], $club[12]);
+        $stmt->bind_param("sssiisssssssss", $club[0], $club[1], $club[2], $club[3], $club[4], $club[5], $club[6], $club[7], $club[8], $club[9], $club[10], $club[11], $club[12], $club[13]);
         if ($stmt->execute() !== TRUE) {
             echo "Error inserting club: " . $conn->error;
         }

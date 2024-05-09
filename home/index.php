@@ -113,7 +113,7 @@ $row = $result->fetch_assoc();
 </head>
 <body class="font-sans antialiased text-gray-900 bg-gray-100">
     <!-- Navigation Bar -->
-<nav class="bg-blue-500 p-4 text-white fixed w-full z-50">
+<nav class="p-4 text-white fixed w-full z-50" style="background-image: url('../assets/figmatingy1.jpg'); background-size: cover; background-repeat: no-repeat;">
     <div class="container mx-auto flex items-center justify-between">
         <a class="text-lg font-semibold" href="#">EP Tracker</a>
         <div class="flex items-center space-x-4">
