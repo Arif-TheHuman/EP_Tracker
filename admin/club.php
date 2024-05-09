@@ -55,11 +55,11 @@ $conn->close();
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
     <div class="bg-white p-4 rounded shadow">
         <h2 class="text-2xl font-bold mb-2">Name</h2>
-        <input type="text" class="w-full bg-gray-100 hover:bg-gray-200 rounded-xl" id="name" name="name" required>
+        <input type="text" class="w-full bg-gray-200 hover:bg-gray-400 rounded-xl" id="name" name="name" required>
     </div>
     <div class="bg-white p-4 rounded shadow">
         <h2 class="text-2xl font-bold mb-2">Description</h2>
-        <textarea class="w-full bg-gray-100 hover:bg-gray-200 rounded-sm" id="description" name="description" required></textarea>
+        <textarea class="w-full bg-gray-200 hover:bg-gray-400 rounded-sm" id="description" name="description" required></textarea>
     </div>
     <div class="bg-white p-4 rounded shadow">
         <h2 class="text-2xl font-bold mb-2">Type</h2>
@@ -71,7 +71,7 @@ $conn->close();
     </div>
     <div class="bg-white p-4 rounded shadow">
         <h2 class="text-2xl font-bold mb-2 ">Quota</h2>
-        <input type="number" class="w-full bg-gray-100 hover:bg-gray-200 rounded-sm" id="quota" name="quota" required>
+        <input type="number" class="w-full bg-gray-200 hover:bg-gray-400 rounded-sm" id="quota" name="quota" required>
     </div>
     <div class="bg-white p-4 rounded shadow">
         <h2 class="text-2xl font-bold mb-2">Image 2</h2>
