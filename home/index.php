@@ -121,7 +121,9 @@ $row = $result->fetch_assoc();
             <a class="hover:text-gray-300" href="../clubs/club-page.php">Clubs</a>
             <a class="hover:text-gray-300" href="../newsPage/newspage.php">News</a>
             <a class="hover:text-gray-300" href="../calendar/calendar.php">Calendar</a>
-            <img class="h-8 w-8 rounded-full" src="https://b.fssta.com/uploads/application/soccer/headshots/885.vresize.350.350.medium.14.png" alt="Profile Image">
+            <a href="../profile/profile.php">
+                <img class="h-8 w-8 rounded-full" src="https://b.fssta.com/uploads/application/soccer/headshots/885.vresize.350.350.medium.14.png" alt="Profile Image">
+            </a>
         </div>
     </div>
 </nav>

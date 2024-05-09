@@ -1,10 +1,6 @@
 <?php
 include 'db_connection.php';
 
-$adminUsername = "admin";
-$adminPassword = "admin";
-$adminRole = "admin";
-
 // Create database if it doesn't exist
 $sql = "CREATE DATABASE IF NOT EXISTS $dbName";
 if ($conn->query($sql) !== TRUE) {
@@ -24,27 +20,46 @@ password VARCHAR(30) NOT NULL
 if ($conn->query($sql) !== TRUE) {
     echo "Error creating table: " . $conn->error;
 }
+
+// Check if the 'email' column exists in the 'users' table
+$sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '$dbName' AND TABLE_NAME = 'users' AND COLUMN_NAME = 'email'";
+$result = $conn->query($sql);
+if ($result->num_rows == 0) {
+    // The 'email' column does not exist, so add it
+    $sql = "ALTER TABLE users ADD COLUMN email VARCHAR(255) NOT NULL";
+    if ($conn->query($sql) !== TRUE) {
+        echo "Error adding column: " . $conn->error;
+    }
+}
+
+// Check if the 'phone_number' column exists in the 'users' table
+$sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '$dbName' AND TABLE_NAME = 'users' AND COLUMN_NAME = 'phone_number'";
+$result = $conn->query($sql);
+if ($result->num_rows == 0) {
+    // The 'phone_number' column does not exist, so add it
+    $sql = "ALTER TABLE users ADD COLUMN phone_number VARCHAR(15) NOT NULL";
+    if ($conn->query($sql) !== TRUE) {
+        echo "Error adding column: " . $conn->error;
+    }
+}
+
+// Check if the 'userRoleSchool' column exists in the 'users' table
+$sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '$dbName' AND TABLE_NAME = 'users' AND COLUMN_NAME = 'userRoleSchool'";
+$result = $conn->query($sql);
+if ($result->num_rows == 0) {
+    // The 'userRoleSchool' column does not exist, so add it
+    $sql = "ALTER TABLE users ADD COLUMN userRoleSchool ENUM('member', 'non-member') NOT NULL DEFAULT 'member'";
+    if ($conn->query($sql) !== TRUE) {
+        echo "Error adding column: " . $conn->error;
+    }
+}
+
 $sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '$dbName' AND TABLE_NAME = 'users' AND COLUMN_NAME = 'role'";
 $result = $conn->query($sql);
 if ($result->num_rows == 0) {
     $sql = "ALTER TABLE users ADD COLUMN role ENUM('user', 'admin') NOT NULL DEFAULT 'user'";
     if ($conn->query($sql) !== TRUE) {
         echo "Error adding column: " . $conn->error;
-    }
-}
-// Check if the admin user already exists
-$sql = "SELECT * FROM users WHERE username = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $adminUsername);
-$stmt->execute();
-$result = $stmt->get_result();
-if ($result->num_rows == 0) {
-    // The admin user does not exist, so insert it
-    $sql = "INSERT INTO users (username, password, role) VALUES (?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sss", $adminUsername, $adminPassword, $adminRole);
-    if ($stmt->execute() !== TRUE) {
-        echo "Error creating admin user: " . $conn->error;
     }
 }
 
@@ -70,9 +85,34 @@ if ($result->num_rows == 0) {
     }
 }
 
+$adminUsername = "admin";
+$adminPassword = "admin";
+$adminRole = "admin";
+$adminSchoolRole = "admin";
+$adminPhoneNumber = "1234567890";
+$adminEmail = "PoliAdmin@gmail.com";
+
+// Check if the admin user already exists
+$sql = "SELECT * FROM users WHERE username = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $adminUsername);
+$stmt->execute();
+$result = $stmt->get_result();
+if ($result->num_rows == 0) {
+    $sql = "INSERT INTO users (username, password, role, email, phone_number) VALUES (?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sssss", $adminUsername, $adminPassword, $adminRole, $adminEmail, $adminPhoneNumber);
+    if ($stmt->execute() !== TRUE) {
+        echo "Error creating admin user: " . $stmt->error;
+    }
+}
+
 $userUsername = "UserMan";
 $userPassword = "a";
 $userRole = "user";
+$userSchoolRole = "member";
+$userPhoneNumber = "987654321";
+$userEmail = "userman@gmail.com";
 
 $sql = "SELECT * FROM users WHERE username = ?";
 $stmt = $conn->prepare($sql);
@@ -81,9 +121,9 @@ $stmt->execute();
 $result = $stmt->get_result();
 if ($result->num_rows == 0) {
     // The 'UserMan' user does not exist, so insert it
-    $sql = "INSERT INTO users (username, password, role) VALUES (?, ?, ?)";
+    $sql = "INSERT INTO users (username, password, role, email, phone_number, userRoleSchool) VALUES (?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sss", $userUsername, $userPassword, $userRole);
+    $stmt->bind_param("ssssss", $userUsername, $userPassword, $userRole, $userEmail, $userPhoneNumber, $userSchoolRole);
     if ($stmt->execute() !== TRUE) {
         echo "Error creating 'UserMan' user: " . $conn->error;
     }
