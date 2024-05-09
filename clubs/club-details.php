@@ -59,17 +59,25 @@ $isMember = mysqli_num_rows($result) > 0;
         </div>
 
         <?php if (!$isMember) : ?>
-            <form action="join_club.php" method="post">
+            <form action="join_club.php" method="post" class="pb-4">
                 <input type="hidden" name="clubId" value="<?php echo $club['id']; ?>">
                 <input type="hidden" name="clubName" value="<?php echo $club['name']; ?>">
                 <button class="bg-white hover:bg-gray-200 text-black font-bold py-2 px-4 rounded" type="submit">Join</button>
             </form>
         <?php else : ?>
-            <form action="leave_club.php" method="post">
-                <input type="hidden" name="clubId" value="<?php echo $club['id']; ?>">
-                <input type="hidden" name="clubName" value="<?php echo $club['name']; ?>">
-                <button class="bg-white hover:bg-gray-200 text-black font-bold py-2 px-4 rounded" type="submit">Joined</button>
-            </form>
+            <div class="flex items-center space-x-4 pb-4">
+                <form action="leave_club.php" method="post">
+                    <input type="hidden" name="clubId" value="<?php echo $club['id']; ?>">
+                    <input type="hidden" name="clubName" value="<?php echo $club['name']; ?>">
+                    <button class="bg-white hover:bg-gray-200 text-black font-bold py-2 px-4 rounded" type="submit">Joined</button>
+                </form>
+                <a href="session.php?clubId=<?php echo $club['id']; ?>" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Session</a>
+                <form action="leave_club.php" method="post">
+                    <input type="hidden" name="clubId" value="<?php echo $club['id']; ?>">
+                    <input type="hidden" name="clubName" value="<?php echo $club['name']; ?>">
+                    <button type="submit" class="bg-white hover:bg-gray-200 text-black font-bold py-2 px-4 rounded">Leave</button>
+                </form>
+            </div>
         <?php endif; ?>
     </div>
 
@@ -78,16 +86,7 @@ $isMember = mysqli_num_rows($result) > 0;
         <input type="hidden" name="clubId" value="<?php echo $club['id']; ?>">
         <input type="hidden" name="clubName" value="<?php echo $club['name']; ?>">
     </form>
-    <?php if ($isMember) : ?>
-        <a href="session.php?clubId=<?php echo $club['id']; ?>" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Session</a>
-    <?php endif; ?>
-    <?php if ($isMember) : ?>
-        <form action="leave_club.php" method="post">
-            <input type="hidden" name="clubId" value="<?php echo $club['id']; ?>">
-            <input type="hidden" name="clubName" value="<?php echo $club['name']; ?>">
-            <button type="submit">Leave</button>
-        </form>
-    <?php endif; ?>
+
 </body>
 
 </html>
