@@ -19,7 +19,7 @@ $nextType = $types[($currentIndex + 1) % count($types)];
 <body class="bg-gray-100">
     <header class="p-6 flex justify-between items-center bg-cover" style="background-image: url('../calendar/assets/background.jpg'); position: relative;">
         <div class="back-button">
-            <a href="../home/index.php" class="bg-white rounded-full p-2">Back</a>
+            <a href="../home/index.php" class="bg-yellow-300 rounded-full p-2 hover:bg-yellow-500">Back</a>
         </div>
         <h1 class="text-white text-lg"></h1>
         <div onclick="window.location.href='../profile/profile.php'" class="bg-white rounded-full">
@@ -29,12 +29,12 @@ $nextType = $types[($currentIndex + 1) % count($types)];
 
     <div class="container mx-auto my-10">
         <div class="text-center mb-10">
-            <a href="?type=<?php echo $previousType; ?>" class="inline-block px-4 py-2 bg-blue-500 text-white rounded-l">&lt;</a>
+            <a href="?type=<?php echo $previousType; ?>" class="inline-block px-4 py-2 bg-blue-500 text-white rounded-l hover:bg-blue-700">&lt;</a>
             <h1 class="inline-block sm:text-3xl md:text-4xl lg:text-5xl mx-4 bg-white shadow p-2 rounded"><?php echo strtoupper($type); ?></h1>
-            <a href="?type=<?php echo $nextType; ?>" class="inline-block px-4 py-2 bg-blue-500 text-white rounded-r">&gt;</a>
+            <a href="?type=<?php echo $nextType; ?>" class="inline-block px-4 py-2 bg-blue-500 text-white rounded-r hover:bg-blue-700">&gt;</a>
         </div>
         <div class="justify-center items-center text-center">
-            <table class="w-full bg-white shadow rounded mr-5 ml-5 sm:mr-10 sm:ml-5 md:mr-15 md:ml-10 lg:mr-20 lg:ml-15">
+            <table class="w-full bg-white shadow rounded mr-5 ml-0 sm:mr-10 sm:ml-0 md:mr-15 md:ml-0 lg:mr-20 lg:ml-15">
                 <thead>
                     <tr>
                         <th class="px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl bg-blue-500 text-white">Club</th>
@@ -48,7 +48,7 @@ $nextType = $types[($currentIndex + 1) % count($types)];
                     $result = mysqli_query($conn, $sql);
                     if (mysqli_num_rows($result) > 0) {
                         while ($row = mysqli_fetch_assoc($result)) {
-                            echo "<tr><td class='border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl flex items-center'><img class='w-12 h-12 rounded-full mr-4' src='" . $row["profilePic"] . "' alt='Club Profile Pic'><a href='club-details.php?name=" . $row["name"] . "'>" . $row["name"] . "</a></td>
+                            echo "<tr><td class='border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl flex items-center hover:bg-gray-300'><img class='w-12 h-12 rounded-full mr-4' src='" . $row["profilePic"] . "' alt='Club Profile Pic'><a href='club-details.php?name=" . $row["name"] . "'>" . $row["name"] . "</a></td>
                                     <td class='border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl'>" . $row["current_members"] . "</td>
                                     <td class='border px-6 py-3 sm:text-2xl md:text-3xl lg:text-4xl'>" . $row["quota"] . "</td></tr>";
                         }
