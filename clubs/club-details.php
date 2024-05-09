@@ -52,7 +52,20 @@
                     <p class="ml-96 font-semibold text-3xl text-center mt-12"><?php echo $club['quota']; ?><br>Quota</p>
                 </div>
         </div>
-        <button type="submit" class="ml-96 text-3xl bg-white text-center px-16 py-2 rounded mb-10 " <?php if ($isMember) echo 'disabled'; ?>><?php echo $isMember ? 'Joined' : 'Join'; ?></button>    
+
+        <?php if (!$isMember) : ?>
+    <form action="join_club.php" method="post">
+        <input type="hidden" name="clubId" value="<?php echo $club['id']; ?>">
+        <input type="hidden" name="clubName" value="<?php echo $club['name']; ?>">
+        <button class="bg-white hover:bg-gray-200 text-black font-bold py-2 px-4 rounded" type="submit">Join</button>
+    </form>
+<?php else : ?>
+    <form action="leave_club.php" method="post">
+        <input type="hidden" name="clubId" value="<?php echo $club['id']; ?>">
+        <input type="hidden" name="clubName" value="<?php echo $club['name']; ?>">
+        <button class="bg-white hover:bg-gray-200 text-black font-bold py-2 px-4 rounded" type="submit">Joined</button>
+    </form>
+<?php endif; ?>
     </div>
 
     <h2><?php echo $club['description'] ?></h2>
