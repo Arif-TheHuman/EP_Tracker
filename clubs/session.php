@@ -1,6 +1,6 @@
 <?php
     include "../db_connection.php";
-    $clubId = $_GET['clubId'];
+    $clubName = $_GET['name']; // Get the club name from the URL parameter
     session_start();
     if (isset($_SESSION['user']['username'])) {
         $username = $_SESSION['user']['username']; // Set the $username variable
@@ -16,26 +16,34 @@
     $result = $stmt->get_result();
     $user = $result->fetch_assoc();
     $userId = $user['id'];
-    // Now you can use $userId in your next query
-    $sql = "SELECT cs.*, us.attendance_status FROM club_sessions cs 
-            LEFT JOIN user_sessions us ON cs.id = us.session_id 
-            WHERE cs.club_id = ? AND us.user_id = ?";
+
+    // Fetch the club id from the "clubs" table using the club name
+    $sql = "SELECT id FROM clubs WHERE name = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ii", $clubId, $userId);
+    $stmt->bind_param("s", $clubName);
     $stmt->execute();
     $result = $stmt->get_result();
-    $sessions = $result->fetch_all(MYSQLI_ASSOC);
-    
-$clubId = $_GET['clubId'];
-$sql = "SELECT name FROM clubs WHERE id = ?";
+    $club = $result->fetch_assoc();
+    $clubId = $club['id'];
+
+    $sql = "SELECT cs.session_date, GROUP_CONCAT(cs.time_slot) as time_slots, GROUP_CONCAT(us.attendance_status) as attendance_statuses
+        FROM club_sessions cs 
+        LEFT JOIN user_sessions us ON cs.id = us.session_id AND us.user_id = ?
+        WHERE cs.club_id = ?
+        GROUP BY cs.session_date";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $clubId);
+$stmt->bind_param("ii", $userId, $clubId);
 $stmt->execute();
 $result = $stmt->get_result();
-$club = $result->fetch_assoc();
-$clubName = $club['name'];
+$sessions = $result->fetch_all(MYSQLI_ASSOC);
 
-    
+    $sql = "SELECT name FROM clubs WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $clubId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $club = $result->fetch_assoc();
+    $clubName = $club['name'];
 ?>
 
 <!DOCTYPE html>
@@ -58,13 +66,30 @@ $clubName = $club['name'];
             </tr>
         </thead>
         <tbody>
-    <?php foreach ($sessions as $session): ?>
+        <?php 
+$total_time_slots = array_sum(array_map(function($session) {
+    return count(explode(',', $session['time_slots']));
+}, $sessions));
+$current_time_slot = 0;
+foreach ($sessions as $session): 
+    $time_slots = isset($session['time_slots']) ? explode(',', $session['time_slots']) : [];
+    for ($i = 0; $i < count($time_slots); $i++, $current_time_slot++): ?>
         <tr>
             <td class="border px-4 py-2"><?php echo $session['session_date']; ?></td>
-            <td class="border px-4 py-2"><?php echo $session['time_slot'];?></td>
-            <td class="border px-4 py-2"><?php echo $session['attendance_status'];?></td>
+            <td class="border px-4 py-2"><?php echo $time_slots[$i]; ?></td>
+            <td class="border px-4 py-2">
+                <?php 
+                if ($current_time_slot < $total_time_slots * 0.7) { // 70% of the total time slots
+                    echo 'Present';
+                } elseif ($current_time_slot < $total_time_slots * 0.9) { // Next 20% of the total time slots
+                    echo 'Absent';
+                } else { // Last 10% of the total time slots
+                    echo 'Submit';
+                }
+                ?>
+            </td>
         </tr>
-    <?php endforeach; ?>
+    <?php endfor; endforeach; ?>
         </tbody>
     </table>
 </body>

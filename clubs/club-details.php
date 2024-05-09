@@ -71,7 +71,7 @@ $isMember = mysqli_num_rows($result) > 0;
                     <input type="hidden" name="clubName" value="<?php echo $club['name']; ?>">
                     <button class="bg-white hover:bg-gray-200 text-black font-bold py-2 px-4 rounded" type="submit">Joined</button>
                 </form>
-                <a href="session.php?clubId=<?php echo $club['id']; ?>" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Session</a>
+                <a href="session.php?name=<?php echo urlencode($club['name']); ?>" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Session</a>
                 <form action="leave_club.php" method="post">
                     <input type="hidden" name="clubId" value="<?php echo $club['id']; ?>">
                     <input type="hidden" name="clubName" value="<?php echo $club['name']; ?>">

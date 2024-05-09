@@ -379,51 +379,57 @@ foreach ($years as $year) {
 // Create user_sessions table if it doesn't exist
 $sql = "CREATE TABLE IF NOT EXISTS user_sessions (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    user_id INT(6) UNSIGNED NOT NULL,
     session_id INT(6) UNSIGNED NOT NULL,
     attendance_status ENUM('attended', 'absent', 'cancelled', 'none') NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (session_id) REFERENCES club_sessions(id)
 )";
 if ($conn->query($sql) !== TRUE) {
     echo "Error creating table: " . $conn->error;
 }
 
+
+// Add user_id column to user_sessions table
+$sql = "ALTER TABLE user_sessions ADD COLUMN user_id INT(6) UNSIGNED NOT NULL AFTER session_id, ADD FOREIGN KEY (user_id) REFERENCES users(id)";
+if ($conn->query($sql) !== TRUE) {
+    echo "Error adding column: " . $conn->error;
+}
+
 // Define the attendance statuses
 $attendance_statuses = ['attended', 'absent', 'cancelled'];
 
-// Fetch all user IDs from the users table
-$sql = "SELECT id FROM users";
-$resultUsers = $conn->query($sql);
+// Fetch all club IDs from the club_sessions table
+$sql = "SELECT DISTINCT club_id FROM club_sessions";
+$resultClubs = $conn->query($sql);
 
-if ($resultUsers->num_rows > 0) {
-    // Output data of each row
-    while($rowUser = $resultUsers->fetch_assoc()) {
-        $user_id = $rowUser["id"];
+while($rowClub = $resultClubs->fetch_assoc()) {
+    $club_id = $rowClub["club_id"];
 
-        // Fetch the maximum session_id from the club_sessions table
-        $sql = "SELECT MAX(id) as max_session_id FROM club_sessions";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
-        $resultSessions = $stmt->get_result();
-        $rowSession = $resultSessions->fetch_assoc();
-        $max_session_id = $rowSession['max_session_id'];
+    // Fetch the maximum session_id for the current club from the club_sessions table
+    $sql = "SELECT MAX(id) as max_session_id FROM club_sessions WHERE club_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $club_id);
+    $stmt->execute();
+    $resultSessions = $stmt->get_result();
+    $rowSession = $resultSessions->fetch_assoc();
+    $max_session_id = $rowSession['max_session_id'];
 
-        for ($i = 1; $i <= $max_session_id; $i++) {
-            // If it's the last session (i.e., session_id == max_session_id), set the status to 'none'
-            $attendance_status = $i == $max_session_id ? 'none' : $attendance_statuses[array_rand($attendance_statuses)];
+    
+// Assume a default user_id for the purpose of this example
+$default_user_id = 2;
 
-            // Insert the dummy data into the user_sessions table
-            $sql = "INSERT INTO user_sessions (user_id, session_id, attendance_status) VALUES (?, ?, ?)";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("iis", $user_id, $i, $attendance_status);
-            if ($stmt->execute() !== TRUE) {
-                echo "Error inserting dummy data: " . $conn->error;
-            }
-        }
+for ($i = 1; $i <= 7; $i++) {
+    // If it's the last two sessions (i.e., session_id == max_session_id or max_session_id - 1), set the status to 'none'
+    $attendance_status = $i >= $max_session_id - 1 ? 'none' : $attendance_statuses[array_rand($attendance_statuses)];
+
+    // Insert the dummy data into the user_sessions table
+    $sql = "INSERT INTO user_sessions (session_id, user_id, attendance_status) VALUES (?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("iis", $i, $default_user_id, $attendance_status);
+    if ($stmt->execute() !== TRUE) {
+        echo "Error inserting dummy data: " . $conn->error;
     }
 }
-
+}
 
 // Create user_clubs table if it doesn't exist
 $sql = "CREATE TABLE IF NOT EXISTS user_clubs (
