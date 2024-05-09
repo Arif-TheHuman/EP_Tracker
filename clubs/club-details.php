@@ -83,6 +83,7 @@ $isMember = mysqli_num_rows($result) > 0;
 
     <img src="<?php echo $club['contentNO1']; ?>" alt="Club Image">
     <img src="<?php echo $club['contentNO2']; ?>" alt="Club Image">
+    <img src="<?php echo $club['contentNO3']; ?>" alt="Club Image">
     
     <form action="join_club.php" method="post">
         <input type="hidden" name="clubId" value="<?php echo $club['id']; ?>">
