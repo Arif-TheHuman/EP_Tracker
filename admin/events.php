@@ -2,14 +2,13 @@
 include "../db_connection.php";
 
 // Insert data into database
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['name']) && isset($_POST['description']) && isset($_POST['date']) && isset($_POST['ep']) && isset($_POST['sem'])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['name']) && isset($_POST['description']) && isset($_POST['date']) && isset($_POST['ep'])) {
     $name = $_POST['name'];
     $description = $_POST['description'];
     $date = $_POST['date'];
     $ep = $_POST['ep'];
-    $sem = $_POST['sem'];
 
-    $sql = "INSERT INTO events (name, description, date, ep, sem) VALUES ('$name', '$description', '$date', '$ep', '$sem')";
+    $sql = "INSERT INTO events (name, description, date, ep) VALUES ('$name', '$description', '$date', '$ep')";
 
     if ($conn->query($sql) !== TRUE) {
         echo "Error inserting record: " . $conn->error;
@@ -52,7 +51,6 @@ while ($row = $result->fetch_assoc()) {
         <input type="text" name="description" placeholder="Description">
         <input type="text" name="date" placeholder="Date">
         <input type="text" name="ep" placeholder="EP">
-        <input type="text" name="sem" placeholder="SEM">
         <button type="submit">Create</button>
     </form>
 
