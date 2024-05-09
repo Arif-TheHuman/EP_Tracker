@@ -379,7 +379,7 @@ $sql = "CREATE TABLE IF NOT EXISTS user_sessions (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     user_id INT(6) UNSIGNED NOT NULL,
     session_id INT(6) UNSIGNED NOT NULL,
-    attendance_status ENUM('attended', 'absent', 'cancelled') NOT NULL,
+    attendance_status ENUM('attended', 'absent', 'cancelled', 'none') NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (session_id) REFERENCES club_sessions(id)
 )";
@@ -388,7 +388,7 @@ if ($conn->query($sql) !== TRUE) {
 }
 
 // Define the attendance statuses
-$attendance_statuses = ['attended', 'absent', 'cancelled'];
+$attendance_statuses = ['attended', 'absent', 'cancelled', 'none'];
 
 // Fetch all user IDs from the users table
 $sql = "SELECT id FROM users";
@@ -399,17 +399,23 @@ if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
         $user_id = $row["id"];
 
-        for ($i = 0; $i < 10; $i++) {
-            // Generate a random session_id between 1 and 100
-            $session_id = rand(1, 100);
+        // Fetch the maximum session_id for the current user
+        $sql = "SELECT MAX(session_id) as max_session_id FROM user_sessions WHERE user_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $max_session_id = $row['max_session_id'];
 
-            // Pick a random attendance status
-            $attendance_status = $attendance_statuses[array_rand($attendance_statuses)];
+        for ($i = 1; $i <= $max_session_id; $i++) {
+            // If it's the last session (i.e., session_id == max_session_id), set the status to 'none'
+            $attendance_status = $i == $max_session_id ? 'none' : $attendance_statuses[array_rand($attendance_statuses)];
 
             // Insert the dummy data into the user_sessions table
             $sql = "INSERT INTO user_sessions (user_id, session_id, attendance_status) VALUES (?, ?, ?)";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("iis", $user_id, $session_id, $attendance_status);
+            $stmt->bind_param("iis", $user_id, $i, $attendance_status);
             if ($stmt->execute() !== TRUE) {
                 echo "Error inserting dummy data: " . $conn->error;
             }
