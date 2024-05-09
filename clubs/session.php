@@ -25,52 +25,42 @@
     $stmt->execute();
     $result = $stmt->get_result();
     $sessions = $result->fetch_all(MYSQLI_ASSOC);
+    
+$clubId = $_GET['clubId'];
+$sql = "SELECT name FROM clubs WHERE id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $clubId);
+$stmt->execute();
+$result = $stmt->get_result();
+$club = $result->fetch_assoc();
+$clubName = $club['name'];
+
+    
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="font-montserrat">
-    <div class="absolute top-0 left-0 w-full h-10 bg-cover" style="background-image: url(./assets/figmatingy1.jpg);">
-        <button id="back" class="ml-2 text-transparent bg-transparent">
-            <img src="./assets/arrow.png" alt="Image">
-        </button>
-        <div id="session" class="font-bold flex items-center justify-center"><h5 id="session">SESSION</h5></div>
-    </div>
-    <div class="absolute top-10 left-0 w-full h-10 bg-cover" style="background-image: url(./assets/figmating2.png);"></div>
-    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-9/10 h-1 bg-blue-500 flex items-center justify-between">
+<body class="font-montserrat bg-gray-100">
+    <div class="w-full h-70 bg-cover bg-center" style="background-image: url(../assets/figmatingy1.jpg);">'
+    <div id="session" class="font-bold flex items-center justify-center text-black"><h5 id="session">SESSION</h5></div>
+    </div>'
+    <a href="club-details.php?name=<?php echo urlencode($clubName); ?>">Back to Club Details</a>
+  
+    
+    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-9/10 h-1 bg-blue-500 flex items-center justify-between text-white">
         <div class="date">Date</div>  
         <div class="submit">Submit</div>
     </div>
-    <?php
-// Dummy data
-$dummyData = [
-    ['date' => '2024-04-24', 'submitted' => true],
-    ['date' => '2024-04-25', 'submitted' => false],
-    ['date' => '2024-04-26', 'submitted' => true],
-    // Add more dummy data as needed
-];
-foreach ($dummyData as $data) {
-    $date = $data['date'];
-    $submitted = $data['submitted'];
-    // Check if date data exists
-    if (!empty($date)) {
-        // Display custom rectangle with date and submitted status
-        echo '<div class="bg-gray-200 p-2 rounded-md">';
-        echo '<div class="flex items-center justify-between">';
-        echo '<div class="text-left font-bold">' . $date . '</div>';
-        echo '<div class="text-right font-bold">Submitted: ' . ($submitted ? 'Yes' : 'No') . '</div>';
-        echo '</div>';
-        echo '</div>';
-    }
-}
-?>
     
-    <table class="table-auto">
+    <table class="table-auto w-full mt-10 mx-auto bg-white rounded-xl shadow-md overflow-hidden">
         <thead>
             <tr>
                 <th class="px-4 py-2">Date</th>
                 <th class="px-4 py-2">Time Slot</th>
+                <th class="px-4 py-2">Attendance Status</th>
             </tr>
         </thead>
         <tbody>
@@ -81,8 +71,7 @@ foreach ($dummyData as $data) {
             <td class="border px-4 py-2"><?php echo $session['attendance_status'];?></td>
         </tr>
     <?php endforeach; ?>
-</tbody>
+        </tbody>
     </table>
-
 </body>
 </html>
