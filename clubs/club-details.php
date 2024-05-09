@@ -25,9 +25,9 @@ $isMember = mysqli_num_rows($result) > 0;
 
 <body>
     <!-- Taskbar -->
-    <header class="p-6 flex justify-between items-center bg-cover" style="background-image: url('<?php echo $club['taskbarBgImg']; ?>'); position: relative;">
+    <header class="p-6 flex justify-between items-center bg-cover" style="background-image: url('<?php echo $club['headnav']; ?>'); position: relative;">
         <div class="back-button">
-            <a href="../home/index.php" class="bg-white rounded-full p-2">Back</a>
+            <a href="../clubs/club-page.php" class="bg-white rounded-full p-2">Back</a>
         </div>
         <h1 class="text-white text-lg"></h1>
         <div onclick="window.location.href='../profile/profile.php'" class="bg-white rounded-full">
@@ -37,8 +37,8 @@ $isMember = mysqli_num_rows($result) > 0;
 
 
     <br>
-    <!-- <a href="club-page.php" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Back</a> -->
-    <div style="background-image: url('<?php echo $club['img2']; ?>'); background-size: cover;">
+    <!-- this will be the background image for the content -->
+    <div style="background-image: url('<?php echo $club['bgforcontent']; ?>'); background-size: cover;">
         <div class="flex items-center">
             <a href="club-page.php">
                 <img class="mt-10 w-12 h-12 ml-32 mr-8" src="assets/images/backie.png" alt="Your Avatar Description">
