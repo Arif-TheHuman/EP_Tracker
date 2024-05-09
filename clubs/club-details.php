@@ -74,7 +74,7 @@
     <input type="hidden" name="clubName" value="<?php echo $club['name']; ?>">
 </form>
 <?php if ($isMember) : ?>
-    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Session</button>
+    <a href="session.php?clubId=<?php echo $club['id']; ?>" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Session</a>
 <?php endif; ?>
 <?php if ($isMember) : ?>
     <form action="leave_club.php" method="post">
