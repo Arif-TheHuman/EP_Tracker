@@ -117,29 +117,29 @@ $conn->close();
                 </div>
             </div>
             <div class="px-6 py-4">
-                <p class="text-gray-700 text-base"><?php echo $club['description']; ?></p>
+                <p class="text-gray-700 text-xl"><b>Club Description: </b><?php echo $club['description']; ?></p>
             </div>
             <div class="px-6 py-4">
-                <span class="text-gray-700 text-sm"><?php echo $club['type']; ?></span>
+                <span class="text-gray-700 text-xl"><b>Type: </b><?php echo $club['type']; ?></span>
             </div>
             <div class="px-6 py-4">
-                <span class="text-gray-700 text-sm"><?php echo $club['quota']; ?></span>
+                <span class="text-gray-700 text-xl"><b>Quota: </b><?php echo $club['quota']; ?></span>
             </div>
-            <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <div class="grid grid-cols-3 gap-4">
                 <div class="px-6 py-4">
-                    <img src="<?php echo $club['img2']; ?>" alt="Image 2" class="w-full h-full object-cover">
+                    <img src="<?php echo $club['img2']; ?>" alt="Image 2" class="w-32 h-32 object-cover">
                 </div>
                 <div class="px-6 py-4">
-                    <img src="<?php echo $club['img3']; ?>" alt="Image 3" class="w-full h-full object-cover">
+                    <img src="<?php echo $club['img3']; ?>" alt="Image 3" class="w-32 h-32 object-cover">
                 </div>
                 <div class="px-6 py-4">
-                    <img src="<?php echo $club['profilePic']; ?>" alt="Profile Picture" class="w-full h-full object-cover">
+                    <img src="<?php echo $club['profilePic']; ?>" alt="Profile Picture" class="w-32 h-32 object-cover">
                 </div>
                 <div class="px-6 py-4">
-                    <img src="<?php echo $club['coverPic']; ?>" alt="Cover Picture" class="w-full h-full object-cover">
+                    <img src="<?php echo $club['coverPic']; ?>" alt="Cover Picture" class="w-32 h-32 object-cover">
                 </div>
                 <div class="px-6 py-4">
-                    <img src="<?php echo $club['taskbarBgImg']; ?>" alt="Taskbar Background Image" class="w-full h-full object-cover">
+                    <img src="<?php echo $club['taskbarBgImg']; ?>" alt="Taskbar Background Image" class="w-32 h-32 object-cover">
                 </div>
             </div>
         </div>
