@@ -41,7 +41,7 @@ $isMember = mysqli_num_rows($result) > 0;
     <div style="background-image: url('<?php echo $club['bgforcontent']; ?>'); background-size: cover;">
         <div class="flex items-center">
             <a href="club-page.php">
-                <img class="mt-10 w-12 h-12 ml-32 mr-8" src="assets/images/backie.png" alt="Your Avatar Description">
+                <img class="mt-10 w-12 h-12 ml-32 mr-8" src="assets/images/backaru.png" alt="Your Avatar Description">
             </a>
             <h1 class=" font-semibold mt-10 text-4xl"><?php echo $club['name']; ?></h1>
         </div>
@@ -59,31 +59,35 @@ $isMember = mysqli_num_rows($result) > 0;
         </div>
 
         <?php if (!$isMember) : ?>
-            <form action="join_club.php" method="post" class="pb-4">
-                <input type="hidden" name="clubId" value="<?php echo $club['id']; ?>">
-                <input type="hidden" name="clubName" value="<?php echo $club['name']; ?>">
-                <button class="bg-white hover:bg-gray-200 text-black font-bold py-2 px-4 rounded" type="submit">Join</button>
-            </form>
-        <?php else : ?>
-            <div class="flex items-center space-x-4 pb-4">
-                <form action="leave_club.php" method="post">
-                    <input type="hidden" name="clubId" value="<?php echo $club['id']; ?>">
-                    <input type="hidden" name="clubName" value="<?php echo $club['name']; ?>">
-                    <button class="bg-white hover:bg-gray-200 text-black font-bold py-2 px-4 rounded" type="submit">Joined</button>
-                </form>
-                <a href="session.php?name=<?php echo urlencode($club['name']); ?>" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Session</a>
-                <form action="leave_club.php" method="post">
-                    <input type="hidden" name="clubId" value="<?php echo $club['id']; ?>">
-                    <input type="hidden" name="clubName" value="<?php echo $club['name']; ?>">
-                    <button type="submit" class="bg-white hover:bg-gray-200 text-black font-bold py-2 px-4 rounded">Leave</button>
-                </form>
-            </div>
-        <?php endif; ?>
+    <form action="join_club.php" method="post" class="pb-4">
+        <input type="hidden" name="clubId" value="<?php echo $club['id']; ?>">
+        <input type="hidden" name="clubName" value="<?php echo $club['name']; ?>">
+        <div class="flex justify-center items-center">
+            <button class="bg-white hover:bg-gray-200 text-black font-bold py-2 px-4 rounded" type="submit">Join</button>
+        </div>            
+    </form>
+<?php else : ?>
+    <div class="flex justify-center items-center space-x-4 pb-4">
+        <form action="leave_club.php" method="post">
+            <input type="hidden" name="clubId" value="<?php echo $club['id']; ?>">
+            <input type="hidden" name="clubName" value="<?php echo $club['name']; ?>">
+            <button class="bg-white hover:bg-gray-200 text-black font-bold py-2 px-4 rounded" type="submit">Joined</button>
+        </form>
+        <a href="session.php?name=<?php echo urlencode($club['name']); ?>" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Session</a>
+        <form action="leave_club.php" method="post">
+            <input type="hidden" name="clubId" value="<?php echo $club['id']; ?>">
+            <input type="hidden" name="clubName" value="<?php echo $club['name']; ?>">
+            <button type="submit" class="bg-white hover:bg-gray-200 text-black font-bold py-2 px-4 rounded">Leave</button>
+        </form>
+    </div>
+<?php endif; ?>
     </div>
 
-    <img src="<?php echo $club['contentNO1']; ?>" alt="Club Image">
-    <img src="<?php echo $club['contentNO2']; ?>" alt="Club Image">
-    <img src="<?php echo $club['contentNO3']; ?>" alt="Club Image">
+    <div class="flex flex-col items-center justify-center">
+    <img class="w-3/4 h-auto object-cover rounded-lg shadow-md mt-8" src="<?php echo $club['contentNO1']; ?>" alt="Club Image">
+    <img class="w-3/4 h-auto object-cover rounded-lg shadow-md mt-8" src="<?php echo $club['contentNO2']; ?>" alt="Club Image">
+    <img class="w-3/4 h-auto object-cover rounded-lg shadow-md mt-8 mb-6" src="<?php echo $club['contentNO3']; ?>" alt="Club Image">
+</div>
     
     <form action="join_club.php" method="post">
         <input type="hidden" name="clubId" value="<?php echo $club['id']; ?>">
