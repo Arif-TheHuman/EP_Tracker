@@ -390,25 +390,24 @@ if ($conn->query($sql) !== TRUE) {
 }
 
 // Define the attendance statuses
-$attendance_statuses = ['attended', 'absent', 'cancelled', 'none'];
+$attendance_statuses = ['attended', 'absent', 'cancelled'];
 
 // Fetch all user IDs from the users table
 $sql = "SELECT id FROM users";
-$result = $conn->query($sql);
+$resultUsers = $conn->query($sql);
 
-if ($result->num_rows > 0) {
+if ($resultUsers->num_rows > 0) {
     // Output data of each row
-    while($row = $result->fetch_assoc()) {
-        $user_id = $row["id"];
+    while($rowUser = $resultUsers->fetch_assoc()) {
+        $user_id = $rowUser["id"];
 
-        // Fetch the maximum session_id for the current user
-        $sql = "SELECT MAX(session_id) as max_session_id FROM user_sessions WHERE user_id = ?";
+        // Fetch the maximum session_id from the club_sessions table
+        $sql = "SELECT MAX(id) as max_session_id FROM club_sessions";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $user_id);
         $stmt->execute();
-        $result = $stmt->get_result();
-        $row = $result->fetch_assoc();
-        $max_session_id = $row['max_session_id'];
+        $resultSessions = $stmt->get_result();
+        $rowSession = $resultSessions->fetch_assoc();
+        $max_session_id = $rowSession['max_session_id'];
 
         for ($i = 1; $i <= $max_session_id; $i++) {
             // If it's the last session (i.e., session_id == max_session_id), set the status to 'none'
@@ -424,6 +423,7 @@ if ($result->num_rows > 0) {
         }
     }
 }
+
 
 // Create user_clubs table if it doesn't exist
 $sql = "CREATE TABLE IF NOT EXISTS user_clubs (

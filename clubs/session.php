@@ -48,12 +48,6 @@ $clubName = $club['name'];
     <div id="session" class="font-bold flex items-center justify-center text-black"><h5 id="session">SESSION</h5></div>
     </div>'
     <a href="club-details.php?name=<?php echo urlencode($clubName); ?>">Back to Club Details</a>
-  
-    
-    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-9/10 h-1 bg-blue-500 flex items-center justify-between text-white">
-        <div class="date">Date</div>  
-        <div class="submit">Submit</div>
-    </div>
     
     <table class="table-auto w-full mt-10 mx-auto bg-white rounded-xl shadow-md overflow-hidden">
         <thead>
