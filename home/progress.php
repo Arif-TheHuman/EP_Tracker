@@ -88,8 +88,8 @@ if ($totalAllEP > 64) {
         </div>
 
         <div class="container mx-auto text-center my-8">
-            <h1 class="text-2xl sm:ml-40 lg:ml-64 md:ml-48 font-bold p-2 bg-blue-500 text-white rounded-lg w-1/2"><?php echo strtoupper($totalAllEP) ?> OUT OF 64 EP</h1>
-            <p class="text-lg sm:ml-40 lg:ml-64 md:ml-48 p-2 bg-red-500 text-white w-1/2 rounded-lg"><?php echo $req; ?> EP REQUIRED!!</p>
+            <h1 class="text-2xl sm:ml-40 lg:mx-auto md:ml-48 font-bold p-2 bg-blue-500 text-white rounded-lg w-1/2"><?php echo strtoupper($totalAllEP) ?> OUT OF 64 EP</h1>
+            <p class="text-lg sm:ml-40 lg:mx-auto md:ml-48 p-2 bg-red-500 text-white w-1/2 rounded-lg"><?php echo $req; ?> EP REQUIRED!!</p>
             <div class="flex justify-center items-center space-x-4">
                 <form method="POST">
                     <input type="hidden" name="sem" value="<?php echo $sem - 2; ?>">
