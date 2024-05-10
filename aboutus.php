@@ -33,9 +33,29 @@
             </thead>
             <tbody>
                 <tr class="border-b border-gray-300">
-                    <td class="px-4 py-2 border-r border-gray-300">Azeezat</td>
+                    <td class="px-4 py-2 border-r border-gray-300">HakeemTheSmartie</td>
                     <td class="px-4 py-2 border-r border-gray-300">8807016</td>
                     <td class="px-4 py-2">keemi.aziz@gmail.com</td>
+                </tr>
+                <tr class="border-b border-gray-300">
+                    <td class="px-4 py-2 border-r border-gray-300">FarisTheKnight</td>
+                    <td class="px-4 py-2 border-r border-gray-300">8238020</td>
+                    <td class="px-4 py-2">fariszulkiffli@gmail.com</td>
+                </tr>
+                <tr class="border-b border-gray-300">
+                    <td class="px-4 py-2 border-r border-gray-300">ArifTheHuman</td>
+                    <td class="px-4 py-2 border-r border-gray-300">7326604</td>
+                    <td class="px-4 py-2">arifthehuman@gmail.com</td>
+                </tr>
+                <tr class="border-b border-gray-300">
+                    <td class="px-4 py-2 border-r border-gray-300">AmirThePrince</td>
+                    <td class="px-4 py-2 border-r border-gray-300">8340904</td>
+                    <td class="px-4 py-2">amirhuzaifah@gmail.com</td>
+                </tr>
+                <tr class="border-b border-gray-300">
+                    <td class="px-4 py-2 border-r border-gray-300">WafiqPC</td>
+                    <td class="px-4 py-2 border-r border-gray-300">7223322</td>
+                    <td class="px-4 py-2">wafiqmuhammad@gmail.com</td>
                 </tr>
                 <tr class="border-b border-gray-300">
                     <td class="px-4 py-2 border-r border-gray-300">CSDI</td>
