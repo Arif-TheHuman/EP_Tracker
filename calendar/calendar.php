@@ -29,7 +29,7 @@ $conn->commit();
 <body class="bg-white">
     <header class="p-6 flex justify-between items-center bg-cover" style="background-image: url('assets/background.jpg'); position: relative;">
         <div class="back-button">
-            <a href="../home/index.php" class="bg-blue-500 hover:bg-blue-700 text-white font-bold rounded-full p-4">Back</a>
+            <a href="../home/index.php" class="m-4 bg-transparent text-white font-bold py-2 px-4 rounded-full border-2 border-white hover:bg-white hover:text-blue-500">Back</a>
         </div>
         <h1 class="text-white text-lg p-4 bg-blue-700 rounded-xl">Calendar</h1>
         <div onclick="window.location.href='../profile/profile.php'" class="bg-white rounded-full">
