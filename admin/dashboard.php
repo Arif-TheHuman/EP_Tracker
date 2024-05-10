@@ -19,12 +19,17 @@ $conn->close();
 </head>
 
 <body class="bg-gray-100">
+    <header class="p-6 flex justify-between items-center bg-cover" style="background-image: url('../calendar/assets/background.jpg'); position: relative;">
+        <div class="back-button">
+            <a href="../login.php" class="m-4 bg-transparent text-white font-bold py-2 px-4 rounded-full border-2 border-white hover:bg-white hover:text-blue-500">Logout</a>
+        </div>
+    </header>
 
-<div class=" flex justify-center text-center mt-10 mb-10">
-    <h1 class="text-3xl sm:text-5xl md:text-6xl font-bold leading-tight text-gray-900">
-        <span class="block">Admin dashboard</span>
-    </h1>
-</div>
+    <div class=" flex justify-center text-center mt-10 mb-10">
+        <h1 class="text-3xl sm:text-5xl md:text-6xl font-bold leading-tight text-gray-900">
+            <span class="block">Admin dashboard</span>
+        </h1>
+    </div>
     <div class="container align-center justify-center items-center md:ml-24 lg:ml-48 px-4 flex flex-wrap md:flex-no-wrap lg:flex-wrap">
         <div class="w-full lg:w-3/4 md:w-2/4 sm:w-2/4 p-3">
             <button onclick="window.location.href='club.php'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded block w-full">

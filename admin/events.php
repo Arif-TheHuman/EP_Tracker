@@ -46,6 +46,7 @@ while ($row = $result->fetch_assoc()) {
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
 </head>
 
+<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="window.location.href='dashboard.php'">Back to Dashboard</button>
 <div class=" flex justify-center text-center mt-10 mb-10">
     <h1 class="text-3xl sm:text-5xl md:text-6xl font-bold leading-tight text-gray-900">
         <span class="block">Add New Events</span>
@@ -53,6 +54,8 @@ while ($row = $result->fetch_assoc()) {
 </div>
 
 <body class="bg-gray-100">
+
+
     <div class="container mx-auto p-4">
         <div class="bg-white rounded-lg shadow-lg p-8 flex flex-col md:flex-row flex-wrap md:flex-no-wrap">
             <form class="w-full md:w-1/2 p-2" method="post">
@@ -78,10 +81,10 @@ while ($row = $result->fetch_assoc()) {
     </div>
 
     <div class=" flex justify-center text-center mt-10 mb-10">
-    <h1 class="text-3xl sm:text-5xl md:text-6xl font-bold leading-tight text-gray-900">
-        <span class="block">List of Events</span>
-    </h1>
-</div>
+        <h1 class="text-3xl sm:text-5xl md:text-6xl font-bold leading-tight text-gray-900">
+            <span class="block">List of Events</span>
+        </h1>
+    </div>
 
     <div class="flex flex-wrap -mx-2">
         <?php foreach ($events as $event) : ?>
