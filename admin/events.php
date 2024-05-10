@@ -8,26 +8,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['name']) && isset($_POS
     $date = $_POST['date'];
     $ep = $_POST['ep'];
 
-    $sql = "INSERT INTO events (name, description, date, ep) VALUES ('$name', '$description', '$date', '$ep')";
+    $stmt = $conn->prepare("INSERT INTO events (name, description, date, ep) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("ssss", $name, $description, $date, $ep);
 
-    if ($conn->query($sql) !== TRUE) {
+    if ($stmt->execute() !== TRUE) {
         echo "Error inserting record: " . $conn->error;
     }
+
+    $stmt->close();
 }
 
 // Delete data from database
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete']) && is_numeric($_POST['delete'])) {
     $id = $_POST['delete'];
 
-    $sql = "DELETE FROM events WHERE id = $id";
+    $stmt = $conn->prepare("DELETE FROM events WHERE id = ?");
+    $stmt->bind_param("i", $id);
 
-    if ($conn->query($sql) !== TRUE) {
+    if ($stmt->execute() !== TRUE) {
         echo "Error deleting record: " . $conn->error;
     }
+
+    $stmt->close();
 }
 
 // Get data from database
-$sql = "SELECT * FROM events ORDER BY date"; // The error is that the SELECT statement is missing the column names. The solution is to add "SELECT id, name, description, date, ep, sem" before the FROM clause.
+$sql = "SELECT * FROM events ORDER BY date";
 $result = $conn->query($sql);
 
 $events = [];
@@ -54,24 +60,24 @@ while ($row = $result->fetch_assoc()) {
 </div>
 
 <body class="bg-gray-100">
-
-
     <div class="container mx-auto p-4">
-        <div class="bg-white rounded-lg shadow-lg p-8 flex flex-col md:flex-row flex-wrap md:flex-no-wrap">
+        <div class="bg-white rounded-lg shadow-lg p-8 flex flex-col md:flex-row flex-wrap md:flex-no-wrap justify-center">
             <form class="w-full md:w-1/2 p-2" method="post">
-                <div class="flex flex-col">
-                    <input class="w-full p-2 border rounded" type="text" name="name" placeholder="Name">
+                <div class="flex flex-wrap -mx-2">
+                    <div class="w-full md:w-1/2 p-2">
+                        <input class="w-full p-2 border rounded" type="text" name="name" placeholder="Name">
+                    </div>
+                    <div class="w-full md:w-1/2 p-2">
+                        <input class="w-full p-2 border rounded" type="text" name="ep" placeholder="EP">
+                    </div>
                 </div>
-                <div class="flex flex-col mt-4">
-                    <input class="w-full p-2 border rounded" type="text" name="ep" placeholder="EP">
-                </div>
-            </form>
-            <form class="w-full md:w-1/2 p-2" method="post">
-                <div class="flex flex-col">
-                    <textarea class="w-full p-2 border rounded" name="description" placeholder="Description"></textarea>
-                </div>
-                <div class="flex flex-col mt-4">
-                    <input class="w-full p-2 border rounded" type="text" name="date" placeholder="Date">
+                <div class="flex flex-wrap -mx-2">
+                    <div class="w-full md:w-1/2 p-2">
+                        <textarea class="w-full p-2 border rounded" name="description" placeholder="Description"></textarea>
+                    </div>
+                    <div class="w-full md:w-1/2 p-2">
+                        <input class="w-full p-2 border rounded" type="text" name="date" placeholder="Date">
+                    </div>
                 </div>
                 <div class="flex flex-col mt-4">
                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Create</button>

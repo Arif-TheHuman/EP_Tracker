@@ -46,6 +46,7 @@ $conn->close();
         <span class="block">Add new News</span>
     </h1>
 </div>
+<form method="post" enctype="multipart/form-data">
     <div class="md:flex md:justify-center md:space-x-8 md:px-14">
         <div class="flex flex-col md:w-1/2">
             <label for="title" class="font-bold mb-2">Title:</label>
@@ -65,6 +66,7 @@ $conn->close();
             <input type="submit" value="Add News" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-6">
         </div>
     </div>
+</form>
 </div>
 <div class="bg-white p-4 rounded shadow">
  <div class=" flex justify-center text-center mt-10 mb-10">
