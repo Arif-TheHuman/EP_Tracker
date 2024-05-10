@@ -28,9 +28,14 @@ $user = $result->fetch_assoc();
 </head>
 
 <body class="bg-gray-100">
-    <button onclick="window.history.back()" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-        Go Back
-    </button>
+    <header class="p-6 flex justify-between items-center bg-cover" style="background-image: url('../calendar/assets/background.jpg'); position: relative;">
+        <div class="back-button">
+            <a href="../home/index.php" class="m-4 bg-transparent text-white font-bold py-2 px-4 rounded-full border-2 border-white hover:bg-white hover:text-blue-500">Back</a>
+        </div>
+        <h1 class="text-white text-lg"></h1>
+
+    </header>
+
     <div class="container mx-auto px-4">
         <div class="flex justify-center items-center min-h-screen">
             <div class="bg-white shadow-lg rounded-lg p-6 w-full max-w-md">

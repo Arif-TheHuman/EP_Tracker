@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
     <header class="p-6 flex justify-between items-center bg-cover" style="background-image: url('../calendar/assets/background.jpg'); position: relative;">
         <div class="back-button">
-            <a href="../home/index.php" class="bg-white rounded-full p-2">Back</a>
+            <a href="../home/index.php" class="m-4 bg-transparent text-white font-bold py-2 px-4 rounded-full border-2 border-white hover:bg-white hover:text-blue-500">Back</a>
         </div>
         <h1 class="text-white text-lg"></h1>
         <div onclick="window.location.href='../profile/profile.php'" class="bg-white rounded-full">
@@ -44,9 +44,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </a>
             <h1 class="text-4xl font-bold text-center">EP Hub</h1>
         </div>
-        <div class="flex justify-center items-center mb-20 space-x-4">
+
+        <!-- IMAGE HERE -->
+        <!-- <div class="flex justify-center items-center mb-20 space-x-4">
             <img src="https://t3.ftcdn.net/jpg/02/48/42/64/360_F_248426448_NVKLywWqArG2ADUxDq6QprtIzsF82dMF.jpg" alt="placeholder" class="rounded shadow-md">
-        </div>
+        </div> -->
+
         <div class="flex justify-center items-center mb-20 space-x-4">
             <p class="text-center text-gray-700 text-base">Attendance at the upcoming event is mandatory for EP points. Failure to attend will result in no EP points awarded</p>
         </div>
