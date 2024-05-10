@@ -16,7 +16,7 @@ $result = mysqli_query($conn, $sql);
 <body class="bg-gray-100">
     <header class="p-6 flex justify-between items-center bg-cover" style="background-image: url('../calendar/assets/background.jpg'); position: relative;">
         <div class="back-button">
-            <a href="../home/index.php" class="bg-white rounded-full p-2">Back</a>
+            <a href="../home/index.php" class="m-4 bg-transparent text-white font-bold py-2 px-4 rounded-full border-2 border-white hover:bg-white hover:text-blue-500">Back</a>
         </div>
         <h1 class="text-white text-lg"></h1>
         <div onclick="window.location.href='../profile/profile.php'" class="bg-white rounded-full">
