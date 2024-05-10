@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start(); // Start the session
 include '../db_connection.php';
 if (isset($_SESSION['user']['username'])) {
@@ -19,6 +19,7 @@ $user = $result->fetch_assoc();
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -58,7 +59,7 @@ $user = $result->fetch_assoc();
                     <p class="text-gray-600"><?php echo $user['userRoleSchool']; ?></p>
                 </div>
                 <div class="flex justify-between mt-6">
-                    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                    <button onclick="window.location.href='../home/progress.php'" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
                         Enrichment Point
                     </button>
                     <button onclick="window.location.href='edit_profile.php'" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">

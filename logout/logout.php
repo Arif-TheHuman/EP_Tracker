@@ -53,7 +53,7 @@
         <div id="div" class="p-6 max-w-sm mx-auto bg-white shadow-md flex items-center space-x-4 flex-col">
             <img src="sadderz.png" alt="">
             <h2>Do you really want to log out?</h2>
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2 w-full">Yes</button>
+            <button onclick="window.location.href='../login.php'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2 w-full">Yes</button>
             <a href="../profile/profile.php" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-2 block text-center w-full">No</a>
         </div>
     </div>
