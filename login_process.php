@@ -12,7 +12,7 @@ if ($result->num_rows > 0) {
   
   $_SESSION['user'] = $row;
   if ($_SESSION['user']['role'] == 'admin') { // Check role from session
-    header('Location: ./admin/dashboard.php'); // Update the location here
+    header('Location: ./home/index.php'); // Update the location here
   } else {
     header('Location: ./home/index.php');
   }

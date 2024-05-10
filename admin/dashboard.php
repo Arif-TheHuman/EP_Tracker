@@ -21,6 +21,9 @@ $conn->close();
 <body class="bg-gray-100">
     <header class="p-6 flex justify-between items-center bg-cover" style="background-image: url('../calendar/assets/background.jpg'); position: relative;">
         <div class="back-button">
+            <a href="../home/index.php" class="m-4 bg-transparent text-white font-bold py-2 px-4 rounded-full border-2 border-white hover:bg-white hover:text-blue-500">Back</a>
+        </div>
+        <div class="back-button">
             <a href="../login.php" class="m-4 bg-transparent text-white font-bold py-2 px-4 rounded-full border-2 border-white hover:bg-white hover:text-blue-500">Logout</a>
         </div>
     </header>

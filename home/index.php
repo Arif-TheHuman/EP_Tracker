@@ -102,6 +102,15 @@ $stmt->execute();
 $result = $stmt->get_result();
 $row = $result->fetch_assoc();
 
+function showAdminLink() {
+    if ($_SESSION['user']['role'] != 'admin') {
+        ;
+    } else {
+        echo '<a href="../admin/dashboard.php" class="text-gray-100 hover:text-gray-900 font-medium py-2 px-4 rounded-md hover:bg-gray-100">Admin</a>';
+    }
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -119,6 +128,7 @@ $row = $result->fetch_assoc();
         <div class="container mx-auto flex items-center justify-between">
             <a class="text-lg font-semibold" href="#">EP Tracker</a>
             <div class="flex items-center space-x-4">
+                <?php showAdminLink(); ?>
                 <a class="hover:text-gray-300" href="#">Home</a>
                 <a class="hover:text-gray-300" href="../clubs/club-page.php">Clubs</a>
                 <a class="hover:text-gray-300" href="../newsPage/newspage.php">News</a>
