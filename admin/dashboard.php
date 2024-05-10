@@ -30,7 +30,7 @@ $conn->close();
             <span class="block">Admin dashboard</span>
         </h1>
     </div>
-    <div class="container align-center justify-center items-center md:ml-24 lg:ml-48 px-4 flex flex-wrap md:flex-no-wrap lg:flex-wrap">
+    <div class="container align-center justify-center items-center sm:ml-12 md:ml-6 lg:ml-6 px-4 flex flex-wrap md:flex-no-wrap lg:flex-wrap">
         <div class="w-full lg:w-3/4 md:w-2/4 sm:w-2/4 p-3">
             <button onclick="window.location.href='club.php'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded block w-full">
                 <a href="club.php" class="text-white no-underline">Clubs</a>
