@@ -37,13 +37,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </header>
 
 
-    <div class="bg-cover w-full h-48 mt-24" style="background-image: url('../assets/figmating2.png');">
-        <div class="bg-blue-500 w-full h-12 flex items-center justify-center">
-            <p class="text-lg text-black m-0 font-bold">Please enter the session's provided Passcode to submit your attendance.</p>
-        </div>
-        <form id="myForm" method="post" class="mt-5">
-            <input type="text" id="inputfield" class="bg-white w-48 h-8 border-none rounded px-2" name="passcode">
-            <input type="submit" class="bg-blue-500 text-white border-none px-5 py-2 text-center cursor-pointer inline-block text-lg mx-1 my-2" value="Submit">
+
+
+    <div class="w-full max-w-xs mx-auto flex items-center justify-center h-screen">
+        <form id="myForm" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+                    Please enter the session's provided Passcode to submit your attendance.
+                </label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="inputfield" type="text" placeholder="Passcode" name="passcode">
+            </div>
+            <div class="flex items-center justify-between">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" value="Submit">
+                    Submit
+                </button>
+            </div>
             <?php if (!empty($message)) : ?>
                 <p id="message" class="text-red-500 font-bold"><?php echo $message; ?></p>
             <?php endif; ?>
